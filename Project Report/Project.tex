@@ -5,6 +5,7 @@
 % -------------------------------------------------------------
 % PACKAGES 
 \usepackage{xcolor}
+\usepackage[normalem]{ulem} 
 \usepackage{graphicx}
 \usepackage{cite}
 \usepackage{amsmath}
@@ -68,6 +69,39 @@ Another tool people consult when making FPL related decisions is social media, w
 
 However, using social media can often be a tedious process, sifting through thousands of posts trying to decide which ones to listen to - a stark contrast to the ease of use AI platforms bring. By leveraging sentiment analysis, this manual process can be automated, enabling AI to sift through vast amounts of data and extract meaningful insights. This study aims to explore how sentiment analysis can be applied to social media data and used in combination with existing AI models to enhance the accuracy of recommendations for FPL managers. In doing so it adds to the ongoing discussion around integrating human feedback into existing AI models used to forecast FPL performance. This study hopes to explore new areas with a particular emphasis on Twitter, a platform previously neglected when it comes to FPL research, due to the complicated jargon found in typical posts.
 % -------------------------------------------------------------
+% FPL RULES
+% -------------------------------------------------------------
+\section[Rules of FPL]{Rules of FPL}
+Note the terms \textit{player} and \textit{manager} are often confused when it comes to FPL, so please be aware that this study uses the term \textit{manager} to refer to people who participate in the game of FPL, and \textit{players} to refer to real-life premier league footballers.
+
+Fantasy Premier League is a mirror of the real-life English Premier League, meaning that each in game event (referred to as a \textit{gameweek}) represents a set of real-life football matches. The game takes place over a \textit{season} which usually runs from August until May of the following calendar year, and at the end of the season the winner is crowned. There are 20 teams who play each other twice over the course of the season, resulting in a total of 38 gameweeks. Note that sometimes due to unforeseen circumstances like bad weather or domestic cup fixtures, games are postponed resulting in a team not playing in one gameweek (known as a \textit{blank} gameweek), and playing twice in another gameweek (known as a \textit{double} gameweek) to make up.
+
+Upon the start of the season, each manager is tasked with choosing a team of players from a database of around 500. A team must be made up of 15 players, consisting of 2 goalkeepers (GKs), 5 defenders (DEFs), 5 midfielders (MIDs), and 3 strikers (STs). On top of these positional constraints, each player is assigned a monetary value in £m's (roughly according to how well they performed in the previous season), and the manager is given a budget of £100m from which they must select their team. A final constraint on team selection is that you cannot select more than 3 players from the same team, so it would not be possible to buy the whole Manchester United team, for example.
+
+	% -------------------------------------------------------------
+	%INITIAL TEAM SELECTION FIGURE
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.275]{team-selection-initial}
+	\caption{Initial Team Selection}
+	\label{default}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	%INITIAL TEAM SELECTION FIGURE
+	% -------------------------------------------------------------
+	
+Replacing a player in your team with another is known as a \textit{transfer}. Each manager is given 1 free transfer (\textit{FT}) every gameweek, which can accumulate up to a maximum of 5. Managers who make a number of transfers that is higher than their free transfer balance must pay 4 points per additional transfer - referred to as a \textit{hit}. Transfers cannot lead to illegal teams, i.e. teams resulting from transfers must still meet the positional, budgetary, and 3-player per team constraints mentioned above.
+
+Another variable affecting team selection is price changes. Throughout the season player's values will go up and down depending on how popular they are among the player base. The more people buying a player, the more expensive they become and vice versa. This means managers can grow their budget by selling players who have gone up in value. When a manager sells a player who has gone up in value, the manager receives 50\% of that increase rounded down to the nearest £0.1m. So if a manager bought a player for £5m and sells them at £5.5m, the manager will only receive £5.2m back. However, when a player goes down in value, the manager suffers the full price loss.
+
+Every gameweek, managers must choose 11 \textit{starters} (a \textit{starting 11}) and 4 \textit{substitutes} or \textit{'subs'}. The starting 11 is the set of players who contribute to a manager's overall score (points scored by substitutes do not count towards their total). A starting 11 must consist of at least 3 DEFs, 3 MIDs, 1 ST, and exactly 1 GK. Subs will replace starters in the event that the starting player does not play a single minute in their real-life match. Before the start of the gameweek, the manager must choose a substitution preference, which is the order in which substitutes replace starters. This preference does not supersede the starting 11 constraints - that is, if a defender did not play in real-life and a midfielder was first in the substitute preference, the midfielder would not replace the defender if it resulted in a team with less than 3 defenders.
+
+One of the most important choices a manger must make is who to \textit{captain}. Giving a player captaincy places a 2x multiplier on their points, meaning if they were to score 10 points the manager would receive 20. A vice-captain is also chosen, and in the case that the captain is replaced by a substitute they will become the new captain.
+
+A gameweek \textit{deadline} is the final opportunity for managers to make changes to their teams for that gameweek. This deadline always occurs 90 minutes before the first real-life match of the gameweek. Once the deadline passes, any changes made will apply only to the following gameweek. Points are then awarded based on the outcomes of the matches over the next few days. This process of team selection, deadlines, and scoring continues throughout the season, resulting in a leaderboard ranking that determines the winner. The points scoring system can be found \href{https://www.premierleague.com/news/2174909}{\textcolor{blue}{\uline{here}}}
+% -------------------------------------------------------------
 % PROJECT AIMS AND OBJECTVES
 % -------------------------------------------------------------
 \section[Project Aims and Objectives]{Project Aims and Objectives}
@@ -98,86 +132,6 @@ To the knowledge of the author, no research has been done surrounding sentiment 
     \item Compare data sources by conducting a statistical comparison against models using sentiment derived from other sources such as news articles.
     \item Ensure sufficient long-term prediction ability by analysing system performance across multiple gameweeks, accounting for variability in player form, injuries, and match conditions.
 \end{itemize}
-
-% -------------------------------------------------------------
-% FPL DISCRIPTION
-% -------------------------------------------------------------
-\chapter[FPL Description]{FPL Description}
-Fantasy Premier League is something that can be quite confusing to someone unfamiliar with the game. With all the constraints and special abilities that are thrown in to add jeopardy, as well as the technical jargon often used in social media settings, it can be difficult to follow without a full understanding of the rules. This chapter will outline the rules in detail, along with the points scoring system, covering some jargon terms frequently used in the context of FPL.
-
-The terms \textit{player} and \textit{manager} can often be confused when it comes to FPL, so please be aware that this study uses the term \textit{manager} to refer to people who participate in the game of FPL, and \textit{players} to refer to real-life premier league footballers.
-% -------------------------------------------------------------
-% RULES OF FPL
-% -------------------------------------------------------------
-\section[Rules of FPL]{Rules of FPL}
-Fantasy Premier League is a mirror of the real-life English Premier League, meaning that each in game event (referred to as a \textit{gameweek}) represents a set of real-life football matches - typically played out over a weekend. The game takes place over a \textit{season} which usually runs from August until May of the following calendar year, and at the end of the season the winner is crowned. There are 20 teams who play each other twice over the course of the season, resulting in a total of 38 gameweeks (not 40 as they cannot play themselves). Note that sometimes due to unforeseen circumstances like bad weather or domestic cup fixtures, games are postponed resulting in a team not playing in one gameweek (known as a \textit{blank} gameweek), and playing twice in another gameweek (known as a \textit{double} gameweek) to make up.
-
-Upon the start of the season, each manager is tasked with choosing a team of players from a database of around 500. A team must be made up of 15 players, consisting of 2 goalkeepers (GKs), 5 defenders (DEFs), 5 midfielders (MIDs), and 3 strikers (STs). On top of these positional constraints, each player is assigned a monetary value in £m's roughly according to how well they performed in the previous season, and the manager is given a budget of £100m from which they must select their team. A final constraint on team selection is that you cannot select more than 3 players from the same real-life football team, so it would not be possible to buy the whole Manchester United team, for example. Managers can edit their team as much as they like for no penalty before the first gameweek starts, but after that point changes start to incur penalties.
-
-	% -------------------------------------------------------------
-	%INITIAL TEAM SELECTION FIGURE
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\begin{center}
-	\includegraphics[scale=0.275]{team-selection-initial}
-	\caption{Initial Team Selection}
-	\label{default}
-	\end{center}
-	\end{figure}
-	% -------------------------------------------------------------
-	%INITIAL TEAM SELECTION FIGURE
-	% -------------------------------------------------------------
-	
-Replacing a player in your team with another is known as a \textit{transfer}, and has certain costs that come with it. Each manager is given 1 \textit{free transfer} (also known as an \textit{FT}) every gameweek, which can accumulate up to a maximum of 5. Managers who make a number of transfers that is higher than their free transfer balance have to pay 4 points per additional transfer - referred to as a \textit{hit}. Transfers cannot lead to illegal teams, i.e. teams resulting from transfers must still meet the positional, budgetary, and 3-player per team constraints mentioned above.
-
-Another variable affecting team selection is price changes. Throughout the season player's values will go up and down depending on how many managers transfer them in and out of their team. The more people buying a player, the more expensive they become and vice versa. This means managers can grow their budget by selling players who have gone up in value. When a manager sells a player who has gone up in value, the manager only receives 50\% of that increase rounded down to the nearest £0.1m. So if a manager bought a player for £5m and sells them at £5.5m, the manager will only receive £5.2m back. However, when a player goes down in value, the manager suffers the full price loss.
-
-Upon selection of a team, for each gameweek managers must choose 11 \textit{starters} (a \textit{starting 11}) and 4 \textit{substitutes} or \textit{'subs'}. The starting 11 is the set of players who contribute to a manager's overall score (points scored by substitutes do not count towards their total). A starting 11 must consist of at least 3 DEFs, 3 MIDs, 1 ST, and exactly 1 GK. Subs will replace starters in the event that the starting player does not play a single minute in their real-life match. Before the start of the gameweek, the manager must choose a substitution preference, which is the order in which substitutes replace starters. This preference does not supersede the starting 11 constraints - that is, if a defender did not play in real-life and a midfielder was first in the substitute preference, the midfielder would not replace the defender if it resulted in a team with less than 3 defenders.
-
-One of the most important choices a manger must make is who to \textit{captain}. Giving a player captaincy places a 2x multiplier on their points, meaning if they were to score 10 points the manager would receive 20. A vice-captain is also chosen, and in the case that the captain is replaced by a substitute they will become the new captain.
-
-A gameweek \textit{deadline} is the final opportunity for managers to make changes to their teams for that gameweek. This deadline always occurs 90 minutes before the first real-life match of the gameweek. Once the deadline passes, any changes made will apply only to the following gameweek. Points are then awarded based on the outcomes of the matches over the next few days. This process of team selection, deadlines, and scoring continues throughout the season, resulting in a leaderboard ranking that determines the winner.
-
-Finally, managers are given \textit{gamechips} or \textit{chips} to use throughout the season that change the rules of the game for them, for one gameweek only. Currently the gamechips available to managers are as follows:
-\begin{itemize}
-  \item Wildcard - allows a manager to make unlimited transfers for no points or free transfer cost
-  \item Triple Captain - increases the captain multiplier to 3x points 
-  \item Bench Boost - substitute's points count towards the total
-  \item Free Hit - managers can select a new team from scratch that will play for that gameweek, afterwards the manager's current team will be reinstated
-\end{itemize}
-Each manager is given one of each chip, apart from the wildcard which is given once in the first half of the season, and once again in the second half of the season. Gamechips cannot be used simultaneously.
-% -------------------------------------------------------------
-% POINTS SYSTEM
-% -------------------------------------------------------------
-\section[Points System]{Points System}
-Points are awarded to players based on the following criteria which differs depending on the position of the player.
-
-\begin{table}[h!]
-\centering
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|>{\raggedright\arraybackslash}m{4cm}|c|c|c|c|}
-\hline
-\textbf{Event} & \textbf{Goalkeeper} & \textbf{Defender} & \textbf{Midfielder} & \textbf{Striker} \\ \hline
-For playing up to 60 minutes (not including stoppage time) &1&1&1&1 \\ \hline
-For playing 60 minutes or more &2&2&2&2 \\ \hline
-For each goal scored &10&6&5&4 \\ \hline
-For each assist for a goal &3&3&3&3\\ \hline
-For a clean sheet &4&4&1&- \\ \hline
-For every 3 shots saved &1&-&-&- \\ \hline
-For each penalty save &5&-&-&- \\ \hline
-For each penalty miss &-2&-2&-2&-2 \\ \hline
-For every 2 goals conceded &-1&-1&-&- \\ \hline
-For each yellow card &-1&-1&-1&-1 \\ \hline
-For each red card &-3&-3&-3&-3 \\ \hline
-For each own goal &-2&-2&-2&-2 \\ \hline
-\end{tabular}
-\caption{Scoring System Based on Events and Positions}
-\label{tab:scoring_system}
-\end{table}
-
-An assist is awarded to the player who touched the ball last before the goalscorer, and if a goal is scored from a set piece like a free-kick or penalty, the player who won that set piece is awarded the assist.
-
-Additionally, bonus points are awarded to 3 players each match in the increments of 1, 2, and 3 bonus points. These are awarded based on a bonus points system (BPS) which ranks players on a range of in-game statistics like passes, big chances created and goals scored. The 3 players with the most BPS points are given the bonuses. A full breakdown of the BPS can be found here \url{https://www.premierleague.com/news/106533}
 % -------------------------------------------------------------
 % LITERATURE REVIEW
 % -------------------------------------------------------------
@@ -222,7 +176,11 @@ Targeted Aspect-Based Sentiment Analysis (TABSA) aims to determine sentiment tow
 % SUMMARY
 % -------------------------------------------------------------
 \section[Summary]{Summary}
-From the research explored, it is clear that there is a large gap between the points scored by the top performing manager in the world and the ceiling of potential points available. This gap highlights the potentially undiscovered strategies that machine learning models could discover to help bridge that gap and outperform other human managers. The existing models used for optimising FPL performance have been able to perform well with some ranking inside the top 1\% of all players in the world. Of these models, some of the best performing include Random Forests, Linear Regression and Gradient Boosting Machines. It is also clear that incorporating human feedback and crowd wisdom into these models helps to improve their performance by a significant margin. Using high-performing deep learning models like BERT can give accurate sentiment analysis of tweets, whilst targeted aspect-based sentiment analysis can further improve this by capturing sentiment towards people and groups. 
+From the research explored, it is clear that there is a large gap between the points scored by the top performing manager in the world and the ceiling of potential points available. This gap highlights the potentially undiscovered strategies that machine learning models could discover to help bridge that gap and outperform other human managers. The existing models used for optimising FPL performance have been able to perform well with some ranking inside the top 1\% of all players in the world. Of these models, some of the best performing include Random Forests, Linear Regression and Gradient Boosting Machines. It is also clear that incorporating human feedback and crowd wisdom into these models helps to improve their performance by a significant margin. Using high-performing deep learning models like BERT can give accurate sentiment analysis of tweets, whilst targeted aspect-based sentiment analysis can further improve this by capturing sentiment towards people and groups.
+% -------------------------------------------------------------
+% DESIGN
+% ------------------------------------------------------------- 
+\chapter[Design]{Design}
 % -------------------------------------------------------------
 % SENTIMENT ANALYSIS MODEL
 % -------------------------------------------------------------
