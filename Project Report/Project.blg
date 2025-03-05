@@ -1,0 +1,75 @@
+This is BibTeX, Version 0.99d (TeX Live 2024)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Project.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: Bib.bib
+I was expecting a `,' or a `}'---line 321 of file Bib.bib
+ :  
+ :  doi = {10.11591/ijeecs.v29.i3.pp1817-1826},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 514 of file Bib.bib
+ :   
+ :   year={2023},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 521 of file Bib.bib
+ :   
+ :   year={2024},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty booktitle in bangdiwala
+Warning--empty booktitle in sentiment-cls-diagram
+Warning--empty booktitle in vader
+
+Done.
+You've used 56 entries,
+            4087 wiz_defined-function locations,
+            1117 strings with 17395 characters,
+and the built_in function-call counts, 30400 in all, are:
+= -- 2290
+> -- 774
+< -- 126
++ -- 404
+- -- 159
+* -- 1325
+:= -- 4731
+add.period$ -- 107
+call.type$ -- 56
+change.case$ -- 49
+chr.to.int$ -- 288
+cite$ -- 59
+duplicate$ -- 2357
+empty$ -- 2738
+format.name$ -- 187
+if$ -- 7009
+int.to.chr$ -- 0
+int.to.str$ -- 56
+missing$ -- 498
+newline$ -- 229
+num.names$ -- 48
+pop$ -- 1353
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 2361
+stack$ -- 0
+substring$ -- 744
+swap$ -- 1677
+text.length$ -- 30
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 56
+warning$ -- 3
+while$ -- 94
+width$ -- 58
+write$ -- 526
+(There were 3 error messages)
