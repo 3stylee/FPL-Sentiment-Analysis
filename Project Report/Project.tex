@@ -178,20 +178,109 @@ Targeted Aspect-Based Sentiment Analysis (TABSA) aims to determine sentiment tow
 \section[Summary]{Summary}
 From the research explored, it is clear that there is a large gap between the points scored by the top performing manager in the world and the ceiling of potential points available. This gap highlights the potentially undiscovered strategies that machine learning models could discover to help bridge that gap and outperform other human managers. The existing models used for optimising FPL performance have been able to perform well with some ranking inside the top 1\% of all players in the world. Of these models, some of the best performing include Random Forests, Linear Regression and Gradient Boosting Machines. It is also clear that incorporating human feedback and crowd wisdom into these models helps to improve their performance by a significant margin. Using high-performing deep learning models like BERT can give accurate sentiment analysis of tweets, whilst targeted aspect-based sentiment analysis can further improve this by capturing sentiment towards people and groups.
 % -------------------------------------------------------------
-% DESIGN
+% METHODOLOGY
 % ------------------------------------------------------------- 
-\chapter[Design]{Design}
+\chapter[Methodology]{Methodology}
+% -------------------------------------------------------------
+% OVERVIEW OF THE SYSTEM
+% -------------------------------------------------------------
+\section[Overview of the System]{Overview of the System}
+The main system is comprised of three components: the sentiment analysis model, the expected points model, and the team selection algorithm. Developed in Google Colab \cite{colab} using Python, the sentiment analysis model is used to generate an overall sentiment held by twitter users towards a certain Premier League player ahead of an FPL gameweek. This sentiment score is incorporated into an existing dataset, containing historical data for FPL players to enhance a point prediction model. Whilst many expected points models for FPL points predictions have already been developed, none have leveraged twitter sentiment. By adding this feature, it is hoped model performance will increase due to the added knowledge and crowd wisdom the twitter data contains. 
+
+The expected points model outputs a final prediction for each player, representing its guess for how many FPL points that player will score in the upcoming gameweek. A team selection algorithm will take this information and identify the squad expected to maximise the number of points scored, whilst satisfying all budgetary, positional, and team constraints.
+
+The sentiment analysis model is trained using a publicly available dataset of Premier League related tweets from the 2022/23 season. A fine-tuned BERT model is used to classify the data and then sentiment scores are aggregated to produce a final sentiment value for each gameweek. Respective historical data from the same time period is then taken from a community-run github repository, and combined with the sentiment values for each player. A gradient boosting machine (GBM) is trained on the enhanced dataset, producing a final expected points value for each player.
+
+Finally, a team selection algorithm takes the expected points values, and selects an optimal squad of 15 players that satisfies the FPL team constraints. This problem is formulated as an optimisation problem with the objective being to maximise total expected points within a given budget. Integer linear programming is used to find the best possible team composition.
+
+Together these components form an intelligent support system for FPL managers that incorporates crowd wisdom as well as historical data. The final system should help managers to make better and more informed decisions that lead to an increase in their overall rank.
+% -------------------------------------------------------------
+% SENTIMENT ANALYSIS MODEL
+% -------------------------------------------------------------
+\section[Sentiment Analysis Model]{Sentiment Analysis Model}
+To capture crowd wisdom through twitter, a sentiment analysis model is needed to automatically label tweets and gauge users opinions towards each player. Whilst it is possible to train a sentiment analysis model from scratch, this study uses a pre-trained BERT model \cite{BERT} available for free from Google. This approach leverages access to a model that has been trained on billions of texts, giving it an extremely complex understanding of natural language. A model trained from scratch could not hope to replicate such complexity given the timeframe of this project. It would also be unreasonable to expect such a large task to be completed without the use of advanced computing machinery unavailable to individual researchers without the backing of a large corporation. The BERT model has been chosen specifically because it has been proven to outperform other state-of-the-art models like LSTM in sentiment analysis tasks\cite{elankath, hoang}.
+
+This study will use fine-tuning to refine BERT for the specific task of sentiment analysis on FPL tweets. Fine tuning is the process of adapting a pre-trained model for specific tasks or use-cases \cite{fine-tuning}. This is a much less computationally demanding task than fully training a model and requires only a small to mid sized dataset. It also uses less computing power, ideal for a project of this scale. By training the extensive natural language knowledge that BERT already has on a suitable dataset of FPL tweets, a sophisticated and accurate sentiment analysis model that suits the needs of the project should be achievable.
+
+\subsection[Data Collection]{Data Collection}
+Identifying and collecting suitable data for fine-tuning the model is a critical step in creating a model with optimal performance. The quality of the fine-tuning data directly affects the model's output quality \cite{gigo}, so it was important to chose a dataset carefully.
+
+The first approach considered was manual data collection directly via Twitter, however, exploring this approach led to many dead ends. The first problem was the financial cost of using the official Twitter API, which has seen a price increase from \$3 per month to \$100 per month since the company was sold in 2022 \cite{twitter-costs}. This change has led to many free tools aimed at helping researchers leverage twitter data for their studies being shut down, impacting the entire research field by limiting the options they have when it comes to collecting data. Without being able to use these tools, and with the official API unaffordable, using the API to efficiently collect data was not an option. Whilst other methods of collecting data exist, such as writing code scripts to scrape data from the Twitter website, or using 3rd party browser extensions, these methods are against the Twitter terms of service and could result in a permanent account ban if caught.
+
+Manual collection of data on Twitter is an acceptable approach within the terms of service, however it is an extremely tedious process. When considering a dataset needed to fine tune a BERT model should contain thousands of entries, as well as the time constraints of this project, manually collecting and then labelling thousands of tweets was also not an option. 
+
+The chosen approach was to use an existing dataset published on popular machine learning forums such as Hugging Face and Kaggle. These sites have thousands of active users contributing to a wide range of research topics. As such, finding a dataset for a similar purpose to this study's was not difficult. 4 potential datasets were identified on Kaggle, and include:
+
+\begin{itemize}
+    \item \href{https://www.kaggle.com/datasets/tirendazacademy/fifa-world-cup-2022-tweets}{Fifa World Cup 2022 Tweets with Sentiment Labels} - (30k tweets)
+    \item \href{https://www.kaggle.com/datasets/wjia26/epl-teams-twitter-sentiment-dataset}{Premier League Teams Tweets with Sentiment Labels} - (460k tweets)
+    \item \href{https://www.kaggle.com/datasets/prasad22/fpl-tweets-dataset}{FPL Tweets from 2012 - 2023, unlabelled} - (110k tweets)
+    \item \href{https://www.kaggle.com/datasets/firefly55lm/tweets-footballers-premier-league}{Premier League Players Tweets with Sentiment Labels} - (167k tweets)
+\end{itemize}
+
+
+A further inspection of these 4 datasets was carried out to identify the most suitable given the needs of the model being built. 
+
+The first dataset, whilst labelled, only contained tweets for the first day of the world cup. This meant a majority of tweets were centered around the event as a whole and the controversy of Qatar hosting, with little mention of players or actions they had carried out during football matches. The second dataset was much more suited to the needs of the model, however had the drawback of being centred around teams rather than individual players. The third dataset was focused specifically on FPL which appeared ideal at first. However it was found that this dataset contained a lot of unrelated tweets from people tweeting about their own performance in FPL, instead of expected performance of actual players.
+	% -------------------------------------------------------------
+	% NOISY DATA
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[scale=0.5]{fpl-tweets-dataset}
+	\caption{Examples of noisy tweets irrelevant to player performance, such as personal FPL commentary}
+	\label{default}
+	\end{figure}
+	% -------------------------------------------------------------
+	% NOISY DATA
+	% -------------------------------------------------------------
+
+The fourth and final dataset was identified as the most suitable for this study. This dataset contains a far greater number of relevant tweets, focused on individual Premier League players from the 2022/23 season (it is almost impossible to find more recent data, due to the Twitter API price changes coming into effect from 2023). As well as the relevant focus of the tweets themselves, this dataset contains player labels for each row which is perfect for construction of an auxiliary sentence for target-based sentiment analysis. Instead of manually searching for players in each tweet, the existing \textit{player\_name} column in the dataset can be used. Finally, this dataset comes with the advantage of being almost fully cleaned of any noise including emojis, links, images, etc. reducing the amount of pre-processing required.
+
+The sentiment labels provided in the dataset were automatically created by the Vader \cite{vader}, and TextBlob \cite{textblob} models. These models are fairly accurate however it is worth noting they do incorrectly label some tweets and therefore this dataset is not perfect. A potential solution to this problem is manually labelling the tweets, however this would require some criteria to match certain labels to tweets, and would also be extremely time consuming. Given the time constraints of this project and the limited human resources available for labelling, the dataset's size would have to decrease significantly to use a manual labelling approach. It is hoped that using the existing labels will be more beneficial due to the much larger dataset size available with this approach, which should result in a more accurate final model.
+\newpage
+% -------------------------------------------------------------
+% DATA PRE-PROCESSING
+% -------------------------------------------------------------
+\subsection[Data Pre-Processing]{Data Pre-Processing}
+The dataset was cut down to a more suitable size of around 20k tweets to keep training time reasonable. This was done using a random sampling approach to reduce biases. Reducing the dataset size will most likely affect the models performance negatively, however given the time constraints of this project the computation time required to train the model on a dataset over 100k rows would have been too large.
+
+Many tweets in the dataset mention multiple players, with some even containing conflicting sentiments e.g. "Haaland was poor today, massively outshone by Salah". In order to capture the separate sentiment values (target based sentiment) the method introduced by Sun et al. \cite{sun} was used, where an auxiliary sentence was created posing a question to the model. The chosen format was: "What do you think of the sentiment towards [player]?". Using this approach, the model inputs and outputs will look like:  
+
+\begin{itemize}
+    \item \textbf{Input:} What do you think of the sentiment towards Haaland?  
+    \item \textbf{Output:} Negative
+    \item \textbf{Input:} What do you think of the sentiment towards Salah?  
+    \item \textbf{Output:} Positive
+\end{itemize}
+
+While a more FPL-specific auxiliary sentence (e.g., 'Should [player] be in my FPL squad?') was considered, it risked introducing noise due to sentiment labels from Vader/TextBlob. For example, 'Jamie Vardy has great hair!' might be labeled as 'yes' (suggesting he should be in an FPL squad) despite being unrelated to performance. Due to this potential issue, a more generic question was used with the intuition being that positive overall sentiment should closely correlate with good FPL performance.
+ 
+After adding the auxiliary sentence to the dataset, the rest of the tweets were cleaned of any noise using regular expressions to remove links, hashtags, and other random characters. Duplicates and empty rows were removed, and any other unnecessary columns were dropped. Removing noise from tweets ensures the model learns only relevant information, ultimately improving performance.
+
+\subsection[Fine-Tuning BERT]{Fine-Tuning BERT}
+
+% -------------------------------------------------------------
+% EXPECTED POINTS MODEL
+% -------------------------------------------------------------
+\section[Expected Points Model]{Expected Points Model}
+\subsection[Data Collection and Engineering]{Data Collection and Engineering}
+\subsection[Gradient Boosting Model]{Gradient Boosting Model}
+\subsection[Model Training and Evaluation]{Model Training and Evaluation}
+% -------------------------------------------------------------
+% OPTIMAL TEAM SELECTION ALGORITHM
+% -------------------------------------------------------------
+\section[Optimal Team Selection Algorithm]{Optimal Team Selection Algorithm}
+\subsection[Constraints]{Constraints}
+\subsection[Algorithm]{Algorithm}
+% -------------------------------------------------------------
+% SUMMARY
+% -------------------------------------------------------------
+\section[Summary]{Summary}
 % -------------------------------------------------------------
 % SENTIMENT ANALYSIS MODEL
 % -------------------------------------------------------------
 \chapter[Sentiment Analysis Model]{Sentiment Analysis Model}
-This chapter outlines the design decisions taken, their justifications and the implementation methods for the sentiment analysis model. This includes the underlying model architecture, training data used, tools used to fine-tune the model, and the evaluation process. 
-
-Whilst it is possible to train a sentiment analysis model from scratch, this study uses a pre-trained BERT model \cite{BERT} available for free from Google. This approach leverages access to a model that has been trained on billions of texts, giving it an extremely complex understanding of natural language. A model trained from scratch could not hope to replicate such complexity given the timeframe of this project. It would also be unreasonable to expect such a large task to be completed without the use of advanced computing machinery unavailable to individual researchers without the backing of a large corporation. The BERT model has been chosen specifically because it has been proven to outperform other state-of-the-art models like LSTM in sentiment analysis tasks\cite{elankath, hoang}.
-
-This study will use fine-tuning to refine BERT for the specific task of sentiment analysis on FPL tweets. Fine tuning is the process of adapting a pre-trained model for specific tasks or use-cases \cite{fine-tuning}. This is a much less computationally demanding task than fully training a model and requires only a small to mid sized dataset. It also uses less computing power, ideal for a project of this scale. By training the extensive natural language knowledge that BERT already has on a suitable dataset of FPL tweets, a sophisticated and accurate sentiment analysis model that suits the needs of the project should be achievable.
-
-\newpage
 \section[The BERT Model]{The BERT Model}
 Bidirectional Encoder Representation from Transformers or BERT \cite{BERT}, is a pre-trained language representation model based on the transformer architecture proposed in the now infamous 2017 paper "Attention is All You Need" \cite{attention}. The transformer is a deep learning architecture that is the backbone of some of the most prominent achievements in AI in recent years, including OpenAI's ChatGPT \cite{chatGPT}.
 
@@ -211,7 +300,6 @@ Bidirectional Encoder Representation from Transformers or BERT \cite{BERT}, is a
 
 The original transformer architecture was designed for language translation, but has since been adopted and used for a vast array of other tasks, including for pre-trained systems like BERT and Generative Pre-trained Transformers (GPTs) \cite{transformer-applications}. The transformer is made up of two parts; the encoder, and the decoder. A few months after the transformer architecture was proposed, researchers started experimenting with the idea of separating the encoder and the decoder resulting in some incredible breakthroughs. The creation of encoder-only and decoder-only transformers is what has resulted in the AI boom that we have seen today with large language models like GPTs \cite{chatGPT} and BERT \cite{BERT}. BERT is made up of deeply bidirectional encoder-only transformers which although have been more understated than their decoder-only siblings (used in ChatGPT), are still extremely powerful for natural language tasks like sentiment analysis.
 
-\newpage
 \subsection[Tokenisation]{Tokenisation}
 To split large pieces of text into more manageable chunks of data so that natural language models can process and understand them better, a process known as tokenisation is carried out on the training data \cite{jurafsky-speech}.
 
@@ -341,10 +429,7 @@ By leveraging these tasks across millions of sentences and performing millions o
 	% -------------------------------------------------------------
 	
 This extensive pre-training enables BERT to capture nuanced patterns and relationships in text, which are then fine-tuned on downstream tasks like sentiment analysis, question answering, and named entity recognition \cite{fine-tune-bert}.
-
-\newpage
-\subsection[Fine-Tuning BERT for Sentiment Analysis]{Fine-Tuning BERT for Sentiment Analysis}
-
+\subsection[BERT fine-tuning]{BERT fine-tuning}
 Fine-tuning is the process of adapting a pre-trained model to a specific task by training it further on task-specific data \cite{fine-tuning}. For sentiment analysis, this involves adding a task-specific classification layer on top of the BERT encoder stack \cite{BERT}. Fine-tuning combines BERT's pre-trained understanding of language with additional knowledge it needs for the unique challenges of sentiment analysis.
 
 After an input sentence passes through the model, the final hidden state vector $\mathbf{h}$ corresponding to [CLS] acts as a condensed representation of the entire sequence, capturing its sentiment information. A softmax \cite{softmax} classifier is then applied to predict the probability of each sentiment label $c$ \cite{fine-tune-bert}:
@@ -389,6 +474,7 @@ During fine-tuning, BERT processes the auxiliary sentence followed by the [SEP] 
 This fine-tuning process not only adapts BERT to specific targets but also allows it to capture domain-specific language features that differ from general usage. For instance, while the word “soft” might generally convey positive sentiment (e.g., a soft blanket), in the FPL context, calling a player "soft" is often a negative sentiment. By fine-tuning BERT on domain-specific tweets, the model can learn such nuanced language patterns, improving its accuracy in the target domain.
 
 Fine-tuning BERT is computationally efficient compared to training a model from scratch and requires a relatively small amount of labeled data. This makes it a practical choice for sentiment analysis tasks across diverse domains.
+\newpage
 % -------------------------------------------------------------
 % MODEL IMPLEMENTATION
 % -------------------------------------------------------------
@@ -398,93 +484,8 @@ The BERT model used in this study to predict sentiment for FPL players was fine-
  
 Python was chosen as the preferred language due to the extensive number of libraries that exist supporting the development of deep learning models. Some of the most popular include Hugging Face's Transformers library \cite{huggingface-transformers} which contains APIs for hundreds of pre-trained transformer models including BERT. The transformers library also includes tokenisers for each model and a PyTorch \cite{pytorch} Trainer class that allows fine-tuning to be done with just a few lines of code. The model's hyper-parameters can be fine tuned and optimised using the Optuna library \cite{optuna} to explore the best possible combinations. Use of these libraries ensure correct approaches are taken, and massively reduces development time by simplifying the entire process.
 
-\subsection[Data Collection]{Data Collection}
-Identifying and collecting suitable data for fine-tuning the model is a critical step in creating a model with optimal performance. The quality of the fine-tuning data directly affects the model's output quality \cite{gigo}, so it is important to chose a dataset carefully.
-
-The first approach considered was manual data collection directly via Twitter, however exploring this approach led to many dead ends. The first problem was the financial cost of using the official Twitter API, which has seen a price increase from \$3 per month to \$100 per month since the company was sold in 2022 \cite{twitter-costs}. This change has led to many free tools aimed at helping researchers leverage twitter data for their studies being shut down, impacting the entire research field by limiting the options they have when it comes to collecting data. Without being able to use these tools, and with the official API unaffordable, using the API to efficiently collect data was not an option. Whilst other methods of collecting data exist, such as writing code scripts to scrape data from the Twitter website, or using 3rd party browser extensions, these methods are against the Twitter terms of service and could result in a permanent account ban if caught.
-
-Manual collection of data on Twitter is an acceptable approach within the terms of service, however it is an extremely tedious process. When considering a dataset needed to fine tune a BERT model should contain thousands of entries, as well as the time constraints of this project, manually collecting and then labelling thousands of tweets was also not an option. 
-
-The chosen approach was to use an existing dataset published on popular machine learning forums such as Hugging Face and Kaggle. These sites have thousands of active users contributing to a wide range of research topics. As such, finding a dataset for a similar purpose to this study's was not difficult. 4 potential datasets were identified on Kaggle, and include:
-
-\begin{itemize}
-    \item \href{https://www.kaggle.com/datasets/tirendazacademy/fifa-world-cup-2022-tweets}{Fifa World Cup 2022 Tweets with Sentiment Labels} - (30k tweets)
-    \item \href{https://www.kaggle.com/datasets/wjia26/epl-teams-twitter-sentiment-dataset}{Premier League Teams Tweets with Sentiment Labels} - (460k tweets)
-    \item \href{https://www.kaggle.com/datasets/prasad22/fpl-tweets-dataset}{FPL Tweets from 2012 - 2023, unlabelled} - (110k tweets)
-    \item \href{https://www.kaggle.com/datasets/firefly55lm/tweets-footballers-premier-league}{Premier League Players Tweets with Sentiment Labels} - (167k tweets)
-\end{itemize}
-
-
-A further inspection of these 4 datasets was carried out to identify the most suitable given the needs of the model being built. 
-
-The first dataset, whilst labelled, only contained tweets for the first day of the world cup. This meant a majority of tweets were centered around the event as a whole and the controversy of Qatar hosting, with little mention of players or actions they had carried out during football matches. The second dataset was much more suited to the needs of the model, however had the drawback of being centred around teams rather than individual players. The third dataset was focused specifically on FPL which appeared ideal at first. However it was found that this dataset contained a lot of unrelated tweets from people tweeting about their own performance in FPL, instead of expected performance of actual players.
-	% -------------------------------------------------------------
-	% NOISY DATA
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\centering
-	\includegraphics[scale=0.5]{fpl-tweets-dataset}
-	\caption{Examples of noisy tweets irrelevant to player performance, such as personal FPL commentary}
-	\label{default}
-	\end{figure}
-	% -------------------------------------------------------------
-	% NOISY DATA
-	% -------------------------------------------------------------
-
-The fourth and final dataset was identified as the most suitable for this study. This dataset contains a far greater number of relevant tweets, focused on individual Premier League players from the 2022/23 season (it is almost impossible to find more recent data, due to the Twitter API price changes coming into effect from 2023). As well as the relevant focus of the tweets themselves, this dataset contains player labels for each row which is perfect for construction of an auxiliary sentence for target-based sentiment analysis. Instead of manually searching for players in each tweet, the existing \textit{player\_name} column in the dataset can be used. Finally, this dataset comes with the advantage of being almost fully cleaned of any noise including emojis, links, images, etc. reducing the amount of pre-processing required.
-
-The sentiment labels provided in the dataset were automatically created by the Vader \cite{vader}, and TextBlob \cite{textblob} models. These models are fairly accurate however it is worth noting they do incorrectly label some tweets and therefore this dataset is not perfect. A potential solution to this problem is manually labelling the tweets, however this would require some criteria to match certain labels to tweets, and would also be extremely time consuming. Given the time constraints of this project and the limited human resources available for labelling, the dataset's size would have to decrease significantly to use a manual labelling approach. It is hoped that using the existing labels will be more beneficial due to the much larger dataset size available with this approach, which should result in a more accurate final model.
-
-\subsection[Data Pre-Processing]{Data Pre-Processing}
-The dataset was cut down to a more suitable size of around 20k tweets to keep training time reasonable (the original 167k size would take around 4 hours to train a single epoch). This was done using the Hugging Face Datasets library to randomly pick around 12\% of the dataset using the \textit{train\_test\_split} method. This uses a random sampling approach to reduce biases. Reducing the dataset size will most likely affect the models performance negatively, however given the time constraints of this project the computation time required to train the model on a dataset over 100k rows would have been too large.
-
-Additionally, unseen data was required for evaluation of the model, as well as for testing and implementing the expected points (xP) model described in Chapter 5, so leaving a portion of the dataset for later use was necessary. The sentiment analysis model’s output serves as an input parameter for the xP model, so using the same data for both training and testing would compromise the validity of the results. Training on the unseen data ensures accurate and reliable performance evaluation.
-
-Next, the dataset was cleaned which meant removing unnecessary columns, removing any duplicate rows, and cleaning the text values to remove noise. The published dataset had been cleaned of most noise expected from tweets such as emojis and hashtags, however there were still some image links which all started with the \textit{a href} tag. To remove the noise, a regular expression was used to search for the tag and everything that came after it was removed. Removing noise should help focus the model to learn relationships between meaningful text, rather than irrelevant text that has no effect on sentiment. 
-
-Additionally, some rows had a player\_name that did not actually appear in the text which is an error and invalidates the auxiliary sentence method to be used for target-based sentiment analysis. To fix this a regular expression search was done in each row to ensure the player\_name occurred in the corresponding text.
-
-In terms of the existing sentiment labels in the dataset, the TextBlob labels were ignored and instead the Vader labels were used as this model was designed specifically for social media texts, so it should be more accurate for this dataset. The 'vader\_emotion' label was used which specifies whether text has a 'positive', 'negative', or 'neutral' sentiment. 
-
-After cleaning the data, the dataset size was around 14k rows. The next step was to create an auxiliary sentence for target-based sentiment analysis, which the model was trained on. The chosen format was: "What do you think of the sentiment towards \textit{placeholder}?". A possible improvement could involve a question more directly related to Fantasy Premier League (FPL), such as: "Should \textit{placeholder} be in my FPL squad?" In this case, sentiment labels like 'positive', 'neutral', and 'negative' could be mapped to 'yes', 'unsure', and 'no', respectively. However, using labels from Vader (a sentiment model) could lead to mismatches in labeling. For instance, the tweet \textit{"Jamie Vardy has great hair!"} might be labeled as 'yes', suggesting a positive FPL outlook, despite the tweet not being relevant to his actual FPL performance.
-
-This mismatch highlights the potential benefit of manual labeling to more accurately answer the focused question. However, given that this study uses pre-labeled sentiment values, a more general question was selected. The rationale behind this choice is that an overall positive sentiment is expected to correlate to anticipation of a good performance in the context of FPL.
-	% -------------------------------------------------------------
-	% CONSTRUCT AUXILIARY
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\centering
-	\includegraphics[scale=0.36]{construct-auxiliary}
-	\caption{Cleaned Dataset with Auxiliary Sentence.}
-	\label{default}
-	\end{figure}
-	% -------------------------------------------------------------
-	% CONSTRUCT AUXILIARY
-	% -------------------------------------------------------------
-	
-Once the auxiliary sentence was constructed, the dataset was ready to be divided into training and validation subsets. These splits are essential to prevent the model from overfitting. Overfitting occurs when a model learns to recognise specific patterns in the training data too well, to the point where it performs poorly on new, unseen data. To mitigate this, the validation set is used to evaluate the model’s performance on data it hasn’t been trained on, providing a measure of how well it generalises and ensuring that the model does not overfit the training data. The same method and code used to reduce the original dataset down to a smaller size was used to randomly split the data into training and validation subsets. This provided a random split, ensuring that there was no bias involved which could affect the training process.
-
-Finally, the text data needed to be tokenised so it could be fed into the BERT model as input. The reason the dataset was split before tokenisation is to prevent the tokeniser from learning vocabulary that might not end up in the training data. This could unintentionally provide the model with information about the validation dataset, resulting in biased performance. Instead both the training and validation subsets are tokenised separately.
-
-Hugging Face's transformers library provides a simple \textit{Tokenizer} API which makes tokenising text extremely easy. A pre-trained BERT tokeniser was loaded in from Hugging Face and then passed both the auxiliary sentence and context as input. The labels were also mapped to numerical values so that the BERT model could understand them. Examining the output of the tokeniser (converted back to text from the numerical IDs) for one of the rows shows it has been correctly formatted. 
-
-	% -------------------------------------------------------------
-	% TOKENISER OUTPUT
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\centering
-	\includegraphics[scale=0.48]{tokeniser-output}
-	\caption{Human-readable tokeniser output}
-	\label{default}
-	\end{figure}
-	% -------------------------------------------------------------
-	% TOKENISER OUTPUT
-	% -------------------------------------------------------------
-
-The [PAD] token is a special padding token used to keep all the inputs the same length regardless of sentence length.
-\newpage
 \subsection[Training the Model]{Training the Model}
-Once the data had been pre-processed, the model could be trained. The first step of training was to configure the TrainingArguments from the transformers library. This class contains the hyper-parameters for the model such as learning rate, batch size, epochs, and weight decay. These hyper-parameters can be tweaked to improve model performance and prevent overfitting during training. Initially, these were set to default values suggested by the Hugging Face tutorial, with the intention to optimise them properly later (see 4.2.4).  
+The first step of training was to configure the TrainingArguments from the transformers library. This class contains the hyper-parameters for the model such as learning rate, batch size, epochs, and weight decay. These hyper-parameters can be tweaked to improve model performance and prevent overfitting during training. Initially, these were set to default values suggested by the Hugging Face tutorial, with the intention to optimise them properly later (see 4.2.4).  
 	
 After these arguments were configured, the next step was to set up the Trainer object. The pre-trained \texttt{BertForSequenceClassification} model was loaded in from the transformers library. This model is configured for classification tasks on 2 input sentences with a suitable classification head already implemented, exactly what is needed for target-based sentiment analysis with an auxiliary sentence. The specific model used was 'bert-base-cased' which is just the base variant of the BERT model that is case-sensitive. The Trainer was initialised by passing in the model, datasets and training arguments. Once the Trainer had been initialised, the training process was started by calling the \texttt{train()} method.
 
@@ -502,7 +503,7 @@ Training took around 90 minutes, and the resulting model scored an initial accur
 	% INITIAL METRICS
 	% -------------------------------------------------------------
 
-\newpage
+
 Once trained, the model was tested to ensure the it worked as expected. 5 samples from the unseen data were taken and passed through the model to infer an output. The unseen data was processed by the same tokeniser function used for the training data to ensure the data used for model inference was pre-processed in the exact same way as the training data. This is crucial for achieving an accurate prediction from the model by ensuring the model recognises the inputs and can leverage knowledge learned during training to the fullest extent. Inference was done using the built in \texttt{eval()} method that the transformers library provides for every model.
 	% -------------------------------------------------------------
 	% INFERENCE
@@ -651,17 +652,13 @@ The models all struggled with the negative class which is likely because the dat
 % -------------------------------------------------------------
 \chapter[Team Selection Algorithm]{Team Selection Algorithm}
 % -------------------------------------------------------------
-% RESULTS
+% RESULTS AND DISCUSSION
 % -------------------------------------------------------------
-\chapter[Results]{Results}
+\chapter[Results and Discussion]{Results and Discussion}
 % -------------------------------------------------------------
-% DISCUSSION
+% CONCLUSION AND FUTURE WORK
 % -------------------------------------------------------------
-\chapter[Discussion]{Discussion}
-% -------------------------------------------------------------
-% CONCLUSION
-% -------------------------------------------------------------
-\chapter[Conclusion]{Conclusion}
+\chapter[Conclusion and Future Work]{Conclusion and Future Work}
 % -------------------------------------------------------------
 % BIBLIOGRAPHY
 % -------------------------------------------------------------
