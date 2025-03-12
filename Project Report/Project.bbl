@@ -217,6 +217,40 @@ M.~Hoang, O.~A. Bihorac, and J.~Rouces, ``Aspect-based sentiment analysis using
 D.~Bergmann, ``What is fine-tuning?''
   \url{https://www.ibm.com/topics/fine-tuning}, March 2024.
 
+\bibitem{gigo}
+R.~Awati, ``Garbage in, garbage out (gigo),''
+  \url{https://www.techtarget.com/searchsoftwarequality/definition/garbage-in-garbage-out}.
+
+\bibitem{twitter-costs}
+J.~Porter, ``Twitter announces new api pricing, posing a challenge for small
+  developers,''
+  \url{https://www.theverge.com/2023/3/30/23662832/twitter-api-tiers-free-bot-novelty-accounts-basic-enterprice-monthly-price}.
+
+\bibitem{vader}
+C.~Hutto and E.~Gilbert, ``Vader: A parsimonious rule-based model for sentiment
+  analysis of social media text,'' 01 2015.
+
+\bibitem{textblob}
+``Textblob,'' \url{https://textblob.readthedocs.io/en/dev/}, December 2024.
+
+\bibitem{softmax}
+I.~Goodfellow, Y.~Bengio, and A.~Courville, ``Softmax units for multinoulli
+  output distributions. deep learning,'' \emph{Preprint at}, 2018.
+
+\bibitem{sentiment-cls-diagram}
+H.~Nuraliza, O.~Pratiwi, and M.~Lubis, ``Metaverse tweet sentiment text
+  classification using bert algorithm and tunning hyperparameter,'' 08 2023,
+  pp. 207--212.
+
+\bibitem{sentence-pair-cls-diagram}
+T.~Chang, Y.-C. Fan, and A.~Chen, ``Emotion-cause pair extraction based on
+  machine reading comprehension model,'' \emph{Multimedia Tools and
+  Applications}, vol.~81, 05 2022.
+
+\bibitem{anand}
+V.~Anand, ``{FPL Historical Dataset},'' Retrieved February 2025 from
+  \url{https://github.com/vaastav/Fantasy-Premier-League/}, 2025.
+
 \bibitem{attention}
 \BIBentryALTinterwordspacing
 A.~Vaswani, N.~Shazeer, N.~Parmar, J.~Uszkoreit, L.~Jones, A.~N. Gomez,
@@ -263,20 +297,16 @@ C.~Sun, X.~Qiu, Y.~Xu, and X.~Huang, ``How to fine-tune bert for text
   \url{https://arxiv.org/abs/1905.05583}
 \BIBentrySTDinterwordspacing
 
+\bibitem{embedding-layer-diagram}
+G.~Novak, ``Bert embeddings,''
+  \url{https://tinkerd.net/blog/machine-learning/bert-embeddings/}, March 2023.
+
 \bibitem{mikolov-word2vec}
 \BIBentryALTinterwordspacing
 T.~Mikolov, K.~Chen, G.~Corrado, and J.~Dean, ``Efficient estimation of word
   representations in vector space,'' 2013. [Online]. Available:
   \url{https://arxiv.org/abs/1301.3781}
 \BIBentrySTDinterwordspacing
-
-\bibitem{embedding-layer-diagram}
-G.~Novak, ``Bert embeddings,''
-  \url{https://tinkerd.net/blog/machine-learning/bert-embeddings/}, March 2023.
-
-\bibitem{softmax}
-I.~Goodfellow, Y.~Bengio, and A.~Courville, ``Softmax units for multinoulli
-  output distributions. deep learning,'' \emph{Preprint at}, 2018.
 
 \bibitem{ffnn}
 K.~Gomez, ``The feedforward demystified: A core operation of transformers,''
@@ -287,16 +317,6 @@ K.~Gomez, ``The feedforward demystified: A core operation of transformers,''
 D.~E. Rumelhart, G.~E. Hinton, and R.~J. Williams, \emph{Learning
   representations by back-propagating errors}.\hskip 1em plus 0.5em minus
   0.4em\relax Cambridge, MA, USA: MIT Press, 1988, p. 696–699.
-
-\bibitem{sentiment-cls-diagram}
-H.~Nuraliza, O.~Pratiwi, and M.~Lubis, ``Metaverse tweet sentiment text
-  classification using bert algorithm and tunning hyperparameter,'' 08 2023,
-  pp. 207--212.
-
-\bibitem{sentence-pair-cls-diagram}
-T.~Chang, Y.-C. Fan, and A.~Chen, ``Emotion-cause pair extraction based on
-  machine reading comprehension model,'' \emph{Multimedia Tools and
-  Applications}, vol.~81, 05 2022.
 
 \bibitem{colab}
 ``Google colab,'' \url{https://colab.google/}, December 2024.
@@ -310,22 +330,6 @@ T.~Chang, Y.-C. Fan, and A.~Chen, ``Emotion-cause pair extraction based on
 
 \bibitem{optuna}
 ``Optuna,'' \url{https://optuna.org/}, December 2024.
-
-\bibitem{gigo}
-R.~Awati, ``Garbage in, garbage out (gigo),''
-  \url{https://www.techtarget.com/searchsoftwarequality/definition/garbage-in-garbage-out}.
-
-\bibitem{twitter-costs}
-J.~Porter, ``Twitter announces new api pricing, posing a challenge for small
-  developers,''
-  \url{https://www.theverge.com/2023/3/30/23662832/twitter-api-tiers-free-bot-novelty-accounts-basic-enterprice-monthly-price}.
-
-\bibitem{vader}
-C.~Hutto and E.~Gilbert, ``Vader: A parsimonious rule-based model for sentiment
-  analysis of social media text,'' 01 2015.
-
-\bibitem{textblob}
-``Textblob,'' \url{https://textblob.readthedocs.io/en/dev/}, December 2024.
 
 \bibitem{hyperparameters}
 \BIBentryALTinterwordspacing

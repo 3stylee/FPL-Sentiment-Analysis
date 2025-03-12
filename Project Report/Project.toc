@@ -15,29 +15,25 @@
 \contentsline {section}{\numberline {3.2}Sentiment Analysis Model}{16}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Data Collection}{16}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Data Pre-Processing}{19}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Fine-Tuning BERT}{20}{subsection.3.2.3}%
-\contentsline {section}{\numberline {3.3}Expected Points Model}{20}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Data Collection and Engineering}{20}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Gradient Boosting Model}{20}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Model Training and Evaluation}{20}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Optimal Team Selection Algorithm}{20}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Constraints}{20}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Algorithm}{20}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Summary}{20}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Sentiment Analysis Model}{21}{chapter.4}%
-\contentsline {section}{\numberline {4.1}The BERT Model}{21}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Tokenisation}{22}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Input Embeddings}{24}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Multi-Head Attention}{25}{subsection.4.1.3}%
-\contentsline {subsection}{\numberline {4.1.4}Feed-Forward Network}{27}{subsection.4.1.4}%
-\contentsline {subsection}{\numberline {4.1.5}Final BERT Architecture}{27}{subsection.4.1.5}%
-\contentsline {subsection}{\numberline {4.1.6}Pre-Training}{28}{subsection.4.1.6}%
-\contentsline {subsection}{\numberline {4.1.7}BERT fine-tuning}{29}{subsection.4.1.7}%
-\contentsline {section}{\numberline {4.2}Model Implementation}{31}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Training the Model}{31}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Hyper-parameter Optimisation}{33}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Model Evaluation}{35}{subsection.4.2.3}%
-\contentsline {chapter}{\numberline {5}Expected Points Model}{37}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Team Selection Algorithm}{38}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Results and Discussion}{39}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{40}{chapter.8}%
+\contentsline {subsection}{\numberline {3.2.3}Fine-Tuning BERT}{19}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Expected Points Model}{22}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Data Collection and Engineering}{22}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Data Pre-Processing}{23}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Model Training and Evaluation}{24}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Optimal Team Selection Algorithm}{24}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Constraints}{24}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Algorithm}{24}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Summary}{24}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Sentiment Analysis Model}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Theory Behind the BERT Model}{25}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Model Implementation}{32}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Data Pre-Processing}{32}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Training the Model}{33}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Hyper-parameter Optimisation}{35}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Model Evaluation}{37}{subsection.4.2.4}%
+\contentsline {chapter}{\numberline {5}Expected Points Model}{39}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Gradient Boosting Theory}{39}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Model Implementation}{39}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Team Selection Algorithm}{40}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Results and Discussion}{41}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{42}{chapter.8}%

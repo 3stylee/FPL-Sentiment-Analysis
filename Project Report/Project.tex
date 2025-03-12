@@ -158,7 +158,7 @@ In his 2005 book \textit{The Wisdom of Crowds}, James Surowiecki explains how co
 
 An expansion on this theory is a new technique dubbed "surprisingly popular" \cite{surprisingly-popular}. This technique was discovered during a study at MIT's Sloan Neuroeconomics Lab in collaboration with Princeton University. In the study, participants were asked a series of questions for which they had to provide what they thought was the correct answer, alongside what they thought the most popular answer would be. Researchers found that taking the average difference between the two responses as the correct answer, reduced errors by 21.3 in comparison to simple majority results, and 24.2 percent in comparison to confidence weighted results, where participants gave a confidence score alongside their answer to express how confident they were with their answer.
 
-Taking this knowledge back into an FPL context, research exists detailing how the use of crowd-based metrics such as a player's ownership percentage among other mangers can benefit overall performance. In the earlier mentioned model built by GS, he states how using the concept of wisdom of crowds by adding features like player ownership\%, transfers in, and transfers out to his gradient boost model improved the precision from 75\% to 83.33\% \cite{raghunandh}. Another study in 2019 by Bonello et al. details how expanding on existing models with human feedback such as news articles and betting markets led to a performance increase of over 300 points over the course of a whole season, ranking within the top 0.5\% of players in the world \cite{bonello}. This is compared to a standard statistical model that only placed within the top 13\%. The Bonello study also details how they explicitly decided against the use of Twitter posts in their model, as they found it hard to accurately derive sentiment from tweets due to grammatical errors, emoji usage, and football specific jargon. However, this study aims to use proper pre-processing and more accurate sentiment analysis methods that have emerged since 2019 (detailed in subsequent chapters) to eliminate these concerns, as there is a huge amount of data available on Twitter that should not be overlooked and it offers a large crowd of people all sharing opinions.
+Taking this knowledge back into an FPL context, research exists detailing how the use of crowd-based metrics such as a player's ownership percentage among other mangers can benefit overall performance. In the earlier mentioned model built by GS, he states how using the concept of wisdom of crowds by adding features like player ownership\%, transfers in, and transfers out to his gradient boost model improved the precision from 75\% to 83.33\% \cite{raghunandh}. Another study in 2019 by Bonello et al. details how expanding on existing models with human feedback such as news articles and betting markets led to a performance increase of over 300 points over the course of a whole season, ranking within the top 0.5\% of players in the world \cite{bonello}. This is compared to a standard statistical model that only placed within the top 13\%. The Bonello study also details how they explicitly decided against the use of Twitter posts in their model, as they found it hard to accurately derive sentiment from tweets due to grammatical errors, emoji usage, and football specific jargon. However, this study aims to use proper pre-processing and more accurate sentiment analysis methods that have emerged since 2019 (detailed in subsequent chapters) to eliminate these concerns, as there is a huge amount of data available on Twitter from a diverse crowd of people that should not be overlooked.
 
 This is backed up by a 2022 study where Whittaker found that 72\% of FPL players found social media to be at least somewhat influential in their decision making when it comes to their FPL team \cite{whittaker}. Twitter was also central to a 2019 study by Bhatt et al. where crowd wisdom was put to the test using Twitter sentiment as a metric for creating diverse crowds \cite{bhatt}. FPL related tweets were collected, and then matched to real people's FPL accounts. User's historical player selection was then collected, focusing specifically on who they chose to captain each week. The Twitter users were then clustered into diverse crowds based on the semantic diversity of their tweets, and further sampled from the clusters to create a final set of diverse crowds. Analysing the captaincy choice from these groups found that on average, the captaincy choice from a random group of 6 outperformed 73\% of individuals, and the choice of a diverse group of 6 outperformed 93\% of people.
 % -------------------------------------------------------------
@@ -185,11 +185,11 @@ From the research explored, it is clear that there is a large gap between the po
 % OVERVIEW OF THE SYSTEM
 % -------------------------------------------------------------
 \section[Overview of the System]{Overview of the System}
-The main system is comprised of three components: the sentiment analysis model, the expected points model, and the team selection algorithm. Developed in Google Colab \cite{colab} using Python, the sentiment analysis model is used to generate an overall sentiment held by twitter users towards a certain Premier League player ahead of an FPL gameweek. This sentiment score is incorporated into an existing dataset, containing historical data for FPL players to enhance a point prediction model. Whilst many expected points models for FPL points predictions have already been developed, none have leveraged twitter sentiment. By adding this feature, it is hoped model performance will increase due to the added knowledge and crowd wisdom the twitter data contains. 
+The main system is comprised of three components: the sentiment analysis model, the expected points model, and the team selection algorithm. The sentiment analysis model is used to label tweets about FPL players before a gameweek. The number of positive and negative tweets for each player are incorporated into an existing dataset, containing historical data for FPL players. Whilst many expected points models for FPL points predictions have already been developed, none have leveraged twitter sentiment. By adding this feature, it is hoped model performance will increase due to the additional knowledge and crowd wisdom the twitter data contains. 
 
 The expected points model outputs a final prediction for each player, representing its guess for how many FPL points that player will score in the upcoming gameweek. A team selection algorithm will take this information and identify the squad expected to maximise the number of points scored, whilst satisfying all budgetary, positional, and team constraints.
 
-The sentiment analysis model is trained using a publicly available dataset of Premier League related tweets from the 2022/23 season. A fine-tuned BERT model is used to classify the data and then sentiment scores are aggregated to produce a final sentiment value for each gameweek. Respective historical data from the same time period is then taken from a community-run github repository, and combined with the sentiment values for each player. A gradient boosting machine (GBM) is trained on the enhanced dataset, producing a final expected points value for each player.
+The sentiment analysis model is trained using a publicly available dataset of Premier League related tweets from the 2022/23 season. A fine-tuned BERT model is used to classify the data and then sentiment scores are aggregated to produce a final sentiment value for each gameweek. Respective historical data from the same time period is then taken from a community-run Github repository, and combined with the sentiment values for each player. A gradient boosting machine (GBM) is trained on the enhanced dataset, producing a final expected points value for each player.
 
 Finally, a team selection algorithm takes the expected points values, and selects an optimal squad of 15 players that satisfies the FPL team constraints. This problem is formulated as an optimisation problem with the objective being to maximise total expected points within a given budget. Integer linear programming is used to find the best possible team composition.
 
@@ -198,9 +198,9 @@ Together these components form an intelligent support system for FPL managers th
 % SENTIMENT ANALYSIS MODEL
 % -------------------------------------------------------------
 \section[Sentiment Analysis Model]{Sentiment Analysis Model}
-To capture crowd wisdom through twitter, a sentiment analysis model is needed to automatically label tweets and gauge users opinions towards each player. Whilst it is possible to train a sentiment analysis model from scratch, this study uses a pre-trained BERT model \cite{BERT} available for free from Google. This approach leverages access to a model that has been trained on billions of texts, giving it an extremely complex understanding of natural language. A model trained from scratch could not hope to replicate such complexity given the timeframe of this project. It would also be unreasonable to expect such a large task to be completed without the use of advanced computing machinery unavailable to individual researchers without the backing of a large corporation. The BERT model has been chosen specifically because it has been proven to outperform other state-of-the-art models like LSTM in sentiment analysis tasks\cite{elankath, hoang}.
+To capture crowd wisdom through twitter, a sentiment analysis model is needed to automatically label tweets and gauge user's opinions towards each player. Whilst it is possible to train a sentiment analysis model from scratch, this study uses a pre-trained BERT model \cite{BERT} available for free from Google. This approach leverages access to a model that has been trained on billions of texts, giving it an extremely complex understanding of natural language. A model trained from scratch could not hope to replicate such complexity given the timeframe of this project. It would also be unreasonable to expect such a large task to be completed without the use of advanced computing machinery unavailable to individual researchers without the backing of a large corporation. The BERT model has been chosen specifically because it has been proven to outperform other state-of-the-art models like LSTM in sentiment analysis tasks\cite{elankath, hoang}.
 
-This study will use fine-tuning to refine BERT for the specific task of sentiment analysis on FPL tweets. Fine tuning is the process of adapting a pre-trained model for specific tasks or use-cases \cite{fine-tuning}. This is a much less computationally demanding task than fully training a model and requires only a small to mid sized dataset. It also uses less computing power, ideal for a project of this scale. By training the extensive natural language knowledge that BERT already has on a suitable dataset of FPL tweets, a sophisticated and accurate sentiment analysis model that suits the needs of the project should be achievable.
+This study uses fine-tuning to refine BERT for the specific task of sentiment analysis on FPL tweets. Fine tuning is the process of adapting a pre-trained model for specific tasks or use-cases \cite{fine-tuning}. This is a much less computationally demanding task than fully training a model, and only requires a relatively small dataset which is ideal for a project of this scale. By combining the extensive natural language knowledge that BERT already has with a suitable dataset of FPL tweets, a sophisticated and accurate sentiment analysis model that suits the needs of the project will be achieved.
 
 \subsection[Data Collection]{Data Collection}
 Identifying and collecting suitable data for fine-tuning the model is a critical step in creating a model with optimal performance. The quality of the fine-tuning data directly affects the model's output quality \cite{gigo}, so it was important to chose a dataset carefully.
@@ -217,7 +217,6 @@ The chosen approach was to use an existing dataset published on popular machine 
     \item \href{https://www.kaggle.com/datasets/prasad22/fpl-tweets-dataset}{FPL Tweets from 2012 - 2023, unlabelled} - (110k tweets)
     \item \href{https://www.kaggle.com/datasets/firefly55lm/tweets-footballers-premier-league}{Premier League Players Tweets with Sentiment Labels} - (167k tweets)
 \end{itemize}
-
 
 A further inspection of these 4 datasets was carried out to identify the most suitable given the needs of the model being built. 
 
@@ -243,7 +242,7 @@ The sentiment labels provided in the dataset were automatically created by the V
 % DATA PRE-PROCESSING
 % -------------------------------------------------------------
 \subsection[Data Pre-Processing]{Data Pre-Processing}
-The dataset was cut down to a more suitable size of around 20k tweets to keep training time reasonable. This was done using a random sampling approach to reduce biases. Reducing the dataset size will most likely affect the models performance negatively, however given the time constraints of this project the computation time required to train the model on a dataset over 100k rows would have been too large.
+The dataset was cut down to a more suitable size of around 20k tweets to keep training time reasonable (roughly 30 mins per epoch). This was done using a random sampling approach to reduce biases. Reducing the dataset size will most likely affect the model's performance negatively, however, given the time constraints of this project the computation time required to train the model on a dataset over 100k rows would have been too large.
 
 Many tweets in the dataset mention multiple players, with some even containing conflicting sentiments e.g. "Haaland was poor today, massively outshone by Salah". In order to capture the separate sentiment values (target based sentiment) the method introduced by Sun et al. \cite{sun} was used, where an auxiliary sentence was created posing a question to the model. The chosen format was: "What do you think of the sentiment towards [player]?". Using this approach, the model inputs and outputs will look like:  
 
@@ -256,17 +255,97 @@ Many tweets in the dataset mention multiple players, with some even containing c
 
 While a more FPL-specific auxiliary sentence (e.g., 'Should [player] be in my FPL squad?') was considered, it risked introducing noise due to sentiment labels from Vader/TextBlob. For example, 'Jamie Vardy has great hair!' might be labeled as 'yes' (suggesting he should be in an FPL squad) despite being unrelated to performance. Due to this potential issue, a more generic question was used with the intuition being that positive overall sentiment should closely correlate with good FPL performance.
  
-After adding the auxiliary sentence to the dataset, the rest of the tweets were cleaned of any noise using regular expressions to remove links, hashtags, and other random characters. Duplicates and empty rows were removed, and any other unnecessary columns were dropped. Removing noise from tweets ensures the model learns only relevant information, ultimately improving performance.
+After adding the auxiliary sentence to the dataset, the rest of the tweets were cleaned of any noise. Additionally duplicates and empty rows were removed, and any other unnecessary columns were dropped. Removing noise from tweets ensures the model learns only relevant information, ultimately improving performance.
 
 \subsection[Fine-Tuning BERT]{Fine-Tuning BERT}
+For a more detailed view of the BERT model architecture, see chapter 4. 
 
+To fine-tune a BERT model for sentiment analysis, the pre-trained BERT model was modified by adding a task-specific classification layer on top of the BERT encoder stack \cite{BERT}. This final layer transforms the output weight values (represented as a vector $\mathbf{h}$) into a final class 'positive', 'negative', or 'neutral' sentiment by using probabilities to predict which class the model's output most closely represents.
+
+The classification layer is a softmax \cite{softmax} classifier, which takes as input a vector $\mathbf{h}$ and uses the following equation to predict the final class:
+\[
+p(c|\mathbf {h}) =\mathrm {softmax}(W\mathbf {h})
+\]
+
+The vector $\mathbf{h}$ corresponds to the token [CLS] which is a special token added to the input sentence before it is processed by the model. This token is modified as the input passes through the model’s layers, forming a condensed representation of the entire input sequence. By fine-tuning the model specifically for sentiment analysis, this token learns to focus on sentiment information. $W$ represents the task-specific weight matrix, which is updated during fine-tuning to minimise classification loss.
+	% -------------------------------------------------------------
+	% BERT FINE-TUNING
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.35]{sentiment-diagram}
+	\caption{Single sentence classification \cite{sentiment-cls-diagram}}
+	\label{default}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% BERT FINE-TUNING
+	% -------------------------------------------------------------
+
+To minimise classification loss, a labeled dataset of texts and their corresponding sentiment labels (e.g., ‘positive,’ ‘negative,’ ‘neutral’) was used. During training, the model was fed these texts and its predictions were compared to the labels. Weights were updated iteratively to improve accuracy. This process was repeated for a set number of epochs (complete passes through the dataset) to improve accuracy whilst preventing overfitting.
+
+While standard sentiment analysis provides a single sentiment label per text, Targeted Aspect-Based Sentiment Analysis (TABSA) enables sentiment classification for specific entities within a sentence, such as individual players. The auxiliary sentence method introduced by Sun et al. \cite{sun} was used. BERT processes the auxiliary sentence and the original tweet as a sentence pair, with a [SEP] (separator) token placed in between them. Classification is done in the same way as single sentence sentiment analysis with the hidden vector $\mathbf{h}$ used to predict the label. This approach enables BERT to focus on the sentiment directed toward each specific player, rather than providing a single sentiment value for the entire sentence. A single value could be uninformative, as positive and negative sentiments might cancel each other out. By targeting individual players, this method ensures more accurate predictions, with players labeled according to their specific sentiment.
+
+	% -------------------------------------------------------------
+	% BERT FINE-TUNING
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.35]{sentence-pair-cls-diagram}
+	\caption{Sentence-pair classification \cite{sentence-pair-cls-diagram}}
+	\label{default}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% BERT FINE-TUNING
+	% -------------------------------------------------------------
+
+The fine-tuning process not only adapts BERT to specific targets but also allows it to capture domain-specific language features that differ from general usage. For instance, while the word “soft” might generally convey positive sentiment (e.g., a soft blanket), in the FPL context, calling a player "soft" is often a negative sentiment. By fine-tuning BERT on domain-specific tweets, the model can learn such nuanced language patterns, improving its accuracy in the target domain.
+
+Fine-tuning BERT is computationally efficient compared to training a model from scratch and requires a relatively small amount of labeled data. As such it was a practical approach that suited the needs of this project given the time restraints.
+\newpage
 % -------------------------------------------------------------
 % EXPECTED POINTS MODEL
 % -------------------------------------------------------------
 \section[Expected Points Model]{Expected Points Model}
+In order for the system to identify the best team of players ahead of an FPL gameweek, a prediction model is needed that can accurately forecast the number of points each player is going to score. Predicting player performance in Fantasy Premier League is a well-explored problem. Many studies have used a variety of machine learning and statistical methods in order to achieve this goal. The study most similar to this one, carried out by Bonello et al. \cite{bonello} in which news articles and betting markets were used to improve traditional model performance, found that Gradient Boosting Machines (GBMs) were the most effective. They state "ensemble methods show[ed] far higher suitability to the task when compared with alternate supervised learning approaches such as SVMs." 
+
+Due to the similar nature of this study (the main difference is the source of crowd wisdom coming from Twitter instead of news articles and betting markets) GBMs were chosen as the approach for expected points model. In selecting GBMs, this study builds on the success of previous studies where they have been proven to handle complex datasets with lots of interacting features. The selection of Twitter data adds a unique advantage, capturing opinions from millions of fans around the world instead of just 'expert' journalists. As well as this, FPL-specific information such as when a \texttt{double gameweek} is coming up for certain teams will typically not be reported on by traditional news outlets.
+% -------------------------------------------------------------
+% DATA COLLECTION AND ENGINEERING
+% -------------------------------------------------------------
 \subsection[Data Collection and Engineering]{Data Collection and Engineering}
-\subsection[Gradient Boosting Model]{Gradient Boosting Model}
+The core of the dataset containing historical information for each player was taken from a community-run \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}} set up by Anand \cite{anand}. This repository contains data for each FPL season dating back to 2016, including information for every player and every gameweek. Data for the 2022/23 FPL season was used, as this matches the timeline of the most recent Twitter data available (more recent data locked behind \$100 per month API).
+
+As well as the raw data available, rolling features were computed such as 'average\_points\_last\_3\_weeks', and 'minutes\_last\_3\_weeks', in order to capture a greater range information about each player ahead of a gameweek. In total 21 input parameters were chosen, with roughly 3 main categories for the type of information captured by each input: 
+
+\begin{itemize}
+    \item \textbf{Information known before kick-off} - e.g., home or away, opponent difficulty
+    \item \textbf{Player specific data} - e.g., average points last 3 weeks, goals scored last 3 weeks
+    \item \textbf{Team specific data} - e.g., team form, team goals scored last 3 weeks
+\end{itemize}
+
+Once the base dataset had been constructed, the next step was to add in the sentiment information about each player. The first step in achieving this was running the unseen Twitter data through the sentiment analysis model to get a sentiment value for each row in the dataset. After this each tweet needed to be tagged with the FPL gameweek it belonged to. To do this tweets a list of start dates for each gameweek was used, and tweets were matched to the closest start date.
+
+This process resulted in a dataset of unseen tweets, each containing the attributes 'player\_name', 'gameweek', and 'sentiment'. The next step was to match each tweet to its corresponding player and gameweek from the historical information dataset. For each match, two new columns, 'total\_positive\_tweets' and 'total\_negative\_tweets', were added to the dataset. The matching tweets for each player and gameweek were then counted, with the final counts of positive and negative tweets appended to the main dataset.
+
+Finally the complete dataset was uploaded to a Hugging Face repository so it could be used by the GBM model for training, as well as later use for the overall evaluation of the complete system. 
+
+\subsection[Data Pre-Processing]{Data Pre-Processing}
+To pre-process the dataset before training the model, a number of steps were taken.
+
+Firstly, the only text value feature in the dataset, the team name, was encoded using one-hot encoding. This is where a new column is introduced for every possible value the feature could take, so a new column for all 20 Premier League teams was introduced. Then if for example, the original row in the dataset had a team value of 'Manchester United', the 'manchester\_united' column would have a value of 1, and all other team columns would have a value of 0. 
+
+Next, each numerical value was normalised (scaled to a value between 1 and 0). This done so all features in the dataset have the same scale, which is important for the convergence of GBMs. Normalisation was performed using Min-Max scaling, which rescales each feature by subtracting the minimum value and dividing by the range (maximum value - minimum value). This ensures that no feature dominates the learning process due to differing scales, and that the model can more efficiently optimise during training.
+
+After this, any rows with empty values or duplicate rows were dropped from the dataset completely. Finally the dataset was split into train and validation sets, with around 5k rows being set aside for the final evaluation of the complete system. 
+
+\newpage
+% -------------------------------------------------------------
+% MODEL TRAINING AND EVALUATION
+% -------------------------------------------------------------
 \subsection[Model Training and Evaluation]{Model Training and Evaluation}
+Training the model
 % -------------------------------------------------------------
 % OPTIMAL TEAM SELECTION ALGORITHM
 % -------------------------------------------------------------
@@ -281,7 +360,7 @@ After adding the auxiliary sentence to the dataset, the rest of the tweets were 
 % SENTIMENT ANALYSIS MODEL
 % -------------------------------------------------------------
 \chapter[Sentiment Analysis Model]{Sentiment Analysis Model}
-\section[The BERT Model]{The BERT Model}
+\section[Theory Behind the BERT Model]{Theory Behind the BERT Model}
 Bidirectional Encoder Representation from Transformers or BERT \cite{BERT}, is a pre-trained language representation model based on the transformer architecture proposed in the now infamous 2017 paper "Attention is All You Need" \cite{attention}. The transformer is a deep learning architecture that is the backbone of some of the most prominent achievements in AI in recent years, including OpenAI's ChatGPT \cite{chatGPT}.
 
         % -------------------------------------------------------------
@@ -289,7 +368,7 @@ Bidirectional Encoder Representation from Transformers or BERT \cite{BERT}, is a
 	% -------------------------------------------------------------
 	\begin{figure}[htbp]
 	\begin{center}
-	\includegraphics[scale=0.35]{transformer-architecture}
+	\includegraphics[scale=0.37]{transformer-architecture}
 	\caption{Architecture of a Transformer \cite{attention}}
 	\label{default}
 	\end{center}
@@ -300,7 +379,7 @@ Bidirectional Encoder Representation from Transformers or BERT \cite{BERT}, is a
 
 The original transformer architecture was designed for language translation, but has since been adopted and used for a vast array of other tasks, including for pre-trained systems like BERT and Generative Pre-trained Transformers (GPTs) \cite{transformer-applications}. The transformer is made up of two parts; the encoder, and the decoder. A few months after the transformer architecture was proposed, researchers started experimenting with the idea of separating the encoder and the decoder resulting in some incredible breakthroughs. The creation of encoder-only and decoder-only transformers is what has resulted in the AI boom that we have seen today with large language models like GPTs \cite{chatGPT} and BERT \cite{BERT}. BERT is made up of deeply bidirectional encoder-only transformers which although have been more understated than their decoder-only siblings (used in ChatGPT), are still extremely powerful for natural language tasks like sentiment analysis.
 
-\subsection[Tokenisation]{Tokenisation}
+\subsection*{Tokenisation}
 To split large pieces of text into more manageable chunks of data so that natural language models can process and understand them better, a process known as tokenisation is carried out on the training data \cite{jurafsky-speech}.
 
 In the BERT model, raw text is broken down into tokens using the WordPiece tokenisation algorithm \cite{word-piece}. As opposed to word-level or character-level tokenisation, where whole words or individual characters represent tokens, the WordPiece algorithm is a subword-level tokenisation algorithm. This means words are split into one or more tokens such as \texttt{'token'} and \texttt{'isation'}.
@@ -317,19 +396,7 @@ Once the vocabulary has been generated, words can be tokenised. This is done by 
 
 The BERT model also uses the special tokens [CLS] (classifier) and [SEP] (separator). The CLS token is placed at the very start of the input, and for sentiment analysis tasks it has a hidden state associated with it that will be passed to a classifier to predict sentiment after the input has been processed \cite{fine-tune-bert}. The SEP token is used to separate two sentences for tasks such as question-answering and dual-sentence classification \cite{BERT}.
 
-\newpage
-\subsection[Input Embeddings]{Input Embeddings}
-After text has been tokenised, it needs to be converted into numerical values using text encoding. Text encoding allows raw text to be handled by neural networks which can only take numerical values as input \cite{jurafsky-speech}. The raw text is converted into a set of vectors called word embeddings, which can be processed by the encoder's neural network. Embeddings give meaning to tokens, with similar tokens like 'great' and 'awesome' closer together in vector space, and opposites like 'sad' and 'happy' further apart \cite{mikolov-word2vec}.
-
-The embedding layer creates word embeddings (or subword embeddings, in the case of BERT) for each token in the input using 3 different types of embeddings: token embeddings, positional embeddings, and token type embeddings \cite{embedding-layer-diagram}. 
-
-\begin{itemize}
-    \item \textbf{Token embeddings} are vectors that have been learned during the model's pre-training phase to place similar tokens close together in vector space, they are stored in an embedding matrix which maps each token to a specific embedding. 
-    \item \textbf{Positional embeddings} are also learned vectors given to each token that represent their positions in the input sentence.
-    \item \textbf{Token type embeddings} are often used for two-sentence NLP tasks like question-answering to identify which sentence a token belongs to. For one-sentence tasks like next word prediction, all tokens are assigned the same vector.
-\end{itemize}
-
-The embedding layer then sums these embeddings together, and applies normalisation to their sum. The resulting vector output contains meaningful information about each token and its position in the input. These embeddings are passed into the subsequent transformer layers of the BERT model for processing.
+\subsection*{Input Embeddings}
         % -------------------------------------------------------------
 	% EMBEDDING LAYER DIAGRAM
 	% -------------------------------------------------------------
@@ -343,7 +410,19 @@ The embedding layer then sums these embeddings together, and applies normalisati
 	% -------------------------------------------------------------
 	% EMBEDDING LAYER DIAGRAM
 	% -------------------------------------------------------------
-\subsection[Multi-Head Attention]{Multi-Head Attention}
+After text has been tokenised, it needs to be converted into numerical values using text encoding. Text encoding allows raw text to be handled by neural networks which can only take numerical values as input \cite{jurafsky-speech}. The raw text is converted into a set of vectors called word embeddings, which can be processed by the encoder's neural network. Embeddings give meaning to tokens, with similar tokens like 'great' and 'awesome' closer together in vector space, and opposites like 'sad' and 'happy' further apart \cite{mikolov-word2vec}.
+
+The embedding layer creates word embeddings (or subword embeddings, in the case of BERT) for each token in the input using 3 different types of embeddings: token embeddings, positional embeddings, and token type embeddings \cite{embedding-layer-diagram}. 
+
+\begin{itemize}
+    \item \textbf{Token embeddings} are vectors that have been learned during the model's pre-training phase to place similar tokens close together in vector space, they are stored in an embedding matrix which maps each token to a specific embedding. 
+    \item \textbf{Positional embeddings} are also learned vectors given to each token that represent their positions in the input sentence.
+    \item \textbf{Token type embeddings} are often used for two-sentence NLP tasks like question-answering to identify which sentence a token belongs to. For one-sentence tasks like next word prediction, all tokens are assigned the same vector.
+\end{itemize}
+
+The embedding layer then sums these embeddings together, and applies normalisation to their sum. The resulting vector output contains meaningful information about each token and its position in the input. These embeddings are passed into the subsequent transformer layers of the BERT model for processing.
+
+\subsection*{Multi-Head Attention}
 A fundamental concept of the transformer architecture is 'self-attention'\cite{attention}. Given the sentence: \textit{'I took the pizza out of the oven and then ate it.'} it is apparent to any human that 'it' refers to the pizza and not oven, based on the surrounding context. Neural networks however lack the ability to identify this relationship, and require mechanisms like self-attention in order to resolve such ambiguities.
 
 Self-attention allows neural networks to identify the importance of each token in relation to the other tokens in the input. To calculate attention values, BERT uses multiple attention 'heads' which all focus on different linguistic features of the input. Each head involves 3 components: the query (Q), the key (K), and the value (V) matrices \cite{attention}. Each of these matrices are made up of the input embeddings of the previous layer (a vector for each token), and are identical to ensure that every token in the input interacts with every other token, including itself (the idea of self-attention).
@@ -366,7 +445,6 @@ Self-attention allows neural networks to identify the importance of each token i
 
 Here $QK^T$ computes the similarity between the key and query matrices, scaled by $\sqrt{d_k}$ (the dimension of the embedding vectors), and then the softmax function \cite{softmax} normalises these values into attention weights. These weights are applied to the value matrix, resulting in an attention net matrix representing the contextual relationship between tokens.
 
-\newpage
 For all attention layer heads (BERT uses $h$=12 attention heads \cite{BERT}), there is a linear layer that uses learned weights to project the input embeddings into separate Q, K, and V matrices for each head. This way different linguistic features can be explored by the model to improve its learning ability. The outputs (attention nets) from each head are then concatenated to form a unified representation:
 	% -------------------------------------------------------------
 	% MULTI-HEAD ATTENTION
@@ -391,21 +469,21 @@ For all attention layer heads (BERT uses $h$=12 attention heads \cite{BERT}), th
 Here, $W_{i}^Q, W_{i}^K , W_{i}^V$ are the learned projection matrices for the $i$-th head, and $W^O$ is the projection matrix for the final linear layer. This final layer aggregates the information from all attention heads to produce a final self-attention representation for the input \cite{attention}.
 
 \newpage
-\subsection[Feed-Forward Network]{Feed-Forward Network}
+\subsection*{Feed-Forward Network}
 The feed-forward neural network (FFNN) is the final stage of the encoder. It is a type of multi-layer perceptron (MLP), used for transforming the output of the self-attention mechanism into a refined representation that can capture deeper relationships within the input sequence \cite{ffnn}.
 
 The FFNN processes input embeddings by first projecting them into a higher-dimensional space. Specifically, the 768-dimensional input for each BERT token embedding \cite{BERT} is transformed into a 3072-dimensional space via a linear projection. This expansion allows the model to explore more complex interactions among the input features. Following this, a ReLU activation function is applied to allow the model to identify more intricate non-linear patterns in the language. Finally, another linear projection reduces the representation back to its original dimensionality, ensuring compatibility with the encoder's output structure \cite{ffnn}.
 
 The FFNN is essential for capturing patterns and interactions that the self-attention mechanism alone cannot model. Its reliance on simple matrix operations makes it computationally efficient and highly parallelisable, leveraging modern hardware accelerators like GPUs and multi-core CPUs to significantly reduce training time. To ensure stable training and enhance convergence, the FFNN's output undergoes normalisation, producing the final output representation for the encoder.\\
 
-\subsection[Final BERT Architecture]{Final BERT Architecture}
+\subsection*{Final BERT Architecture}
 The previous sub-sections have explored the components of the encoder, but the BERT model actually makes use of multiple encoders stacked together (12 for BERT$_{\text{base}}$ which this study uses) \cite{BERT}. This is what makes BERT a deep-learning model, as it incorporates many layers into its structure. The stacking of multiple encoders allows the model to progressively learn more high-level representations of the input data as it passes through the layers.
 
 Each encoder layer outputs a 768-dimensional matrix capturing increasingly complex patterns and relationships in the data at every subsequent encoder layer. The output of the final encoder layer represents the most refined and meaningful representations for each token \cite{BERT}, which can then be used for downstream tasks. For sentence classification tasks like sentiment analysis, the special token ([CLS]) is used, and its final vector representation serves as the input to the classification head. The classification head takes the input vector and outputs a score representing the model's sentiment prediction \cite{fine-tune-bert}.
 
 The depth of the architecture, combined with the self-attention mechanism, enables BERT to model long-range dependencies effectively. This is a huge benefit for processing natural language, where relationships between words are often spread across entire sentences or paragraphs.
 
-\subsection[Pre-Training]{Pre-Training}
+\subsection*{Pre-Training}
 BERT was pre-trained using two tasks: Next Sentence Prediction (NSP) and Masked Language Modelling (MLM) \cite{BERT}.
 
 The first task, MLM, is a technique for training deeply bidirectional models like BERT. Typical language models process tokens sequentially left-to-right, using preceding tokens in a sentence to predict the next. BERT, however, processes all tokens in a sentence simultaneously and can see both preceding and following tokens for each word. To predict a missing token in the middle of a sentence, BERT could "cheat" by leveraging full context, including the token to predict. To address this, word "masks" are applied to randomly hide tokens in a sentence \cite{BERT}, tasking BERT to predict them using only surrounding context. This technique enables BERT to learn bidirectional relationships, resulting in a more robust model than typical left-to-right ones.
@@ -429,63 +507,26 @@ By leveraging these tasks across millions of sentences and performing millions o
 	% -------------------------------------------------------------
 	
 This extensive pre-training enables BERT to capture nuanced patterns and relationships in text, which are then fine-tuned on downstream tasks like sentiment analysis, question answering, and named entity recognition \cite{fine-tune-bert}.
-\subsection[BERT fine-tuning]{BERT fine-tuning}
-Fine-tuning is the process of adapting a pre-trained model to a specific task by training it further on task-specific data \cite{fine-tuning}. For sentiment analysis, this involves adding a task-specific classification layer on top of the BERT encoder stack \cite{BERT}. Fine-tuning combines BERT's pre-trained understanding of language with additional knowledge it needs for the unique challenges of sentiment analysis.
-
-After an input sentence passes through the model, the final hidden state vector $\mathbf{h}$ corresponding to [CLS] acts as a condensed representation of the entire sequence, capturing its sentiment information. A softmax \cite{softmax} classifier is then applied to predict the probability of each sentiment label $c$ \cite{fine-tune-bert}:
-\[
-p(c|\mathbf {h}) =\mathrm {softmax}(W\mathbf {h})
-\]
-Here, $W$ represents the task-specific parameter weights matrix, and the sentiment label with the highest probability is chosen as the final prediction.
-	% -------------------------------------------------------------
-	% BERT FINE-TUNING
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\begin{center}
-	\includegraphics[scale=0.35]{sentiment-diagram}
-	\caption{Single sentence classification \cite{sentiment-cls-diagram}}
-	\label{default}
-	\end{center}
-	\end{figure}
-	% -------------------------------------------------------------
-	% BERT FINE-TUNING
-	% -------------------------------------------------------------
-
-Using a labeled dataset of texts and their corresponding sentiment labels (e.g., ‘positive,’ ‘negative,’ ‘neutral’), the model is trained to minimise a classification loss, such as cross-entropy. During training, the model's predictions are compared to their labels, and all weights (including embedding, self-attention, classification etc.) are updated iteratively to improve accuracy. This process is repeated for a set number of epochs (complete passes through the dataset) to improve accuracy whilst preventing overfitting.
-
-For the more complicated task of Targeted Aspect-Based Sentiment Analysis (TABSA), a proven fine-tuning approach involves reframing the problem as a sentence-pair classification task \cite{sun}. This method involves constructing an auxiliary sentence to specify the target and aspect BERT needs to predict. In the context of FPL, the auxiliary sentence could be: "Should \textit{player} be in my FPL team?". Then when given a sentence like "Mo Salah was excellent, but Haaland was awful," an auxiliary sentence is created for each player by replacing the placeholder \textit{player} with the actual player’s name;  "Should Mo Salah be in my FPL team?" and "Should Haaland be in my FPL team?".
-
-During fine-tuning, BERT processes the auxiliary sentence followed by the [SEP] token and the original sentence for each player. Classification is done in the same way as normal sentiment analysis with the hidden vector $h$ used to predict the label (in this example the labels would be answers to the auxiliary question: 'yes', 'no' or 'unsure'). This approach enables BERT to focus on the sentiment directed toward each specific player, rather than providing a single sentiment value for the entire sentence. A single value would likely be uninformative, as positive and negative sentiments could cancel each other out. By targeting individual players, this method ensures more accurate predictions, with players labeled according to their specific sentiment.
-
-	% -------------------------------------------------------------
-	% BERT FINE-TUNING
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\begin{center}
-	\includegraphics[scale=0.35]{sentence-pair-cls-diagram}
-	\caption{Sentence-pair classification \cite{sentence-pair-cls-diagram}}
-	\label{default}
-	\end{center}
-	\end{figure}
-	% -------------------------------------------------------------
-	% BERT FINE-TUNING
-	% -------------------------------------------------------------
-
-This fine-tuning process not only adapts BERT to specific targets but also allows it to capture domain-specific language features that differ from general usage. For instance, while the word “soft” might generally convey positive sentiment (e.g., a soft blanket), in the FPL context, calling a player "soft" is often a negative sentiment. By fine-tuning BERT on domain-specific tweets, the model can learn such nuanced language patterns, improving its accuracy in the target domain.
-
-Fine-tuning BERT is computationally efficient compared to training a model from scratch and requires a relatively small amount of labeled data. This makes it a practical choice for sentiment analysis tasks across diverse domains.
-\newpage
 % -------------------------------------------------------------
 % MODEL IMPLEMENTATION
 % -------------------------------------------------------------
 \newpage
 \section[Model Implementation]{Model Implementation}
-The BERT model used in this study to predict sentiment for FPL players was fine-tuned in Google Colab \cite{colab} using Python. Google Colab is a cloud computing platform that was chosen as it allows free GPU and TPU access, much better suited to fine-tuning a deep learning model than a CPU found in a typical laptop, helping reduce training time. Its notebook format also allows for simple and clear separation of functions, allowing for single blocks of code to be independently executed. This allows for easy debugging and troubleshooting of code, improving the development experience.
+The BERT model used in this study to predict sentiment for FPL players was fine-tuned in Google Colab \cite{colab} using Python. Google Colab is a cloud computing platform that was chosen as it allows free GPU and TPU access, much better suited to fine-tuning a deep learning model than a CPU found in a typical laptop, helping reduce training time. Its notebook format also allows for simple and clear separation of functions, allowing for single blocks of code to be independently executed. This allows for easy debugging and troubleshooting of code, improving the development experience. A Jupyter notebook was set up to create a pipeline for pre-processing data, training the model, optimising hyperparameters, and evaluation of the model. This format allows for easy and quick reproduction, as it includes markup to explain steps in more detail.
  
 Python was chosen as the preferred language due to the extensive number of libraries that exist supporting the development of deep learning models. Some of the most popular include Hugging Face's Transformers library \cite{huggingface-transformers} which contains APIs for hundreds of pre-trained transformer models including BERT. The transformers library also includes tokenisers for each model and a PyTorch \cite{pytorch} Trainer class that allows fine-tuning to be done with just a few lines of code. The model's hyper-parameters can be fine tuned and optimised using the Optuna library \cite{optuna} to explore the best possible combinations. Use of these libraries ensure correct approaches are taken, and massively reduces development time by simplifying the entire process.
 
+\subsection[Data Pre-Processing]{Data Pre-Processing}
+The first step of the pipeline was to process the dataset, cleaning it of any noise and transforming it to include an auxiliary sentence suited to the TABSA approach chosen. To begin with any image links were identified and removed by searched for occurrences of 'a href' in the texts. Empty rows and duplicates were stripped out, and finally regular expressions were used to check if the player label for each tweet (who the tweet is supposedly mentioning) was actually mentioned in the text. For example, some entries might have a player label of 'Jordan Pickford' but the tweet makes no mention of him. This ensures the model can always see the player it is supposed to be predicted a sentiment value for in the input text. 
+
+The auxiliary sentence was then created for each entry in the dataset by using the player\_name column to construct a sentence in the form "What do you think of the sentiment towards [player\_name]". The column names were adjusted and reordered so that the final dataset contained just three rows: 'question', 'context', and 'label'.
+
+Finally, all the data was converted into a format the model could understand. For the 'question' and 'context' columns this meant tokenisation. To do this the AutoTokenizer class from transformers was used to load in the standard BERT tokeniser. The columns were tokenised and then saved. The 'label' class was mapped to integers, with 0 representing positive, 1 representing negative, and 2 representing neutral. 
+
+Once this was done the dataset was split into train and validation sets using the train\_test\_split method from scikitlearn. The datasets were then ready to be used for training of the model.
+
 \subsection[Training the Model]{Training the Model}
-The first step of training was to configure the TrainingArguments from the transformers library. This class contains the hyper-parameters for the model such as learning rate, batch size, epochs, and weight decay. These hyper-parameters can be tweaked to improve model performance and prevent overfitting during training. Initially, these were set to default values suggested by the Hugging Face tutorial, with the intention to optimise them properly later (see 4.2.4).  
+The next step in the pipeline was to use the processed datasets to train the model's classification layer used to fine-tune it. The first step of training was to configure the TrainingArguments from the transformers library. This class contains the hyper-parameters for the model such as learning rate, batch size, epochs, and weight decay. These hyper-parameters can be tweaked to improve model performance and prevent overfitting during training. Initially, these were set to default values suggested by the Hugging Face tutorial, with the intention to optimise them properly later (see 4.2.4).  
 	
 After these arguments were configured, the next step was to set up the Trainer object. The pre-trained \texttt{BertForSequenceClassification} model was loaded in from the transformers library. This model is configured for classification tasks on 2 input sentences with a suitable classification head already implemented, exactly what is needed for target-based sentiment analysis with an auxiliary sentence. The specific model used was 'bert-base-cased' which is just the base variant of the BERT model that is case-sensitive. The Trainer was initialised by passing in the model, datasets and training arguments. Once the Trainer had been initialised, the training process was started by calling the \texttt{train()} method.
 
@@ -495,7 +536,7 @@ Training took around 90 minutes, and the resulting model scored an initial accur
 	% -------------------------------------------------------------
 	\begin{figure}[htbp]
 	\centering
-	\includegraphics[scale=0.52]{initial-train}
+	\includegraphics[scale=0.46]{initial-train}
 	\caption{Performance metrics for the initial model}
 	\label{default}
 	\end{figure}
@@ -641,12 +682,13 @@ The configurations evaluated were the best 3 from hyper-parameter optimisation (
     \label{tab:config1}
 \end{table}
 
-The models all struggled with the negative class which is likely because the dataset contains far fewer of these samples than neutral or positive samples. They appear to mislabel them as neutral data due to the low precision of the neutral class for all configurations. The first configuration is far better than the other two with a much higher F1 score, and as such was the chosen model. The model weights were saved using the transformers library, for later use.
-
+The models all struggled with the negative class which is likely because the dataset contains far fewer of these samples than neutral or positive samples. They appear to mislabel them as neutral data due to the low precision of the neutral class for all configurations. The first configuration is far better than the other two with a much higher F1 score, and as such was the chosen model. The model weights were saved using the transformers library and then uploaded to Hugging Face, so it could be easy imported by the other components of the system.
 % -------------------------------------------------------------
 % EXPECTED POINTS MODEL	
 % -------------------------------------------------------------
 \chapter[Expected Points Model]{Expected Points Model}
+\section[Gradient Boosting Theory]{Gradient Boosting Theory}
+\section[Model Implementation]{Model Implementation}
 % -------------------------------------------------------------
 % TEAM SELECTION ALGORITHM
 % -------------------------------------------------------------
