@@ -16,24 +16,26 @@
 \contentsline {subsection}{\numberline {3.2.1}Data Collection}{16}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Data Pre-Processing}{19}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Fine-Tuning BERT}{19}{subsection.3.2.3}%
-\contentsline {section}{\numberline {3.3}Expected Points Model}{22}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Data Collection and Engineering}{22}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Data Pre-Processing}{23}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Model Training and Evaluation}{24}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Optimal Team Selection Algorithm}{24}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Constraints}{24}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Algorithm}{24}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Summary}{24}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Sentiment Analysis Model}{25}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Theory Behind the BERT Model}{25}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Model Implementation}{32}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Data Pre-Processing}{32}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Training the Model}{33}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Hyper-parameter Optimisation}{35}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Model Evaluation}{37}{subsection.4.2.4}%
-\contentsline {chapter}{\numberline {5}Expected Points Model}{39}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Gradient Boosting Theory}{39}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Model Implementation}{39}{section.5.2}%
-\contentsline {chapter}{\numberline {6}Team Selection Algorithm}{40}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Results and Discussion}{41}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{42}{chapter.8}%
+\contentsline {subsection}{\numberline {3.2.4}Hyper-parameter Optimisation}{22}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Model Evaluation}{23}{subsection.3.2.5}%
+\contentsline {section}{\numberline {3.3}Expected Points Model}{24}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Data Collection and Engineering}{24}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Data Pre-Processing}{25}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Model Training and Evaluation}{26}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Optimal Team Selection Algorithm}{27}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Constraints}{27}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Algorithm}{27}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Summary}{27}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Sentiment Analysis Model}{28}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Theory Behind the BERT Model}{28}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Model Implementation}{35}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Data Pre-Processing}{35}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Training the Model}{36}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Hyper-parameter Optimisation}{38}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Model Evaluation}{39}{subsection.4.2.4}%
+\contentsline {chapter}{\numberline {5}Expected Points Model}{41}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Gradient Boosting and Decision Trees}{41}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Model Implementation}{41}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Team Selection Algorithm}{42}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Results and Discussion}{43}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{44}{chapter.8}%

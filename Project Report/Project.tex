@@ -212,10 +212,10 @@ Manual collection of data on Twitter is an acceptable approach within the terms 
 The chosen approach was to use an existing dataset published on popular machine learning forums such as Hugging Face and Kaggle. These sites have thousands of active users contributing to a wide range of research topics. As such, finding a dataset for a similar purpose to this study's was not difficult. 4 potential datasets were identified on Kaggle, and include:
 
 \begin{itemize}
-    \item \href{https://www.kaggle.com/datasets/tirendazacademy/fifa-world-cup-2022-tweets}{Fifa World Cup 2022 Tweets with Sentiment Labels} - (30k tweets)
-    \item \href{https://www.kaggle.com/datasets/wjia26/epl-teams-twitter-sentiment-dataset}{Premier League Teams Tweets with Sentiment Labels} - (460k tweets)
-    \item \href{https://www.kaggle.com/datasets/prasad22/fpl-tweets-dataset}{FPL Tweets from 2012 - 2023, unlabelled} - (110k tweets)
-    \item \href{https://www.kaggle.com/datasets/firefly55lm/tweets-footballers-premier-league}{Premier League Players Tweets with Sentiment Labels} - (167k tweets)
+    \item \href{https://www.kaggle.com/datasets/tirendazacademy/fifa-world-cup-2022-tweets}{\textcolor{blue}{\uline{Fifa World Cup 2022 Tweets with Sentiment Labels}}} - (30k tweets)
+    \item \href{https://www.kaggle.com/datasets/wjia26/epl-teams-twitter-sentiment-dataset}{\textcolor{blue}{\uline{Premier League Teams Tweets with Sentiment Labels}}} - (460k tweets)
+    \item \href{https://www.kaggle.com/datasets/prasad22/fpl-tweets-dataset}{\textcolor{blue}{\uline{FPL Tweets from 2012 - 2023, unlabelled}}} - (110k tweets)
+    \item \href{https://www.kaggle.com/datasets/firefly55lm/tweets-footballers-premier-league}{\textcolor{blue}{\uline{Premier League Players Tweets with Sentiment Labels}}} - (167k tweets)
 \end{itemize}
 
 A further inspection of these 4 datasets was carried out to identify the most suitable given the needs of the model being built. 
@@ -258,10 +258,9 @@ While a more FPL-specific auxiliary sentence (e.g., 'Should [player] be in my FP
 After adding the auxiliary sentence to the dataset, the rest of the tweets were cleaned of any noise. Additionally duplicates and empty rows were removed, and any other unnecessary columns were dropped. Removing noise from tweets ensures the model learns only relevant information, ultimately improving performance.
 
 \subsection[Fine-Tuning BERT]{Fine-Tuning BERT}
-For a more detailed view of the BERT model architecture, see chapter 4. 
-
 To fine-tune a BERT model for sentiment analysis, the pre-trained BERT model was modified by adding a task-specific classification layer on top of the BERT encoder stack \cite{BERT}. This final layer transforms the output weight values (represented as a vector $\mathbf{h}$) into a final class 'positive', 'negative', or 'neutral' sentiment by using probabilities to predict which class the model's output most closely represents.
 
+\newpage
 The classification layer is a softmax \cite{softmax} classifier, which takes as input a vector $\mathbf{h}$ and uses the following equation to predict the final class:
 \[
 p(c|\mathbf {h}) =\mathrm {softmax}(W\mathbf {h})
@@ -305,6 +304,47 @@ The fine-tuning process not only adapts BERT to specific targets but also allows
 Fine-tuning BERT is computationally efficient compared to training a model from scratch and requires a relatively small amount of labeled data. As such it was a practical approach that suited the needs of this project given the time restraints.
 \newpage
 % -------------------------------------------------------------
+% HYPERPARAMETER OPTIMISATION
+% -------------------------------------------------------------
+\subsection[Hyper-parameter Optimisation]{Hyper-parameter Optimisation}
+In order to maximise the performance of the final model, hyper-parameters needed to be optimised. Selecting a suitable set of hyper-parameters is crucial for model performance, and adjusting these values during training can help the model to avoid overfitting the training data, minimise validation loss, and maximise accuracy \cite{hyperparameters}. Typically when implementing a machine learning model, researchers manually tweak hyper-parameters and spend significant time exploring configurations that may not improve performance meaningfully. This manual process is inefficient and resource-intensive, so by using an automatic framework, less computational resources and time is spent developing the model.
+
+The framework chosen was Optuna \cite{optuna}, an automatic hyper-parameter optimisation framework for Python that finds the most optimal hyper-parameter values via trial and error. It conducts a series of trials and uses the previous trial to identify promising potential tweaks that could be made to improve performance. This process is repeated and a history of trials is kept throughout the process to guide the next changes made to the hyper-parameters. Through enough trial and error, optimal hyper-parameter values are found. 
+
+The search space for hyper-parameters was defined based on the values recommended in the original BERT paper \cite{BERT}. The chosen hyper-parameters along with their respective search space were:
+
+\begin{itemize}
+	\item Learning Rate ($2 \times 10^{-5}$ to $5 \times 10^{-5}$) - determines the step size at which the model updates its weights during training. A higher learning rate can speed up training time but risks overshooting the optimal parameters, whilst a lower learning rate ensures stability but may result in slower training.
+	\item Batch Size (16 or 32) - Batch size refers to the number of training samples processed simultaneously before updating the model's weights. A smaller batch size can introduce noise in the gradient updates, which sometimes aids in escaping local minima but can lead to slower convergence. A larger batch size offers smoother gradient updates but may require more computational resources and risks overfitting.
+	\item Number of Epochs (2 to 4) - specifies how many times the entire training dataset will be processed by the model during fine-tuning. Too many epochs can cause the model to focus on specific patterns in the training data, leading to overfitting. Too few epochs can limit the model's ability to learn from the data and lead to poor accuracy.
+\end{itemize}
+
+The datasets used during this stage were slimmed down to reduce training time. Evaluating models trained with the entire dataset would have taken too long (90 mins per trial) and used too much computing resource, so instead a dataset 25\% of the size was used. It is hoped this approach resulted in a decent general view of the best configurations, of which a small amount were then explored further using the whole dataset.
+% -------------------------------------------------------------
+% MODEL EVALUATION
+% -------------------------------------------------------------
+\subsection[Model Evaluation]{Model Evaluation}
+The three best configurations discovered during hyper-parameter optimisation were used to fully train 3 models.
+
+These models were evaluated using the following performance metrics:
+
+\begin{itemize} 
+	\item \textbf{Accuracy} - The percentage of predictions that the model correctly makes across all classes. 
+	\item \textbf{Precision} - The combined percentage of predictions that are correct for each class, weighted by the number of instances in each class. E.g. if 30 samples are labelled positive, and the model correctly predicts them all, but also incorrectly predicts 10 more samples as positive the precision for that class will be $30/40 = 75\%$. 
+	\item \textbf{Recall} - The combined percentage of true instances that were correctly identified by the model, also weighted by the number of instances in each class. For the same example where all 30 positive samples were correctly predicted, the recall would be 100\% for the positive class.
+	\item \textbf{F1 Score} - The harmonic mean of precision and recall, calculated as: 
+ \[
+F_1 = 2 \times \frac{\text{precision} \times \text{recall}}{\text{precision} + \text{recall}}
+\]
+\end{itemize}
+
+Using the F1 score as a performance metric should reward models that are both precise and able to recall relevant rows of data effectively, ensuring a robust model. F1 score is particularly relevant for sentiment analysis with multiple labels, as it ensures a model is not just performing well on the majority class, and can accurately predict less frequent classes of data.
+
+The three models were evaluated on approximately 1000 samples taken randomly from the unseen data, ensuring no prior knowledge from training could influence the evaluation, and providing a fair assessment of the models' performance. The unseen data was processed in the exact same way as the training data to ensure consistency.
+
+After evaluation of the three models, the best model was selected to be used in the overall FPL selection system. The model weights were saved using the transformers library and uploaded to Hugging Face. This allowed the trained model to be easily imported into other components of the system, facilitating further use and integration with the system’s expected points model pipeline.
+\newpage
+% -------------------------------------------------------------
 % EXPECTED POINTS MODEL
 % -------------------------------------------------------------
 \section[Expected Points Model]{Expected Points Model}
@@ -325,18 +365,18 @@ As well as the raw data available, rolling features were computed such as 'avera
     \item \textbf{Team specific data} - e.g., team form, team goals scored last 3 weeks
 \end{itemize}
 
-Once the base dataset had been constructed, the next step was to add in the sentiment information about each player. The first step in achieving this was running the unseen Twitter data through the sentiment analysis model to get a sentiment value for each row in the dataset. After this each tweet needed to be tagged with the FPL gameweek it belonged to. To do this tweets a list of start dates for each gameweek was used, and tweets were matched to the closest start date.
+Once the base dataset had been constructed, sentiment information about each player was added into the dataset. To achieve this, unseen Twitter data was run through the sentiment analysis model to get a sentiment value for each row in the dataset. Finally, each tweet was tagged with the FPL gameweek it belonged to by taking start dates for each gameweek and matching tweets to the closest start date.
 
-This process resulted in a dataset of unseen tweets, each containing the attributes 'player\_name', 'gameweek', and 'sentiment'. The next step was to match each tweet to its corresponding player and gameweek from the historical information dataset. For each match, two new columns, 'total\_positive\_tweets' and 'total\_negative\_tweets', were added to the dataset. The matching tweets for each player and gameweek were then counted, with the final counts of positive and negative tweets appended to the main dataset.
+This process resulted in a dataset of unseen tweets, each containing the attributes 'player\_name', 'gameweek', and 'sentiment'. These tweets were matched to their corresponding player and gameweek from the historical information dataset. For each match, two new columns, 'total\_positive\_tweets' and 'total\_negative\_tweets', were added to the dataset. The matching tweets for each player and gameweek were then counted, with the final counts of positive and negative tweets appended to the main dataset.
 
 Finally the complete dataset was uploaded to a Hugging Face repository so it could be used by the GBM model for training, as well as later use for the overall evaluation of the complete system. 
 
 \subsection[Data Pre-Processing]{Data Pre-Processing}
 To pre-process the dataset before training the model, a number of steps were taken.
 
-Firstly, the only text value feature in the dataset, the team name, was encoded using one-hot encoding. This is where a new column is introduced for every possible value the feature could take, so a new column for all 20 Premier League teams was introduced. Then if for example, the original row in the dataset had a team value of 'Manchester United', the 'manchester\_united' column would have a value of 1, and all other team columns would have a value of 0. 
+Firstly, the only text value feature in the dataset, the team name, was encoded using one-hot encoding. This is where a new column is introduced for every possible value the feature could take, so new columns for all 20 Premier League teams were introduced. Then if for example, the original row in the dataset had a team value of 'Manchester United', the 'manchester\_united' column would have a value of 1, and all other team columns would have a value of 0. 
 
-Next, each numerical value was normalised (scaled to a value between 1 and 0). This done so all features in the dataset have the same scale, which is important for the convergence of GBMs. Normalisation was performed using Min-Max scaling, which rescales each feature by subtracting the minimum value and dividing by the range (maximum value - minimum value). This ensures that no feature dominates the learning process due to differing scales, and that the model can more efficiently optimise during training.
+Next, each numerical value was normalised (scaled to a value between 1 and 0). This was done so all features in the dataset had the same scale, which is important for the convergence of GBMs. Normalisation was performed using Min-Max scaling, which rescales each feature by subtracting the minimum value and dividing by the range (maximum value - minimum value). This ensures that no feature dominates the learning process due to differing scales, and that the model can more efficiently optimise during training.
 
 After this, any rows with empty values or duplicate rows were dropped from the dataset completely. Finally the dataset was split into train and validation sets, with around 5k rows being set aside for the final evaluation of the complete system. 
 
@@ -345,7 +385,17 @@ After this, any rows with empty values or duplicate rows were dropped from the d
 % MODEL TRAINING AND EVALUATION
 % -------------------------------------------------------------
 \subsection[Model Training and Evaluation]{Model Training and Evaluation}
-Training the model
+After the dataset was fully pre-processed and prepared, the Gradient Boosting Machine (GBM) model was trained to predict expected points for each player. The train and test datasets were checked to ensure an even distribution of data from different gameweeks. Making sure data was evenly distributed was important to avoid model bias towards a particular period of the season, improving the model's ability to generalise.
+
+Training of a GBM is slightly different to a typical neural network like the one used in the final layer of the BERT model. A GBM works by building a 'tree' (a simple decision-making structure) that initially outputs the mean of the target values, and then calculates the residual errors (difference between the model's prediction and the true values) to build a new better tree. Instead of updating model weights like a neural network, new trees are added to reduce the loss progressively. For a more detailed explanation of decision trees and GBMs, see chapter 5.
+
+An initial GBM model was trained with default hyper-parameters, and the resulting performance was checked to make sure there were no obvious errors or unexpected results. After this model was observed to be behaving correctly, the hyper-parameters were tweaked to maximise performance.
+
+To find the optimal hyper-parameters for the GBM model, Optuna \cite{optuna} was once again used just as for the sentiment analysis model. Root Mean Squared Error (RMSE) was chosen as the evaluation metric, as this directly quantifies the accuracy of point predictions. Due to the much faster training speeds seen when training a GBM as compared to a BERT model, 50 different combinations of hyper-parameters were explored. During training, early stopping was implemented to prevent overfitting. If the validation loss did not improve for 10 consecutive iterations, training was halted. This sped up the training process and reduced computational demand, as each trial involved significantly less iterations. 
+
+Once training was complete, the best-performing set of hyper-parameters was selected based on validation set performance and was subsequently used to train a final model, which was implemented into the FPL team selection system. To ensure the inclusion of sentiment data lead to a significant performance increase, a further model was trained using the same set of hyper-parameters, however the data used to train it did not contain any sentiment information ('positive\_tweets' and 'negative\_tweets' were removed from the dataset). 
+
+Additionally, feature importance scores were analysed post-training to further ensure that sentiment-based features contributed meaningfully to the model's decision-making process.
 % -------------------------------------------------------------
 % OPTIMAL TEAM SELECTION ALGORITHM
 % -------------------------------------------------------------
@@ -517,7 +567,7 @@ The BERT model used in this study to predict sentiment for FPL players was fine-
 Python was chosen as the preferred language due to the extensive number of libraries that exist supporting the development of deep learning models. Some of the most popular include Hugging Face's Transformers library \cite{huggingface-transformers} which contains APIs for hundreds of pre-trained transformer models including BERT. The transformers library also includes tokenisers for each model and a PyTorch \cite{pytorch} Trainer class that allows fine-tuning to be done with just a few lines of code. The model's hyper-parameters can be fine tuned and optimised using the Optuna library \cite{optuna} to explore the best possible combinations. Use of these libraries ensure correct approaches are taken, and massively reduces development time by simplifying the entire process.
 
 \subsection[Data Pre-Processing]{Data Pre-Processing}
-The first step of the pipeline was to process the dataset, cleaning it of any noise and transforming it to include an auxiliary sentence suited to the TABSA approach chosen. To begin with any image links were identified and removed by searched for occurrences of 'a href' in the texts. Empty rows and duplicates were stripped out, and finally regular expressions were used to check if the player label for each tweet (who the tweet is supposedly mentioning) was actually mentioned in the text. For example, some entries might have a player label of 'Jordan Pickford' but the tweet makes no mention of him. This ensures the model can always see the player it is supposed to be predicted a sentiment value for in the input text. 
+The first step of the pipeline was to process the dataset, cleaning it of any noise and transforming it to include an auxiliary sentence suited to the TABSA approach chosen. To begin with any image links were identified and removed by searched for occurrences of 'a href' in the texts. Empty rows and duplicates were stripped out, and finally regular expressions were used to check if the player label for each tweet (who the tweet is supposedly mentioning) was actually mentioned in the text. For example, some entries might have a player label of 'Jordan Pickford' but the tweet makes no mention of him. This ensures the model can always see the player it is supposed to be predicting a sentiment value for in the input text. 
 
 The auxiliary sentence was then created for each entry in the dataset by using the player\_name column to construct a sentence in the form "What do you think of the sentiment towards [player\_name]". The column names were adjusted and reordered so that the final dataset contained just three rows: 'question', 'context', and 'label'.
 
@@ -563,22 +613,9 @@ Model outputs appear to be mostly correct and are easily retrieved through the b
 
 \newpage
 \subsection[Hyper-parameter Optimisation]{Hyper-parameter Optimisation}
-Selecting a suitable set of hyper-parameters is crucial for model performance. Adjusting these values during training can help the model to avoid overfitting the training data, minimise validation loss, and maximise accuracy \cite{hyperparameters}. Typically when implementing a machine learning model, researchers manually tweak hyper-parameters and spend significant time exploring configurations that may not improve performance meaningfully. This manual process is inefficient and resource-intensive, so by using an automatic framework, less computational resources and time is spent developing the model.
+Optuna was the chosen library for tuning hyper-parameters, due to its extensive documentation and computationally efficient approach. 
 
-The framework chosen was Optuna \cite{optuna}, an automatic hyper-parameter optimisation framework for python that finds the most optimal hyper-parameter values via trial and error. It conducts a series of trials and uses the previous trial to identify promising potential tweaks that could be made to improve performance. This process is repeated and a history of trials is kept throughout the process to guide the next changes made to the hyper-parameters. Through enough trial and error, optimal hyper-parameter values are found. Optuna is a well documented library with great Python integration, making it an ideal choice for this project.
-
-The first step in configuring Optuna was to specify the hyper-parameters to be tweaked and the space to be explored. The search space for hyper-parameters was defined based on the values recommended in the original BERT paper \cite{BERT}. The chosen hyper-parameters along with their respective search space were:
-
-\begin{itemize}
-	\item Learning Rate ($2 \times 10^{-5}$ to $5 \times 10^{-5}$) - determines the step size at which the model updates its weights during training. A higher learning rate can speed up training time but risks overshooting the optimal parameters, whilst a lower learning rate ensures stability but may result in slower training.
-	\item Batch Size (16 or 32) - Batch size refers to the number of training samples processed simultaneously before updating the model's weights. A smaller batch size can introduce noise in the gradient updates, which sometimes aids in escaping local minima but can lead to slower convergence. A larger batch size offers smoother gradient updates but may require more computational resources and risks overfitting.
-	\item Number of Epochs (2 to 4) - specifies how many times the entire training dataset will be processed by the model during fine-tuning. Too many epochs can cause the model to focus on specific patterns in the training data, leading to overfitting. Too few epochs can limit the model's ability to learn from the data and lead to poor accuracy.
-\end{itemize}
-
-\newpage
-An objective function was defined to guide the hyper-parameter tuning process. This function evaluates the performance of each 'trial' which is a model trained on a set of hyper-parameters suggested by Optuna. It defines the search space and hyper-parameters available, and then feeds Optuna's suggestions into each model's training arguments. It also specifies which metric to use to evaluate this models - validation loss in this case. The validation loss is a measure of how far away the model's predictions are from the labelled values. To achieve an accurate model, this metric should be as low as possible to indicate the model's guesses are very close to the truth.
-
-The datasets used during this stage were slimmed down to reduce training time. Evaluating models trained with the entire dataset would have taken too long (90 mins per trial) and used too much computing resource, so instead a dataset 25\% of the size was used. This approach should give a general view of the best configurations, which can be explored further using the whole dataset.
+The first step in configuring Optuna was to specify the hyper-parameters to be tweaked and the space to be explored. To do this, an objective function was defined to guide the hyper-parameter tuning process. This function evaluates the performance of each 'trial' which is a model trained on a set of hyper-parameters suggested by Optuna. It defines the search space and hyper-parameters available, and then feeds Optuna's suggestions into each model's training arguments. It also specifies which metric to use to evaluate this models - validation loss in this case. The validation loss is a measure of how far away the model's predictions are from the labelled values. To achieve an accurate model, this metric should be as low as possible to indicate the model's guesses are very close to the truth.
 
 An Optuna study was created using the \textit{create\_study} method, and then run for 10 trials. This amount should allow Optuna to explore a sufficient amount of configurations while keeping resource usage to a minimum. Because Optuna chooses each subsequent configuration based on the previous one, each new configuration should explore meaningful search space and therefore enable a near optimal configuration to be found in 10 trials.
 
@@ -609,25 +646,8 @@ The configurations and resulting validation loss for each trial were:
 
 \newpage
 \subsection[Model Evaluation]{Model Evaluation}
-The three best configurations discovered during hyper-parameter optimisation were used to fully train 3 models. It was initially discovered that these configurations started to overfit due to an increase in data samples, so to compensate for this training was reduced by one epoch. Whilst optimising the hyper-parameters with the full dataset would give the best results, the time taken to do this (around 15 hours for 10 trials) would have been too great, so this approach is chosen as a compromise.
+Whilst fully training the three best configurations, it was initially discovered that these configurations started to overfit due to an increase in data samples, so to compensate for this training was reduced by one epoch. Although optimising the hyper-parameters with the full dataset would give the best results, the time taken to do this (around 15 hours for 10 trials) would have been too great, so this approach is chosen as a compromise.
 
-These models were evaluated using the following performance metrics:
-
-\begin{itemize} 
-	\item \textbf{Accuracy} - The percentage of predictions that the model correctly makes across all classes. 
-	\item \textbf{Precision} - The combined percentage of predictions that are correct for each class, weighted by the number of instances in each class. E.g. if 30 samples are labelled positive, and the model correctly predicts them all, but also incorrectly predicts 10 more samples as positive the precision for that class will be $30/40 = 75\%$. 
-	\item \textbf{Recall} - The combined percentage of true instances that were correctly identified by the model, also weighted by the number of instances in each class. For the same example where all 30 positive samples were correctly predicted, the recall would be 100\% for the positive class.
-	\item \textbf{F1 Score} - The harmonic mean of precision and recall, calculated as: 
- \[
-F_1 = 2 \times \frac{\text{precision} \times \text{recall}}{\text{precision} + \text{recall}}
-\]
-\end{itemize}
-
-Using the F1 score as a performance metric should reward models that are both precise and able to recall relevant rows of data effectively, ensuring a robust model. F1 score is particularly relevant for sentiment analysis with multiple labels, as it ensures a model is not just performing well on the majority class, and can accurately predict less frequent classes of data.
-
-The three models were evaluated on approximately 1000 samples taken randomly from the unseen data, ensuring no prior knowledge from training could influence the evaluation, and providing a fair assessment of the models' performance. The unseen data was processed in the exact same way as the training data to ensure consistency.
-
-\newpage
 The configurations evaluated were the best 3 from hyper-parameter optimisation (see 4.2.4): Trial 5 (Configuration 1), Trial 1 (Configuration 2), and Trial 2 (Configuration 3). The results are as follows:
 
 \begin{table}[ht]
@@ -682,12 +702,20 @@ The configurations evaluated were the best 3 from hyper-parameter optimisation (
     \label{tab:config1}
 \end{table}
 
-The models all struggled with the negative class which is likely because the dataset contains far fewer of these samples than neutral or positive samples. They appear to mislabel them as neutral data due to the low precision of the neutral class for all configurations. The first configuration is far better than the other two with a much higher F1 score, and as such was the chosen model. The model weights were saved using the transformers library and then uploaded to Hugging Face, so it could be easy imported by the other components of the system.
+\newpage
+
+As evident from the results, the models struggled with the negative class in all configurations. This was expected due to the class imbalance present in the dataset, which contains far fewer "negative" samples compared to the "neutral" and "positive" samples. The model tends to mislabel "negative" samples as "neutral" due to the higher number of "neutral" samples during training. This is reflected in the lower precision and recall for the negative class across all configurations.
+
+The neutral class has high recall (close to 1.00) but suffers from lower precision in some configurations, particularly in Configuration 2, where the model incorrectly classifies a significant portion of the negative samples as neutral. The positive class also shows a reasonably balanced performance, but it is clear that the class imbalance impacts the model's performance, as seen in the discrepancies between recall and precision for the "negative" and "neutral" classes.
+
+After evaluating the models, Configuration 1 (Trial 5) stood out as the best model based on the F1-score, which is a better reflection of the model’s overall ability to balance precision and recall. The F1-score of Configuration 1 was significantly higher than the other configurations, making it the most reliable model for classifying positive, negative, and neutral sentiments.
+
+As such, the model trained using Configuration 1 was saved and uploaded to a newly created Hugging Face repository using the API provided. From there it was easily accessible to all other parts of the system.
 % -------------------------------------------------------------
 % EXPECTED POINTS MODEL	
 % -------------------------------------------------------------
 \chapter[Expected Points Model]{Expected Points Model}
-\section[Gradient Boosting Theory]{Gradient Boosting Theory}
+\section[Gradient Boosting and Decision Trees]{Gradient Boosting and Decision Trees}
 \section[Model Implementation]{Model Implementation}
 % -------------------------------------------------------------
 % TEAM SELECTION ALGORITHM
