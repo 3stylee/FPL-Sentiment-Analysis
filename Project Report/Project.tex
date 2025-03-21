@@ -253,9 +253,9 @@ Many tweets in the dataset mention multiple players, with some even containing c
     \item \textbf{Output:} Positive
 \end{itemize}
 
-While a more FPL-specific auxiliary sentence (e.g., 'Should [player] be in my FPL squad?') was considered, it risked introducing noise due to sentiment labels from Vader/TextBlob. For example, 'Jamie Vardy has great hair!' might be labeled as 'yes' (suggesting he should be in an FPL squad) despite being unrelated to performance. Due to this potential issue, a more generic question was used with the intuition being that positive overall sentiment should closely correlate with good FPL performance.
+While a more FPL-specific auxiliary sentence (e.g., 'Should [player] be in my FPL squad?') was considered, it risked introducing noise due to sentiment labels from Vader/TextBlob. For example, 'Jamie Vardy has great hair!' might be labeled as 'yes' (suggesting he should be in an FPL squad) despite being unrelated to performance. Due to this potential issue, a more generic question was used with the intuition being that positive overall sentiment should closely correlate with positive FPL performance.
  
-After adding the auxiliary sentence to the dataset, the rest of the tweets were cleaned of any noise. Additionally duplicates and empty rows were removed, and any other unnecessary columns were dropped. Removing noise from tweets ensures the model learns only relevant information, ultimately improving performance.
+After adding the auxiliary sentence to the dataset, the rest of the tweets were cleaned of any noise. Removing noise from tweets ensures the model learns only relevant information, ultimately improving performance. Additionally, duplicates and empty rows were removed, and any other unnecessary columns were dropped. 
 
 \subsection[Fine-Tuning BERT]{Fine-Tuning BERT}
 To fine-tune a BERT model for sentiment analysis, the pre-trained BERT model was modified by adding a task-specific classification layer on top of the BERT encoder stack \cite{BERT}. This final layer transforms the output weight values (represented as a vector $\mathbf{h}$) into a final class 'positive', 'negative', or 'neutral' sentiment by using probabilities to predict which class the model's output most closely represents.
@@ -355,7 +355,7 @@ Due to the similar nature of this study (the main difference is the source of cr
 % DATA COLLECTION AND ENGINEERING
 % -------------------------------------------------------------
 \subsection[Data Collection and Engineering]{Data Collection and Engineering}
-The core of the dataset containing historical information for each player was taken from a community-run \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}} set up by Anand \cite{anand}. This repository contains data for each FPL season dating back to 2016, including information for every player and every gameweek. Data for the 2022/23 FPL season was used, as this matches the timeline of the most recent Twitter data available (more recent data locked behind \$100 per month API).
+The core of the dataset containing historical information for each player was taken from a community-run \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}} set up by Anand \cite{anand}. This repository contains data for each FPL season dating back to 2016, including information for every player and every gameweek. This dataset was used by GS when he created his binary classification model in 2018 \cite{GS}, so it made sense to combine this approach with the sentiment data collected, in order to get a fair comparison. Data for the 2022/23 FPL season was used, as this matches the timeline of the most recent Twitter data available (more recent data locked behind \$100 per month API).
 
 As well as the raw data available, rolling features were computed such as 'average\_points\_last\_3\_weeks', and 'minutes\_last\_3\_weeks', in order to capture a greater range information about each player ahead of a gameweek. In total 21 input parameters were chosen, with roughly 3 main categories for the type of information captured by each input: 
 
@@ -716,7 +716,105 @@ As such, the model trained using Configuration 1 was saved and uploaded to a new
 % -------------------------------------------------------------
 \chapter[Expected Points Model]{Expected Points Model}
 \section[Gradient Boosting and Decision Trees]{Gradient Boosting and Decision Trees}
+\newpage
 \section[Model Implementation]{Model Implementation}
+The GBM model was implemented using the LightGBM library \cite{lightGBM} due to its comprehensive documentation, simple APIs, and impressive performance aided by the use of GPU learning. LightGBM is a gradient boosting framework that uses a leaf-wise tree splitting approach rather than a level-wise one, which improves overall model performance as more complex trees can be created. More complex trees can however lead to overfitting, so ensuring that the model hyper-parameters are configured correctly is an even more important task than it would be for frameworks using a different algorithm. LightGBM has been shown to outperform other popular algorithms such as XGBoost, making it an appropriate choice for this task \cite{lightGBM-vs-XGBoost}.
+
+Two more Google Colab notebooks were created, one to facilitate the creation of the dataset that contains data from the sentiment analysis model, and a further to create the model training and evaluation pipeline. Again, Python was chosen as the development language due to its wide range of machine learning libraries such as Pandas and Numpy. Additionally, Matplotlib was used to create visualisations for the final evaluation of the models with and without sentiment data.
+
+\subsection[Dataset Creation and Feature Engineering]{Dataset Creation and Feature Engineering}
+In order to train the GBM model, a dataset needed to be created with the most relevant features possible. The first stage in achieving this was downloading the historical dataset from the \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}}. This was a simple case of downloading the raw files for each gameweek of the 2022/23 season via GET request, and saving them. Once saved, irrelevant features were dropped, and a Pandas dataframe was created with the concatenation of all gameweek files.
+
+From this point the 'rolling' features were computed, such as 'starts\_last\_3\_weeks' and 'points\_last\_3\_weeks', by using the inbuilt \texttt{.shift} and \texttt{.rolling} methods from Pandas. The dataset rows were grouped by name, team, and gameweek (there are no players with the same name on the same team, so this provides a unique record) and then \texttt{.shift(1)} could be used to look back 1 gameweek, whilst \texttt{.shift(1).rolling(3)} would look back at 3 previous gameweeks. This allowed for easy and efficient calculation of features, without having to use any loops or array methods. Once these calculations were done, any empty rows were dropped and the dataset was examined to ensure features had been correctly calculated. 
+
+The next step was to add in the sentiment data that is so important to this study. This was done by taking the unseen twitter data from the dataset identified in the sentiment analysis chapter, and running those tweets through the sentiment analysis model to get a list of tweets for every player and every gameweek, labelled as 'positive', 'neutral', or 'negative'. To do this each tweet from the dataset was tagged with the gameweek it belonged to, using the tweet timestamp. The data was pre-processed using the same steps as model training, and then model was loaded using the Hugging Face API so the tweets could be run through it to get a sentiment prediction for each tweet. 
+
+The positive and negative sentiment values for each player for each gameweek were then summed, resulting in a 'positive\_tweets' and 'negative\_tweets' counter for each player and gameweek. The player and gameweek columns were then matched with the same record in the dataframe containing historical information, and merge was performed to get a final dataset. When implementing this, it became clear there were some player names that contained typos and matching player names was not behaving as expected. To fix this, the \texttt{rapidfuzz} library was used, which is a matching library that accounts for typos. This meant small typos were not an issue and the sentiment data was correctly appended to the main dataframe.
+
+This final dataframe was saved as a CSV file and then uploaded to a Hugging Face repository so that it could be used by the second notebook for training and evaluating the GBM model.
+
+\subsection[Data Pre-Processing]{Data Pre-Processing}
+To process the dataset before it could be used for training, sklearn and Pandas were used. Pandas was used to remove the identifying features: name and gameweek, from the actual inputs, with the intent to add them back to the dataset once final model predictions had been generated. This way a dataset of expected points for each player and gameweek could be generated.
+
+Inputs were scaled using the \texttt{MinMaxScaler} from sklearn which is a simple way of normalising the input values between 0 and 1. A different scaler was used for inputs and the target variable 'total\_points' so that the predictions could be unscaled at the end. Additionally, the team name was encoded using Pandas \texttt{.get\_dummies} method which simply adds a new column for every possible value of team name (one hot encoding). This meant 20 additional columns were added and the specific team column for each row was given a value of 1, with all others having a value of 0. 
+
+After this was done duplicates were dropped and the dataset was examined to ensure the correct columns existed, with appropriate values. Finally the dataset was split into test, train and final evaluation datasets. The purpose of the final evaluation dataset was to keep back data, so the entire system could be fairly evaluated without any data leakage during training. The test and train set were used as normal for model training, with around 15k training samples and 3k test samples. 
+
+\newpage
+\subsection[Model Training and Hyperparameter Optimisation]{Model Training and Hyperparameter Optimisation}
+Initially the model was trained with default hyper-parameters, using the class \texttt{LGBMRegressor} from LightGBM. This class makes it extremely simple to create a regression model and train it, which is perfect for the needs of this study. A model object of the class was instantiated and then the \texttt{.fit} method was called, passing in the training data inputs and the target variable.
+
+The \texttt{.predict} method was called on the same model with the validation data to get a performance overview of the model. Initial training was promising, with a Root Mean Squared Error (RMSE) of just 0.0753 for the validation set. To further reduce this value, hyper-parameter optimisation was once again employed using Optuna. 
+
+The hyper-parameters to be explored were defined as: 
+
+\begin{itemize}
+	\item Number of Leaves (20 - 100) - controls the maximum number of leaves per tree (complexity). Higher complexity can increase performance but leaves the model susceptible to overfitting. 
+	\item Learning Rate (0.01 - 0.1) - controls the step size during gradient boosting. Lower learning rate leads to slower convergence but better generalisation, while higher learning rate leads to faster convergence but risks overshooting.
+	\item Min Data in Leaf (100 - 1000) - controls minimum number of data points in a leaf. Lower values risk overfitting, whilst higher values capture more information per leaf so are better at generalising.
+	\item Max Depth (3 - 15) - controls the maximum depth of each tree. Deeper trees are more complex but risk overfitting
+\end{itemize}
+
+	% -------------------------------------------------------------
+	% OPTUNA TRIAL HISTORY
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.27]{optuna-trial-history}
+	\caption{RMSE with each trial (hyper-parameter configuration)}
+	\label{default}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% OPTUNA TRIAL HISTORY
+	% -------------------------------------------------------------
+
+Because of the computational efficiency of LightGBM and the relatively speedy process of training a GBM model, 50 different combinations were explored in a short time period. Additionally the use of early stopping (where training is cut short if a model doesn't improve after a certain number of steps) after 10 steps was used to speed up training. The Optuna study was run and each trial recorded, with the best RMSE value shown as 0.07389 and best configuration identified as: \{'num\_leaves': 67, 'learning\_rate': 0.08101, 'min\_data\_in\_leaf': 110, 'max\_depth': 7\}. These hyper-parameters were saved into a 'best\_params' variable so they could be used later in the pipeline to train the final models. 
+
+Additionally, the Optuna visualisation tools were used to plot a visualisation of how RMSE was reduced progressively as the search space was explored.
+
+\subsection[Evaluation of Sentiment and Non-Sentiment Based Models]{Evaluation of Sentiment and Non-Sentiment Based Models}
+The entire purpose of this study is to compare how models with sentiment information captured via twitter perform against models without this information. As such it made sense to train another model using the exact same dataset, minus the 'positive\_tweets' and 'negative\_tweets' features. 
+
+This way a valid comparison could be made between the two models, and any notable differences could be observed. The first comparison was the RMSE of validation data between the two models. The model trained with the sentiment data produced a RMSE of 0.07208, whilst the model trained without sentiment data produced 0.07221. This small difference favours the model trained with sentiment data, however it is hard to draw conclusions from such a small change.
+
+To get a better understanding, matplotlib was used to visualise feature importance and the distribution of the residuals (real value - prediction) for each model. 
+
+	% -------------------------------------------------------------
+	% RESIDUALS DISTRIBUTION
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.45]{residuals-distribution}
+	\caption{How residuals are distributed for each model.}
+	\label{default}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% RESIDUALS DISTRIBUTION
+	% -------------------------------------------------------------
+	
+From the residual distribution plot, it is clear the model with sentiment has a lot more predictions that are exactly correct or only slightly off (as indicated by the spike at 0.0). In contrast, the model without sentiment data has slightly more spread out predictions which indicate its predictions tend to deviate further from the true values. 
+
+This suggests that the incorporation of sentiment data helps the model to gather more information and make more accurate predictions, reducing any large errors. It seems that positive sentiment can act as a proxy for additional crowd wisdom. It is also worth noting the most important feature 'transfers\_in\_last\_week' (how many people bought that player) is another metric of capturing crowd wisdom, so it is clearly important to predicting overall performance.
+
+The wider spread from the model without sentiment data suggests it is less confident due to the lack of additional knowledge not captured by historical data. 
+
+	% -------------------------------------------------------------
+	% FEATURE IMPORTANCE
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.65]{feature-importance}
+	\caption{Top 10 features by importance}
+	\label{default}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% FEATURE IMPORTANCE
+	% -------------------------------------------------------------
+
+The feature importance analysis shows that 'positive\_tweets' ranks 10th, just behind 'points\_last\_week'. This suggests that positive sentiment contributes meaningfully to model performance. Additionally, the ranking implies that positive sentiment has a stronger correlation with player performance than negative sentiment.
 % -------------------------------------------------------------
 % TEAM SELECTION ALGORITHM
 % -------------------------------------------------------------

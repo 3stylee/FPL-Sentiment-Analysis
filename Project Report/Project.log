@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.30)  13 MAR 2025 16:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.30)  21 MAR 2025 18:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -395,6 +395,15 @@ LaTeX Warning: Label `tab:config1' multiply defined.
 
 LaTeX Warning: Label `tab:config1' multiply defined.
 
+
+LaTeX Warning: Label `default' multiply defined.
+
+
+LaTeX Warning: Label `default' multiply defined.
+
+
+LaTeX Warning: Label `default' multiply defined.
+
 )
 \openout1 = `Project.aux'.
 
@@ -446,7 +455,7 @@ Package hyperref Info: Link coloring OFF on input line 21.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<lu-logo.png, id=168, 375.4025pt x 135.50626pt>
+<lu-logo.png, id=184, 375.4025pt x 135.50626pt>
 File: lu-logo.png Graphic file (type png)
 <use lu-logo.png>
 Package pdftex.def Info: lu-logo.png  used on input line 27.
@@ -472,10 +481,44 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
  [3]
 Chapter 1.
+
+LaTeX Warning: Citation `fpl-origins' on page 4 undefined on input line 64.
+
+
+LaTeX Warning: Citation `fpl-playercount' on page 4 undefined on input line 64.
+
+
+
+LaTeX Warning: Citation `fpl-prizes' on page 4 undefined on input line 64.
+
+
+LaTeX Warning: Citation `fpl-market-growth' on page 4 undefined on input line 6
+4.
+
+
+LaTeX Warning: Citation `ffh' on page 4 undefined on input line 66.
+
+
+LaTeX Warning: Citation `ffh-users' on page 4 undefined on input line 66.
+
+
+LaTeX Warning: Citation `multilevel-models' on page 4 undefined on input line 6
+6.
+
 [4
 
 {/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
- [5]
+
+
+LaTeX Warning: Citation `whittaker' on page 5 undefined on input line 68.
+
+
+LaTeX Warning: Citation `r/FPL' on page 5 undefined on input line 68.
+
+
+LaTeX Warning: Citation `@OfficialFPL' on page 5 undefined on input line 68.
+
+[5]
 <team-selection-initial.png, id=262, 1279.78125pt x 781.92125pt>
 File: team-selection-initial.png Graphic file (type png)
 <use team-selection-initial.png>
@@ -488,34 +531,211 @@ Overfull \hbox (6.93117pt too wide) in paragraph at lines 86--87
 
 [6] [7 <./team-selection-initial.png>] [8] [9]
 Chapter 2.
+
+LaTeX Warning: Citation `kristiansen' on page 10 undefined on input line 144.
+
 [10
 
-] [11] [12] [13] [14]
+]
+
+LaTeX Warning: Citation `matthews' on page 11 undefined on input line 146.
+
+
+LaTeX Warning: Citation `raghunandh' on page 11 undefined on input line 148.
+
+
+LaTeX Warning: Citation `rajesh' on page 11 undefined on input line 150.
+
+
+LaTeX Warning: Citation `bangdiwala' on page 11 undefined on input line 152.
+
+
+LaTeX Warning: Citation `papageorgiou' on page 11 undefined on input line 152.
+
+
+LaTeX Warning: Citation `wisdom-of-crowds' on page 11 undefined on input line 1
+57.
+
+
+LaTeX Warning: Citation `politics' on page 11 undefined on input line 157.
+
+
+LaTeX Warning: Citation `galton' on page 11 undefined on input line 157.
+
+
+LaTeX Warning: Citation `wisdom-of-crowds' on page 11 undefined on input line 1
+57.
+
+[11]
+
+LaTeX Warning: Citation `surprisingly-popular' on page 12 undefined on input li
+ne 159.
+
+
+LaTeX Warning: Citation `raghunandh' on page 12 undefined on input line 161.
+
+
+LaTeX Warning: Citation `bonello' on page 12 undefined on input line 161.
+
+
+LaTeX Warning: Citation `whittaker' on page 12 undefined on input line 163.
+
+
+LaTeX Warning: Citation `bhatt' on page 12 undefined on input line 163.
+
+[12]
+
+LaTeX Warning: Citation `athenian-democracy' on page 13 undefined on input line
+ 168.
+
+
+LaTeX Warning: Citation `droba' on page 13 undefined on input line 168.
+
+
+LaTeX Warning: Citation `mantyla' on page 13 undefined on input line 168.
+
+
+LaTeX Warning: Citation `liu' on page 13 undefined on input line 170.
+
+
+LaTeX Warning: Citation `patel' on page 13 undefined on input line 170.
+
+
+LaTeX Warning: Citation `shah' on page 13 undefined on input line 170.
+
+
+LaTeX Warning: Citation `BERT' on page 13 undefined on input line 172.
+
+
+LaTeX Warning: Citation `elankath' on page 13 undefined on input line 172.
+
+[13]
+
+LaTeX Warning: Citation `tabsa' on page 14 undefined on input line 174.
+
+
+LaTeX Warning: Citation `sun' on page 14 undefined on input line 174.
+
+
+LaTeX Warning: Citation `hoang' on page 14 undefined on input line 174.
+
+[14]
 Chapter 3.
 [15
 
-] [16]
-<fpl-tweets-dataset.png, id=383, 350.30875pt x 395.4775pt>
+]
+
+LaTeX Warning: Citation `BERT' on page 16 undefined on input line 201.
+
+
+LaTeX Warning: Citation `elankath' on page 16 undefined on input line 201.
+
+
+LaTeX Warning: Citation `hoang' on page 16 undefined on input line 201.
+
+
+LaTeX Warning: Citation `fine-tuning' on page 16 undefined on input line 203.
+
+
+LaTeX Warning: Citation `gigo' on page 16 undefined on input line 206.
+
+
+LaTeX Warning: Citation `twitter-costs' on page 16 undefined on input line 208.
+
+
+[16]
+<fpl-tweets-dataset.png, id=325, 350.30875pt x 395.4775pt>
 File: fpl-tweets-dataset.png Graphic file (type png)
 <use fpl-tweets-dataset.png>
 Package pdftex.def Info: fpl-tweets-dataset.png  used on input line 229.
 (pdftex.def)             Requested size: 175.15395pt x 197.73827pt.
- [17] [18 <./fpl-tweets-dataset.png>] [19]
-<sentiment-diagram.png, id=406, 716.6775pt x 533.995pt>
+
+
+LaTeX Warning: Citation `vader' on page 17 undefined on input line 239.
+
+
+LaTeX Warning: Citation `textblob' on page 17 undefined on input line 239.
+
+[17] [18 <./fpl-tweets-dataset.png>]
+
+LaTeX Warning: Citation `sun' on page 19 undefined on input line 247.
+
+
+LaTeX Warning: Citation `BERT' on page 19 undefined on input line 261.
+
+[19]
+
+LaTeX Warning: Citation `softmax' on page 20 undefined on input line 264.
+
+<sentiment-diagram.png, id=341, 716.6775pt x 533.995pt>
 File: sentiment-diagram.png Graphic file (type png)
 <use sentiment-diagram.png>
 Package pdftex.def Info: sentiment-diagram.png  used on input line 275.
 (pdftex.def)             Requested size: 250.84088pt x 186.90105pt.
- [20 <./sentiment-diagram.png>]
-<sentence-pair-cls-diagram.png, id=420, 501.875pt x 415.5525pt>
+
+LaTeX Warning: Citation `sentiment-cls-diagram' on page 20 undefined on input l
+ine 276.
+
+
+LaTeX Warning: Citation `sentiment-cls-diagram' on page 20 undefined on input l
+ine 276.
+
+
+LaTeX Warning: Citation `sun' on page 20 undefined on input line 286.
+
+[20 <./sentiment-diagram.png>]
+<sentence-pair-cls-diagram.png, id=350, 501.875pt x 415.5525pt>
 File: sentence-pair-cls-diagram.png Graphic file (type png)
 <use sentence-pair-cls-diagram.png>
 Package pdftex.def Info: sentence-pair-cls-diagram.png  used on input line 293.
 
 (pdftex.def)             Requested size: 175.65887pt x 145.44554pt.
- [21 <./sentence-pair-cls-diagram.png>] [22] [23] [24] [25] [26] [27]
+
+
+LaTeX Warning: Citation `sentence-pair-cls-diagram' on page 21 undefined on inp
+ut line 294.
+
+
+LaTeX Warning: Citation `sentence-pair-cls-diagram' on page 21 undefined on inp
+ut line 294.
+
+[21 <./sentence-pair-cls-diagram.png>]
+
+LaTeX Warning: Citation `hyperparameters' on page 22 undefined on input line 31
+0.
+
+
+LaTeX Warning: Citation `optuna' on page 22 undefined on input line 312.
+
+
+LaTeX Warning: Citation `BERT' on page 22 undefined on input line 314.
+
+[22] [23]
+
+LaTeX Warning: Citation `bonello' on page 24 undefined on input line 351.
+
+
+LaTeX Warning: Citation `anand' on page 24 undefined on input line 358.
+
+
+LaTeX Warning: Citation `GS' on page 24 undefined on input line 358.
+
+[24] [25]
+
+LaTeX Warning: Citation `optuna' on page 26 undefined on input line 394.
+
+[26] [27]
 Chapter 4.
-<transformer-architecture.png, id=471, 1016.79875pt x 555.07375pt>
+
+LaTeX Warning: Citation `BERT' on page 28 undefined on input line 414.
+
+
+LaTeX Warning: Citation `attention' on page 28 undefined on input line 414.
+
+
+LaTeX Warning: Citation `chatGPT' on page 28 undefined on input line 414.
+
+<transformer-architecture.png, id=385, 1016.79875pt x 555.07375pt>
 File: transformer-architecture.png Graphic file (type png)
 <use transformer-architecture.png>
 Package pdftex.def Info: transformer-architecture.png  used on input line 421.
@@ -525,14 +745,71 @@ Overfull \hbox (31.20966pt too wide) in paragraph at lines 421--422
  [] 
  []
 
+
+LaTeX Warning: Citation `attention' on page 28 undefined on input line 422.
+
+
+LaTeX Warning: Citation `attention' on page 28 undefined on input line 422.
+
+
+LaTeX Warning: Citation `transformer-applications' on page 28 undefined on inpu
+t line 430.
+
+
+LaTeX Warning: Citation `chatGPT' on page 28 undefined on input line 430.
+
+
+LaTeX Warning: Citation `BERT' on page 28 undefined on input line 430.
+
 [28
 
- <./transformer-architecture.png>] [29]
-<bert-embedding-layer.png, id=499, 624.4128pt x 301.22136pt>
+ <./transformer-architecture.png>]
+
+LaTeX Warning: Citation `jurafsky-speech' on page 29 undefined on input line 43
+3.
+
+
+LaTeX Warning: Citation `word-piece' on page 29 undefined on input line 435.
+
+
+LaTeX Warning: Citation `BERT' on page 29 undefined on input line 443.
+
+
+LaTeX Warning: Citation `word-piece' on page 29 undefined on input line 445.
+
+[29]
+
+LaTeX Warning: Citation `fine-tune-bert' on page 30 undefined on input line 447
+.
+
+
+LaTeX Warning: Citation `BERT' on page 30 undefined on input line 447.
+
+<bert-embedding-layer.png, id=397, 624.4128pt x 301.22136pt>
 File: bert-embedding-layer.png Graphic file (type png)
 <use bert-embedding-layer.png>
 Package pdftex.def Info: bert-embedding-layer.png  used on input line 455.
 (pdftex.def)             Requested size: 312.20563pt x 150.6103pt.
+
+LaTeX Warning: Citation `embedding-layer-diagram' on page 30 undefined on input
+ line 456.
+
+
+LaTeX Warning: Citation `embedding-layer-diagram' on page 30 undefined on input
+ line 456.
+
+
+LaTeX Warning: Citation `jurafsky-speech' on page 30 undefined on input line 46
+3.
+
+
+LaTeX Warning: Citation `mikolov-word2vec' on page 30 undefined on input line 4
+63.
+
+
+LaTeX Warning: Citation `embedding-layer-diagram' on page 30 undefined on input
+ line 465.
+
 
 Overfull \hbox (1.30685pt too wide) in paragraph at lines 468--469
 []\OT1/cmr/bx/n/10 Token em-bed-dings \OT1/cmr/m/n/10 are vec-tors that have be
@@ -540,35 +817,122 @@ en learned dur-ing the model's
  []
 
 [30 <./bert-embedding-layer.png>]
-<dot-product-attention.png, id=517, 436.63126pt x 430.60875pt>
+
+LaTeX Warning: Citation `attention' on page 31 undefined on input line 476.
+
+
+LaTeX Warning: Citation `attention' on page 31 undefined on input line 478.
+
+<dot-product-attention.png, id=405, 436.63126pt x 430.60875pt>
 File: dot-product-attention.png Graphic file (type png)
 <use dot-product-attention.png>
 Package pdftex.def Info: dot-product-attention.png  used on input line 484.
 (pdftex.def)             Requested size: 174.6494pt x 172.24043pt.
- [31 <./dot-product-attention.png>]
-<multi-head-attention.png, id=530, 436.63126pt x 430.60875pt>
+
+LaTeX Warning: Citation `attention' on page 31 undefined on input line 485.
+
+
+LaTeX Warning: Citation `attention' on page 31 undefined on input line 485.
+
+[31 <./dot-product-attention.png>]
+
+LaTeX Warning: Citation `softmax' on page 32 undefined on input line 496.
+
+
+LaTeX Warning: Citation `BERT' on page 32 undefined on input line 498.
+
+<multi-head-attention.png, id=414, 436.63126pt x 430.60875pt>
 File: multi-head-attention.png Graphic file (type png)
 <use multi-head-attention.png>
 Package pdftex.def Info: multi-head-attention.png  used on input line 504.
 (pdftex.def)             Requested size: 174.6494pt x 172.24043pt.
- [32 <./multi-head-attention.png>]
+
+LaTeX Warning: Citation `attention' on page 32 undefined on input line 505.
+
+
+LaTeX Warning: Citation `attention' on page 32 undefined on input line 505.
+
+
+LaTeX Warning: Citation `attention' on page 32 undefined on input line 519.
+
+[32 <./multi-head-attention.png>]
+
+LaTeX Warning: Citation `ffnn' on page 33 undefined on input line 523.
+
+
+LaTeX Warning: Citation `BERT' on page 33 undefined on input line 525.
+
+
+LaTeX Warning: Citation `ffnn' on page 33 undefined on input line 525.
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 527--528
 
  []
 
+
+LaTeX Warning: Citation `BERT' on page 33 undefined on input line 530.
+
+
+LaTeX Warning: Citation `BERT' on page 33 undefined on input line 532.
+
+
+LaTeX Warning: Citation `fine-tune-bert' on page 33 undefined on input line 532
+.
+
+
+LaTeX Warning: Citation `BERT' on page 33 undefined on input line 537.
+
 [33]
-<bert-pre-training.png, id=560, 453.695pt x 456.70625pt>
+
+LaTeX Warning: Citation `BERT' on page 34 undefined on input line 539.
+
+
+LaTeX Warning: Citation `BERT' on page 34 undefined on input line 541.
+
+
+LaTeX Warning: Citation `BERT' on page 34 undefined on input line 543.
+
+
+LaTeX Warning: Citation `backpropagation' on page 34 undefined on input line 54
+3.
+
+<bert-pre-training.png, id=429, 453.695pt x 456.70625pt>
 File: bert-pre-training.png Graphic file (type png)
 <use bert-pre-training.png>
 Package pdftex.def Info: bert-pre-training.png  used on input line 550.
 (pdftex.def)             Requested size: 136.10954pt x 137.01292pt.
- [34 <./bert-pre-training.png>] [35]
-<initial-train.png, id=583, 647.41875pt x 192.72pt>
+
+LaTeX Warning: Citation `BERT' on page 34 undefined on input line 551.
+
+
+LaTeX Warning: Citation `BERT' on page 34 undefined on input line 551.
+
+
+LaTeX Warning: Citation `fine-tune-bert' on page 34 undefined on input line 559
+.
+
+[34 <./bert-pre-training.png>]
+
+LaTeX Warning: Citation `colab' on page 35 undefined on input line 565.
+
+
+LaTeX Warning: Citation `huggingface-transformers' on page 35 undefined on inpu
+t line 567.
+
+
+LaTeX Warning: Citation `pytorch' on page 35 undefined on input line 567.
+
+
+LaTeX Warning: Citation `optuna' on page 35 undefined on input line 567.
+
+[35]
+<initial-train.png, id=442, 647.41875pt x 192.72pt>
 File: initial-train.png Graphic file (type png)
 <use initial-train.png>
 Package pdftex.def Info: initial-train.png  used on input line 589.
 (pdftex.def)             Requested size: 297.81624pt x 88.65227pt.
-<inference.png, id=584, 999.735pt x 397.485pt>
+<inference.png, id=443, 999.735pt x 397.485pt>
 File: inference.png Graphic file (type png)
 <use inference.png>
 Package pdftex.def Info: inference.png  used on input line 604.
@@ -583,57 +947,85 @@ Chapter 5.
 [41
 
 ]
+
+LaTeX Warning: Citation `lightGBM' on page 42 undefined on input line 721.
+
+
+LaTeX Warning: Citation `lightGBM-vs-XGBoost' on page 42 undefined on input lin
+e 721.
+
+
+Overfull \hbox (0.91167pt too wide) in paragraph at lines 728--729
+[]\OT1/cmr/m/n/10 From this point the 'rolling' fea-tures were com-puted, such 
+as 'starts[]last[]3[]weeks'
+ []
+
+[42] [43]
+<optuna-trial-history.png, id=487, 1320.935pt x 526.96875pt>
+File: optuna-trial-history.png Graphic file (type png)
+<use optuna-trial-history.png>
+Package pdftex.def Info: optuna-trial-history.png  used on input line 763.
+(pdftex.def)             Requested size: 356.65721pt x 142.28346pt.
+
+Overfull \hbox (11.65721pt too wide) in paragraph at lines 763--764
+ [] 
+ []
+
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 7
+72.
+(/usr/local/texlive/2024/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 772.
+ [44 <./optuna-trial-history.png>]
+<residuals-distribution.png, id=494, 732.8178pt x 339.669pt>
+File: residuals-distribution.png Graphic file (type png)
+<use residuals-distribution.png>
+Package pdftex.def Info: residuals-distribution.png  used on input line 788.
+(pdftex.def)             Requested size: 329.76495pt x 152.84962pt.
+ [45 <./residuals-distribution.png>]
+<feature-importance.png, id=501, 521.0667pt x 328.8285pt>
+File: feature-importance.png Graphic file (type png)
+<use feature-importance.png>
+Package pdftex.def Info: feature-importance.png  used on input line 808.
+(pdftex.def)             Requested size: 338.68933pt x 213.736pt.
+ [46 <./feature-importance.png>]
 Chapter 6.
-[42
+[47
 
 ]
 Chapter 7.
-[43
+[48
 
 ]
 Chapter 8.
-(./Project.bbl [44
+No file Project.bbl.
+[49
 
-] [45
-
-] [46]
-Overfull \hbox (52.08412pt too wide) in paragraph at lines 169--173
-\OT1/cmr/m/n/10 top-[]5-[]techniques-[]for-[]sentiment-[]analysis-[]in-[]natura
-l-[]language-[]processing-[]c07ba5b83f64$[], 
- []
-
-[47]
-Overfull \hbox (60.75082pt too wide) in paragraph at lines 262--265
-\OT1/cmr/m/n/10 chatgpt-[]architecture-[]exploring-[]the-[]inner-[]workings-[]o
-f-[]the-[]language-[]model-[]41731fc05483$[], 
- []
-
-[48]
-Overfull \hbox (7.41734pt too wide) in paragraph at lines 312--315
-\OT1/cmr/m/n/10 the-[]feedforward-[]demysti^^Led-[]a-[]core-[]operation-[]of-[]
-transformers-[]afcd3a136c4c$[], 
- []
-
-) [49] (./Project.aux)
+] (./Project.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 
 
+LaTeX Warning: There were undefined references.
+
+
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Project.out' has not changed.
-(rerunfilecheck)             Checksum: FD1AB6380BC3BC9A65F0348D3F4D8EFC;6427.
+(rerunfilecheck)             Checksum: 8215DF1689DFF614FAE1F8643257DFB0;7515.
  ) 
 Here is how much of TeX's memory you used:
- 12133 strings out of 474116
- 190045 string characters out of 5743681
- 1940187 words of memory out of 5000000
- 34173 multiletter control sequences out of 15000+600000
+ 12129 strings out of 474116
+ 190482 string characters out of 5743681
+ 1942187 words of memory out of 5000000
+ 34220 multiletter control sequences out of 15000+600000
  564707 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,18n,79p,1595b,593s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 69i,18n,79p,1603b,515s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -648,10 +1040,10 @@ xlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texl
 ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texli
 ve/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texliv
 e/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on Project.pdf (49 pages, 1721535 bytes).
+Output written on Project.pdf (49 pages, 1801649 bytes).
 PDF statistics:
- 806 PDF objects out of 1000 (max. 8388607)
- 689 compressed objects within 7 object streams
- 178 named destinations out of 1000 (max. 500000)
- 389 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 613 PDF objects out of 1000 (max. 8388607)
+ 499 compressed objects within 5 object streams
+ 127 named destinations out of 1000 (max. 500000)
+ 436 words of extra memory for PDF output out of 10000 (max. 10000000)
 
