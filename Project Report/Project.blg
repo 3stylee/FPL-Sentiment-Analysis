@@ -1,0 +1,76 @@
+This is BibTeX, Version 0.99d (TeX Live 2024)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Project.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: Bib.bib
+I was expecting a `,' or a `}'---line 320 of file Bib.bib
+ :  
+ :  doi = {10.11591/ijeecs.v29.i3.pp1817-1826},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 513 of file Bib.bib
+ :   
+ :   year={2023},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 520 of file Bib.bib
+ :   
+ :   year={2024},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "GS"
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty booktitle in bangdiwala
+Warning--empty booktitle in vader
+Warning--empty booktitle in sentiment-cls-diagram
+
+Done.
+You've used 60 entries,
+            4087 wiz_defined-function locations,
+            1139 strings with 18035 characters,
+and the built_in function-call counts, 31820 in all, are:
+= -- 2406
+> -- 790
+< -- 126
++ -- 412
+- -- 163
+* -- 1364
+:= -- 4991
+add.period$ -- 115
+call.type$ -- 60
+change.case$ -- 53
+chr.to.int$ -- 288
+cite$ -- 63
+duplicate$ -- 2481
+empty$ -- 2886
+format.name$ -- 191
+if$ -- 7329
+int.to.chr$ -- 0
+int.to.str$ -- 60
+missing$ -- 526
+newline$ -- 241
+num.names$ -- 52
+pop$ -- 1429
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 2482
+stack$ -- 0
+substring$ -- 748
+swap$ -- 1745
+text.length$ -- 30
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 60
+warning$ -- 3
+while$ -- 98
+width$ -- 62
+write$ -- 558
+(There were 3 error messages)

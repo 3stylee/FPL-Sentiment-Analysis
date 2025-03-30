@@ -107,11 +107,9 @@ A gameweek \textit{deadline} is the final opportunity for managers to make chang
 % -------------------------------------------------------------
 \section[Project Aims and Objectives]{Project Aims and Objectives}
 \subsection[Goals]{Goals}
-The main goal of the project is to create a system that will take twitter data about English Premier League players as an input, and use a fine-tuned sentiment analysis model to analyse the twitter data. The sentiment for each player should be used to create an optimised forecast of a player's expected points (xP) for each \textit{gameweek}. The system will then use a team selection algorithm to pick an optimal squad based on each player's xP and price. The team selection algorithm will also have to abide by the constraints placed on team selection by the official FPL rules.
+The main goal of the project is to create a new model that will incorporate Twitter data about English Premier League players as an input. Using a fine-tuned sentiment analysis model to analyse the Twitter data, the sentiment towards each player should be incorporated into the new model to create a forecast of a player's expected points (xP) for each \textit{gameweek}. A team selection algorithm to pick an optimal squad based on each player's xP and price will then be created to evaluate the overall performance of the model and compare it to existing models. These include models that use other sources of data for sentiment such as news articles and betting markets, as well as model with no sentiment information.
 
-Users should be able to interact with the system using commands via the console, however the data should be well organised to make it easy to integrate into a web or mobile app with a fully functioning user interface in the future. The system will be modular, meaning the sentiment analysis model, squad selection algorithm, and xP prediction models should be easily upgradable. This should allow the system to keep up with advancements in forecasting technologies that may arise in future.
-
-To the knowledge of the author, no research has been done surrounding sentiment analysis of twitter for player performance forecasting in the FPL domain. This study aims to advance research in this area and further contribute to the existing fantasy sports forecasting research. The results of the system will be tested against existing research done with no sentiment analysis and the most popular AI FPL platform that charges users a subscription fee to use its services. As well as this, models that have used sentiment analysis of other forms of media such as news articles will be compared to test the suitability of using twitter as a data source. The system will be simulated over a range of gameweeks and its overall score will be compared to see where it ranks in the global leaderboard against other prediction methods.
+To the knowledge of the author, no research has been done surrounding sentiment analysis of Twitter for player performance forecasting in the FPL domain. This study aims to advance research in this area and further contribute to the existing fantasy sports forecasting research. The results of the model will be tested against existing research and the most popular AI FPL platforms. As well as this, models that have used sentiment analysis of other forms of media such as news articles will be compared to test the suitability of using Twitter as a data source. The model will be evaluated over a range of gameweeks and the team picked from the team selection algorithm will have its overall score compared against other prediction methods to see where it ranks in the global leaderboard.
 \subsection[Objectives]{Objectives}
 \begin{enumerate}
     \item Analyse the project aims and break them down into key functional and non-functional requirements.
@@ -119,25 +117,25 @@ To the knowledge of the author, no research has been done surrounding sentiment 
     \item Fine-tune a sentiment analysis model specifically for capturing player sentiment in the FPL context, using labeled data for model training and validation.
     \item Develop and validate a predictive model that uses Twitter sentiment, historical player data, and match fixtures to forecast a player's expected points (xP) for each gameweek.
     \item Implement a team selection algorithm that optimises squad selection based on player xP, prices, and FPL constraints, ensuring compatibility with official game rules.
-    \item Test and evaluate the system by simulating its performance over multiple gameweeks against existing FPL forecasting methods, both with and without sentiment analysis.
+    \item Test and evaluate the model by using the chosen team to simulate its performance over multiple gameweeks against existing FPL forecasting methods, both with and without sentiment analysis.
     \item Prepare a comprehensive report documenting the findings, challenges, and recommendations for future work by the end of the project.
 \end{enumerate}
 
 \subsection[Statistical Objectives]{Statistical Objectives}
 \begin{itemize}
-    \item The main goal of the system is to achieve a higher overall rank than existing models over the course of an FPL season.
-    \item Evaluate the effectiveness of Twitter sentiment analysis in improving xP prediction accuracy by comparing the mean squared error (MSE) or root mean squared error (RMSE) of models with and without sentiment analysis.
-    \item Assess the impact of the sentiment analysis model on team performance by comparing the total points scored by squads selected with and without sentiment-informed xP predictions.
-    \item Measure the success of the team selection algorithm by analysing its ability to stay within the top 10\% of the global leaderboard during simulations.
-    \item Benchmark the system’s results against popular AI-powered FPL platforms by comparing overall ranks, total points, and average weekly points.
+    \item The main goal of the model is to achieve a higher overall rank than existing models over the course of an FPL season.
+    \item Evaluate the effectiveness of Twitter sentiment analysis in improving xP prediction accuracy by comparing the root mean squared error (RMSE) of models with and without sentiment analysis.
+    \item Assess the impact of the sentiment based model on team performance by comparing the total points scored by squads selected with and without sentiment-informed xP predictions.
+    \item Measure the success of the team selection algorithm by analysing its ability to pick the best players from all combinations.
+    \item Benchmark the model's results against popular AI-powered FPL platforms by comparing overall ranks, total points, and average weekly points.
     \item Compare data sources by conducting a statistical comparison against models using sentiment derived from other sources such as news articles.
-    \item Ensure sufficient long-term prediction ability by analysing system performance across multiple gameweeks, accounting for variability in player form, injuries, and match conditions.
+    \item Ensure sufficient long-term prediction ability by analysing model performance across multiple gameweeks, accounting for variability in player form, injuries, and match conditions.
 \end{itemize}
 % -------------------------------------------------------------
 % LITERATURE REVIEW
 % -------------------------------------------------------------
 \chapter[Literature Review]{Literature Review}
-Due to the huge popularity of not only Fantasy Premier League, but the multiple games available for different sports under the fantasy sports genre, there exists a wide plethora of research and discussion around the given problem of maximising performance in fantasy sports. This study will look at the existing models that have been created and review how different machine learning methods stack up against each other. The existing research suggests that whilst many different techniques have been applied to varying degrees of success, using Twitter sentiment to predict player performance over the course of a whole season is a novel approach to the fantasy sports optimisation problem. The theory of wisdom of crowds and human-feedback aided models are explored to verify the benefits of using Twitter as a source of information. Finally, existing sentiment analysis methods are analysed to see how natural language is processed and evaluated to gather an overall sentiment value. The combination of all the research gives a good understanding for the necessity and validity of the approach this study focuses on. 
+Due to the huge popularity of not only Fantasy Premier League, but the multiple games available for different sports under the fantasy sports genre, there exists a wide plethora of research and discussion around the given problem of maximising performance in fantasy sports. This chapter looks at the existing models that have been created and reviews how different machine learning methods stack up against each other. The existing research suggests that whilst many different techniques have been applied to varying degrees of success, using Twitter sentiment to predict player performance over the course of a whole season is a novel approach to the fantasy sports optimisation problem. The theory of wisdom of crowds and human-feedback aided models are explored to verify the benefits of using Twitter as a source of information. Finally, existing sentiment analysis methods are analysed to see how natural language is processed and evaluated to gather an overall sentiment value. The combination of all the research gives a good understanding for the necessity and validity of the approach this study focuses on. 
 % -------------------------------------------------------------
 % FANTASY SPORTS FORECASTING
 % -------------------------------------------------------------
@@ -179,238 +177,15 @@ Targeted Aspect-Based Sentiment Analysis (TABSA) aims to determine sentiment tow
 \section[Summary]{Summary}
 From the research explored, it is clear that there is a large gap between the points scored by the top performing manager in the world and the ceiling of potential points available. This gap highlights the potentially undiscovered strategies that machine learning models could discover to help bridge that gap and outperform other human managers. The existing models used for optimising FPL performance have been able to perform well with some ranking inside the top 1\% of all players in the world. Of these models, some of the best performing include Random Forests, Linear Regression and Gradient Boosting Machines. It is also clear that incorporating human feedback and crowd wisdom into these models helps to improve their performance by a significant margin. Using high-performing deep learning models like BERT can give accurate sentiment analysis of tweets, whilst targeted aspect-based sentiment analysis can further improve this by capturing sentiment towards people and groups.
 % -------------------------------------------------------------
-% METHODOLOGY
-% ------------------------------------------------------------- 
-\chapter[Methodology]{Methodology}
-% -------------------------------------------------------------
-% OVERVIEW OF THE SYSTEM
-% -------------------------------------------------------------
-\section[Overview of the System]{Overview of the System}
-The main system is comprised of three components: the sentiment analysis model, the expected points model, and the team selection algorithm. The sentiment analysis model is used to label tweets about FPL players before a gameweek. The number of positive and negative tweets for each player are incorporated into an existing dataset, containing historical data for FPL players. Whilst many expected points models for FPL points predictions have already been developed, none have leveraged twitter sentiment. By adding this feature, it is hoped model performance will increase due to the additional knowledge and crowd wisdom the twitter data contains. 
-
-The expected points model outputs a final prediction for each player, representing its guess for how many FPL points that player will score in the upcoming gameweek. A team selection algorithm will take this information and identify the squad expected to maximise the number of points scored, whilst satisfying all budgetary, positional, and team constraints.
-
-The sentiment analysis model is trained using a publicly available dataset of Premier League related tweets from the 2022/23 season. A fine-tuned BERT model is used to classify the data and then sentiment scores are aggregated to produce a final sentiment value for each gameweek. Respective historical data from the same time period is then taken from a community-run Github repository, and combined with the sentiment values for each player. A gradient boosting machine (GBM) is trained on the enhanced dataset, producing a final expected points value for each player.
-
-Finally, a team selection algorithm takes the expected points values, and selects an optimal squad of 15 players that satisfies the FPL team constraints. This problem is formulated as an optimisation problem with the objective being to maximise total expected points within a given budget. Integer linear programming is used to find the best possible team composition.
-
-Together these components form an intelligent support system for FPL managers that incorporates crowd wisdom as well as historical data. The final system should help managers to make better and more informed decisions that lead to an increase in their overall rank.
-% -------------------------------------------------------------
-% SENTIMENT ANALYSIS MODEL
-% -------------------------------------------------------------
-\section[Sentiment Analysis Model]{Sentiment Analysis Model}
-To capture crowd wisdom through twitter, a sentiment analysis model is needed to automatically label tweets and gauge user's opinions towards each player. Whilst it is possible to train a sentiment analysis model from scratch, this study uses a pre-trained BERT model \cite{BERT} available for free from Google. This approach leverages access to a model that has been trained on billions of texts, giving it an extremely complex understanding of natural language. A model trained from scratch could not hope to replicate such complexity given the timeframe of this project. It would also be unreasonable to expect such a large task to be completed without the use of advanced computing machinery unavailable to individual researchers without the backing of a large corporation. The BERT model has been chosen specifically because it has been proven to outperform other state-of-the-art models like LSTM in sentiment analysis tasks\cite{elankath, hoang}.
-
-This study uses fine-tuning to refine BERT for the specific task of sentiment analysis on FPL tweets. Fine tuning is the process of adapting a pre-trained model for specific tasks or use-cases \cite{fine-tuning}. This is a much less computationally demanding task than fully training a model, and only requires a relatively small dataset which is ideal for a project of this scale. By combining the extensive natural language knowledge that BERT already has with a suitable dataset of FPL tweets, a sophisticated and accurate sentiment analysis model that suits the needs of the project will be achieved.
-
-\subsection[Data Collection]{Data Collection}
-Identifying and collecting suitable data for fine-tuning the model is a critical step in creating a model with optimal performance. The quality of the fine-tuning data directly affects the model's output quality \cite{gigo}, so it was important to chose a dataset carefully.
-
-The first approach considered was manual data collection directly via Twitter, however, exploring this approach led to many dead ends. The first problem was the financial cost of using the official Twitter API, which has seen a price increase from \$3 per month to \$100 per month since the company was sold in 2022 \cite{twitter-costs}. This change has led to many free tools aimed at helping researchers leverage twitter data for their studies being shut down, impacting the entire research field by limiting the options they have when it comes to collecting data. Without being able to use these tools, and with the official API unaffordable, using the API to efficiently collect data was not an option. Whilst other methods of collecting data exist, such as writing code scripts to scrape data from the Twitter website, or using 3rd party browser extensions, these methods are against the Twitter terms of service and could result in a permanent account ban if caught.
-
-Manual collection of data on Twitter is an acceptable approach within the terms of service, however it is an extremely tedious process. When considering a dataset needed to fine tune a BERT model should contain thousands of entries, as well as the time constraints of this project, manually collecting and then labelling thousands of tweets was also not an option. 
-
-The chosen approach was to use an existing dataset published on popular machine learning forums such as Hugging Face and Kaggle. These sites have thousands of active users contributing to a wide range of research topics. As such, finding a dataset for a similar purpose to this study's was not difficult. 4 potential datasets were identified on Kaggle, and include:
-
-\begin{itemize}
-    \item \href{https://www.kaggle.com/datasets/tirendazacademy/fifa-world-cup-2022-tweets}{\textcolor{blue}{\uline{Fifa World Cup 2022 Tweets with Sentiment Labels}}} - (30k tweets)
-    \item \href{https://www.kaggle.com/datasets/wjia26/epl-teams-twitter-sentiment-dataset}{\textcolor{blue}{\uline{Premier League Teams Tweets with Sentiment Labels}}} - (460k tweets)
-    \item \href{https://www.kaggle.com/datasets/prasad22/fpl-tweets-dataset}{\textcolor{blue}{\uline{FPL Tweets from 2012 - 2023, unlabelled}}} - (110k tweets)
-    \item \href{https://www.kaggle.com/datasets/firefly55lm/tweets-footballers-premier-league}{\textcolor{blue}{\uline{Premier League Players Tweets with Sentiment Labels}}} - (167k tweets)
-\end{itemize}
-
-A further inspection of these 4 datasets was carried out to identify the most suitable given the needs of the model being built. 
-
-The first dataset, whilst labelled, only contained tweets for the first day of the world cup. This meant a majority of tweets were centered around the event as a whole and the controversy of Qatar hosting, with little mention of players or actions they had carried out during football matches. The second dataset was much more suited to the needs of the model, however had the drawback of being centred around teams rather than individual players. The third dataset was focused specifically on FPL which appeared ideal at first. However it was found that this dataset contained a lot of unrelated tweets from people tweeting about their own performance in FPL, instead of expected performance of actual players.
-	% -------------------------------------------------------------
-	% NOISY DATA
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\centering
-	\includegraphics[scale=0.5]{fpl-tweets-dataset}
-	\caption{Examples of noisy tweets irrelevant to player performance, such as personal FPL commentary}
-	\label{default}
-	\end{figure}
-	% -------------------------------------------------------------
-	% NOISY DATA
-	% -------------------------------------------------------------
-
-The fourth and final dataset was identified as the most suitable for this study. This dataset contains a far greater number of relevant tweets, focused on individual Premier League players from the 2022/23 season (it is almost impossible to find more recent data, due to the Twitter API price changes coming into effect from 2023). As well as the relevant focus of the tweets themselves, this dataset contains player labels for each row which is perfect for construction of an auxiliary sentence for target-based sentiment analysis. Instead of manually searching for players in each tweet, the existing \textit{player\_name} column in the dataset can be used. Finally, this dataset comes with the advantage of being almost fully cleaned of any noise including emojis, links, images, etc. reducing the amount of pre-processing required.
-
-The sentiment labels provided in the dataset were automatically created by the Vader \cite{vader}, and TextBlob \cite{textblob} models. These models are fairly accurate however it is worth noting they do incorrectly label some tweets and therefore this dataset is not perfect. A potential solution to this problem is manually labelling the tweets, however this would require some criteria to match certain labels to tweets, and would also be extremely time consuming. Given the time constraints of this project and the limited human resources available for labelling, the dataset's size would have to decrease significantly to use a manual labelling approach. It is hoped that using the existing labels will be more beneficial due to the much larger dataset size available with this approach, which should result in a more accurate final model.
-\newpage
-% -------------------------------------------------------------
-% DATA PRE-PROCESSING
-% -------------------------------------------------------------
-\subsection[Data Pre-Processing]{Data Pre-Processing}
-The dataset was cut down to a more suitable size of around 20k tweets to keep training time reasonable (roughly 30 mins per epoch). This was done using a random sampling approach to reduce biases. Reducing the dataset size will most likely affect the model's performance negatively, however, given the time constraints of this project the computation time required to train the model on a dataset over 100k rows would have been too large.
-
-Many tweets in the dataset mention multiple players, with some even containing conflicting sentiments e.g. "Haaland was poor today, massively outshone by Salah". In order to capture the separate sentiment values (target based sentiment) the method introduced by Sun et al. \cite{sun} was used, where an auxiliary sentence was created posing a question to the model. The chosen format was: "What do you think of the sentiment towards [player]?". Using this approach, the model inputs and outputs will look like:  
-
-\begin{itemize}
-    \item \textbf{Input:} What do you think of the sentiment towards Haaland?  
-    \item \textbf{Output:} Negative
-    \item \textbf{Input:} What do you think of the sentiment towards Salah?  
-    \item \textbf{Output:} Positive
-\end{itemize}
-
-While a more FPL-specific auxiliary sentence (e.g., 'Should [player] be in my FPL squad?') was considered, it risked introducing noise due to sentiment labels from Vader/TextBlob. For example, 'Jamie Vardy has great hair!' might be labeled as 'yes' (suggesting he should be in an FPL squad) despite being unrelated to performance. Due to this potential issue, a more generic question was used with the intuition being that positive overall sentiment should closely correlate with positive FPL performance.
- 
-After adding the auxiliary sentence to the dataset, the rest of the tweets were cleaned of any noise. Removing noise from tweets ensures the model learns only relevant information, ultimately improving performance. Additionally, duplicates and empty rows were removed, and any other unnecessary columns were dropped. 
-
-\subsection[Fine-Tuning BERT]{Fine-Tuning BERT}
-To fine-tune a BERT model for sentiment analysis, the pre-trained BERT model was modified by adding a task-specific classification layer on top of the BERT encoder stack \cite{BERT}. This final layer transforms the output weight values (represented as a vector $\mathbf{h}$) into a final class 'positive', 'negative', or 'neutral' sentiment by using probabilities to predict which class the model's output most closely represents.
-
-\newpage
-The classification layer is a softmax \cite{softmax} classifier, which takes as input a vector $\mathbf{h}$ and uses the following equation to predict the final class:
-\[
-p(c|\mathbf {h}) =\mathrm {softmax}(W\mathbf {h})
-\]
-
-The vector $\mathbf{h}$ corresponds to the token [CLS] which is a special token added to the input sentence before it is processed by the model. This token is modified as the input passes through the model’s layers, forming a condensed representation of the entire input sequence. By fine-tuning the model specifically for sentiment analysis, this token learns to focus on sentiment information. $W$ represents the task-specific weight matrix, which is updated during fine-tuning to minimise classification loss.
-	% -------------------------------------------------------------
-	% BERT FINE-TUNING
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\begin{center}
-	\includegraphics[scale=0.35]{sentiment-diagram}
-	\caption{Single sentence classification \cite{sentiment-cls-diagram}}
-	\label{default}
-	\end{center}
-	\end{figure}
-	% -------------------------------------------------------------
-	% BERT FINE-TUNING
-	% -------------------------------------------------------------
-
-To minimise classification loss, a labeled dataset of texts and their corresponding sentiment labels (e.g., ‘positive,’ ‘negative,’ ‘neutral’) was used. During training, the model was fed these texts and its predictions were compared to the labels. Weights were updated iteratively to improve accuracy. This process was repeated for a set number of epochs (complete passes through the dataset) to improve accuracy whilst preventing overfitting.
-
-While standard sentiment analysis provides a single sentiment label per text, Targeted Aspect-Based Sentiment Analysis (TABSA) enables sentiment classification for specific entities within a sentence, such as individual players. The auxiliary sentence method introduced by Sun et al. \cite{sun} was used. BERT processes the auxiliary sentence and the original tweet as a sentence pair, with a [SEP] (separator) token placed in between them. Classification is done in the same way as single sentence sentiment analysis with the hidden vector $\mathbf{h}$ used to predict the label. This approach enables BERT to focus on the sentiment directed toward each specific player, rather than providing a single sentiment value for the entire sentence. A single value could be uninformative, as positive and negative sentiments might cancel each other out. By targeting individual players, this method ensures more accurate predictions, with players labeled according to their specific sentiment.
-
-	% -------------------------------------------------------------
-	% BERT FINE-TUNING
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\begin{center}
-	\includegraphics[scale=0.35]{sentence-pair-cls-diagram}
-	\caption{Sentence-pair classification \cite{sentence-pair-cls-diagram}}
-	\label{default}
-	\end{center}
-	\end{figure}
-	% -------------------------------------------------------------
-	% BERT FINE-TUNING
-	% -------------------------------------------------------------
-
-The fine-tuning process not only adapts BERT to specific targets but also allows it to capture domain-specific language features that differ from general usage. For instance, while the word “soft” might generally convey positive sentiment (e.g., a soft blanket), in the FPL context, calling a player "soft" is often a negative sentiment. By fine-tuning BERT on domain-specific tweets, the model can learn such nuanced language patterns, improving its accuracy in the target domain.
-
-Fine-tuning BERT is computationally efficient compared to training a model from scratch and requires a relatively small amount of labeled data. As such it was a practical approach that suited the needs of this project given the time restraints.
-\newpage
-% -------------------------------------------------------------
-% HYPERPARAMETER OPTIMISATION
-% -------------------------------------------------------------
-\subsection[Hyper-parameter Optimisation]{Hyper-parameter Optimisation}
-In order to maximise the performance of the final model, hyper-parameters needed to be optimised. Selecting a suitable set of hyper-parameters is crucial for model performance, and adjusting these values during training can help the model to avoid overfitting the training data, minimise validation loss, and maximise accuracy \cite{hyperparameters}. Typically when implementing a machine learning model, researchers manually tweak hyper-parameters and spend significant time exploring configurations that may not improve performance meaningfully. This manual process is inefficient and resource-intensive, so by using an automatic framework, less computational resources and time is spent developing the model.
-
-The framework chosen was Optuna \cite{optuna}, an automatic hyper-parameter optimisation framework for Python that finds the most optimal hyper-parameter values via trial and error. It conducts a series of trials and uses the previous trial to identify promising potential tweaks that could be made to improve performance. This process is repeated and a history of trials is kept throughout the process to guide the next changes made to the hyper-parameters. Through enough trial and error, optimal hyper-parameter values are found. 
-
-The search space for hyper-parameters was defined based on the values recommended in the original BERT paper \cite{BERT}. The chosen hyper-parameters along with their respective search space were:
-
-\begin{itemize}
-	\item Learning Rate ($2 \times 10^{-5}$ to $5 \times 10^{-5}$) - determines the step size at which the model updates its weights during training. A higher learning rate can speed up training time but risks overshooting the optimal parameters, whilst a lower learning rate ensures stability but may result in slower training.
-	\item Batch Size (16 or 32) - Batch size refers to the number of training samples processed simultaneously before updating the model's weights. A smaller batch size can introduce noise in the gradient updates, which sometimes aids in escaping local minima but can lead to slower convergence. A larger batch size offers smoother gradient updates but may require more computational resources and risks overfitting.
-	\item Number of Epochs (2 to 4) - specifies how many times the entire training dataset will be processed by the model during fine-tuning. Too many epochs can cause the model to focus on specific patterns in the training data, leading to overfitting. Too few epochs can limit the model's ability to learn from the data and lead to poor accuracy.
-\end{itemize}
-
-The datasets used during this stage were slimmed down to reduce training time. Evaluating models trained with the entire dataset would have taken too long (90 mins per trial) and used too much computing resource, so instead a dataset 25\% of the size was used. It is hoped this approach resulted in a decent general view of the best configurations, of which a small amount were then explored further using the whole dataset.
-% -------------------------------------------------------------
-% MODEL EVALUATION
-% -------------------------------------------------------------
-\subsection[Model Evaluation]{Model Evaluation}
-The three best configurations discovered during hyper-parameter optimisation were used to fully train 3 models.
-
-These models were evaluated using the following performance metrics:
-
-\begin{itemize} 
-	\item \textbf{Accuracy} - The percentage of predictions that the model correctly makes across all classes. 
-	\item \textbf{Precision} - The combined percentage of predictions that are correct for each class, weighted by the number of instances in each class. E.g. if 30 samples are labelled positive, and the model correctly predicts them all, but also incorrectly predicts 10 more samples as positive the precision for that class will be $30/40 = 75\%$. 
-	\item \textbf{Recall} - The combined percentage of true instances that were correctly identified by the model, also weighted by the number of instances in each class. For the same example where all 30 positive samples were correctly predicted, the recall would be 100\% for the positive class.
-	\item \textbf{F1 Score} - The harmonic mean of precision and recall, calculated as: 
- \[
-F_1 = 2 \times \frac{\text{precision} \times \text{recall}}{\text{precision} + \text{recall}}
-\]
-\end{itemize}
-
-Using the F1 score as a performance metric should reward models that are both precise and able to recall relevant rows of data effectively, ensuring a robust model. F1 score is particularly relevant for sentiment analysis with multiple labels, as it ensures a model is not just performing well on the majority class, and can accurately predict less frequent classes of data.
-
-The three models were evaluated on approximately 1000 samples taken randomly from the unseen data, ensuring no prior knowledge from training could influence the evaluation, and providing a fair assessment of the models' performance. The unseen data was processed in the exact same way as the training data to ensure consistency.
-
-After evaluation of the three models, the best model was selected to be used in the overall FPL selection system. The model weights were saved using the transformers library and uploaded to Hugging Face. This allowed the trained model to be easily imported into other components of the system, facilitating further use and integration with the system’s expected points model pipeline.
-\newpage
-% -------------------------------------------------------------
-% EXPECTED POINTS MODEL
-% -------------------------------------------------------------
-\section[Expected Points Model]{Expected Points Model}
-In order for the system to identify the best team of players ahead of an FPL gameweek, a prediction model is needed that can accurately forecast the number of points each player is going to score. Predicting player performance in Fantasy Premier League is a well-explored problem. Many studies have used a variety of machine learning and statistical methods in order to achieve this goal. The study most similar to this one, carried out by Bonello et al. \cite{bonello} in which news articles and betting markets were used to improve traditional model performance, found that Gradient Boosting Machines (GBMs) were the most effective. They state "ensemble methods show[ed] far higher suitability to the task when compared with alternate supervised learning approaches such as SVMs." 
-
-Due to the similar nature of this study (the main difference is the source of crowd wisdom coming from Twitter instead of news articles and betting markets) GBMs were chosen as the approach for expected points model. In selecting GBMs, this study builds on the success of previous studies where they have been proven to handle complex datasets with lots of interacting features. The selection of Twitter data adds a unique advantage, capturing opinions from millions of fans around the world instead of just 'expert' journalists. As well as this, FPL-specific information such as when a double gameweek is coming up for certain teams will typically not be reported by traditional news outlets.
-% -------------------------------------------------------------
-% DATA COLLECTION AND ENGINEERING
-% -------------------------------------------------------------
-\subsection[Data Collection and Engineering]{Data Collection and Engineering}
-The core of the dataset containing historical information for each player was taken from a community-run \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}} set up by Anand \cite{anand}. This repository contains data for each FPL season dating back to 2016, including information for every player and every gameweek. This dataset was used by GS when he created his binary classification model in 2018 \cite{GS}, so it made sense to combine this approach with the sentiment data collected, in order to get a fair comparison. Data for the 2022/23 FPL season was used, as this matches the timeline of the most recent Twitter data available (more recent data locked behind \$100 per month API).
-
-As well as the raw data available, rolling features were computed such as 'average\_points\_last\_3\_weeks', and 'minutes\_last\_3\_weeks', in order to capture a greater range information about each player ahead of a gameweek. In total 21 input parameters were chosen, with roughly 3 main categories for the type of information captured by each input: 
-
-\begin{itemize}
-    \item \textbf{Information known before kick-off} - e.g., home or away, opponent difficulty
-    \item \textbf{Player specific data} - e.g., average points last 3 weeks, goals scored last 3 weeks
-    \item \textbf{Team specific data} - e.g., team form, team goals scored last 3 weeks
-\end{itemize}
-
-Once the base dataset had been constructed, sentiment information about each player was added into the dataset. To achieve this, unseen Twitter data was run through the sentiment analysis model to get a sentiment value for each row in the dataset. Finally, each tweet was tagged with the FPL gameweek it belonged to by taking start dates for each gameweek and matching tweets to the closest start date.
-
-This process resulted in a dataset of unseen tweets, each containing the attributes 'player\_name', 'gameweek', and 'sentiment'. These tweets were matched to their corresponding player and gameweek from the historical information dataset. For each match, two new columns, 'total\_positive\_tweets' and 'total\_negative\_tweets', were added to the dataset. The matching tweets for each player and gameweek were then counted, with the final counts of positive and negative tweets appended to the main dataset.
-
-Finally the complete dataset was uploaded to a Hugging Face repository so it could be used by the GBM model for training, as well as later use for the overall evaluation of the complete system. 
-
-\subsection[Data Pre-Processing]{Data Pre-Processing}
-To pre-process the dataset before training the model, a number of steps were taken.
-
-Firstly, the only text value feature in the dataset, the team name, was encoded using one-hot encoding. This is where a new column is introduced for every possible value the feature could take, so new columns for all 20 Premier League teams were introduced. Then if for example, the original row in the dataset had a team value of 'Manchester United', the 'manchester\_united' column would have a value of 1, and all other team columns would have a value of 0. 
-
-Next, each numerical value was normalised (scaled to a value between 1 and 0). This was done so all features in the dataset had the same scale, which is important for the convergence of GBMs. Normalisation was performed using Min-Max scaling, which rescales each feature by subtracting the minimum value and dividing by the range (maximum value - minimum value). This ensures that no feature dominates the learning process due to differing scales, and that the model can more efficiently optimise during training.
-
-After this, any rows with empty values or duplicate rows were dropped from the dataset completely. Finally the dataset was split into train and validation sets, with around 5k rows being set aside for the final evaluation of the complete system. 
-
-\newpage
-% -------------------------------------------------------------
-% MODEL TRAINING AND EVALUATION
-% -------------------------------------------------------------
-\subsection[Model Training and Evaluation]{Model Training and Evaluation}
-After the dataset was fully pre-processed and prepared, the Gradient Boosting Machine (GBM) model was trained to predict expected points for each player. The train and test datasets were checked to ensure an even distribution of data from different gameweeks. Making sure data was evenly distributed was important to avoid model bias towards a particular period of the season, improving the model's ability to generalise.
-
-Training of a GBM is slightly different to a typical neural network like the one used in the final layer of the BERT model. A GBM works by building a 'tree' (a simple decision-making structure) that initially outputs the mean of the target values, and then calculates the residual errors (difference between the model's prediction and the true values) to build a new better tree. Instead of updating model weights like a neural network, new trees are added to reduce the loss progressively. For a more detailed explanation of decision trees and GBMs, see chapter 5.
-
-An initial GBM model was trained with default hyper-parameters, and the resulting performance was checked to make sure there were no obvious errors or unexpected results. After this model was observed to be behaving correctly, the hyper-parameters were tweaked to maximise performance.
-
-To find the optimal hyper-parameters for the GBM model, Optuna \cite{optuna} was once again used just as for the sentiment analysis model. Root Mean Squared Error (RMSE) was chosen as the evaluation metric, as this directly quantifies the accuracy of point predictions. Due to the much faster training speeds seen when training a GBM as compared to a BERT model, 50 different combinations of hyper-parameters were explored. During training, early stopping was implemented to prevent overfitting. If the validation loss did not improve for 10 consecutive iterations, training was halted. This sped up the training process and reduced computational demand, as each trial involved significantly less iterations. 
-
-Once training was complete, the best-performing set of hyper-parameters was selected based on validation set performance and was subsequently used to train a final model, which was implemented into the FPL team selection system. To ensure the inclusion of sentiment data lead to a significant performance increase, a further model was trained using the same set of hyper-parameters, however the data used to train it did not contain any sentiment information ('positive\_tweets' and 'negative\_tweets' were removed from the dataset). 
-
-Additionally, feature importance scores were analysed post-training to further ensure that sentiment-based features contributed meaningfully to the model's decision-making process.
-% -------------------------------------------------------------
-% OPTIMAL TEAM SELECTION ALGORITHM
-% -------------------------------------------------------------
-\section[Optimal Team Selection Algorithm]{Optimal Team Selection Algorithm}
-\subsection[Constraints]{Constraints}
-\subsection[Algorithm]{Algorithm}
-% -------------------------------------------------------------
-% SUMMARY
-% -------------------------------------------------------------
-\section[Summary]{Summary}
-% -------------------------------------------------------------
 % THEORY
 % -------------------------------------------------------------
 \chapter[Theory]{Theory}
+The purpose of this chapter is to provide a deeper understanding of the fundamental machine learning methods and models used in this project. Additionally, it highlights the key theoretical concepts learned during the project's development. Whilst a model could technically have been developed without any of this knowledge, its addition has been extremely helpful in shaping the direction of development.
+
+The implementation makes use of various APIs, which often function as 'black boxes' offering predefined methods for training and evaluation without revealing their internal workings. Gaining insight into the underlying processes of these API calls has been essential in refining the model. It has not only improved interpretability but also allowed for more effective debugging, as errors and unexpected behaviours become clearer when understood in context.
+
+A strong theoretical foundation has also helped when it comes to model selection, feature engineering and hyper-parameter optimisation. For example, understanding the key differences in gradient boosting methods with their pros and cons has helped to ensure consideration for bias-variance trade-offs by avoiding overfitting. By including detailed explanations of these concepts it is hoped the reader gains a greater appreciation for the choices taken in this project.
+
 \section[The BERT Model]{The BERT Model}
 Bidirectional Encoder Representation from Transformers or BERT \cite{BERT}, is a pre-trained language representation model based on the transformer architecture proposed in the now infamous 2017 paper "Attention is All You Need" \cite{attention}. The transformer is a deep learning architecture that is the backbone of some of the most prominent achievements in AI in recent years, including OpenAI's ChatGPT \cite{chatGPT}.
 
@@ -527,6 +302,7 @@ The FFNN processes input embeddings by first projecting them into a higher-dimen
 
 The FFNN is essential for capturing patterns and interactions that the self-attention mechanism alone cannot model. Its reliance on simple matrix operations makes it computationally efficient and highly parallelisable, leveraging modern hardware accelerators like GPUs and multi-core CPUs to significantly reduce training time. To ensure stable training and enhance convergence, the FFNN's output undergoes normalisation, producing the final output representation for the encoder.\\
 
+\newpage
 \subsection*{Final BERT Architecture}
 The previous sub-sections have explored the components of the encoder, but the BERT model actually makes use of multiple encoders stacked together (12 for BERT$_{\text{base}}$ which this study uses) \cite{BERT}. This is what makes BERT a deep-learning model, as it incorporates many layers into its structure. The stacking of multiple encoders allows the model to progressively learn more high-level representations of the input data as it passes through the layers.
 
@@ -568,8 +344,32 @@ In order to improve the model iteratively, each new decision tree is trained to 
 
 Compared to other ensemble methods (ones which combine multiple models) like bagging and random forests which train multiple models independently on different parts of the data, gradient boosting differs as it trains new models sequentially, based on the errors of the previous one. Each tree learns the mistakes of its predecessor, making boosting a more adaptive technique.
 
+\newpage
+\subsection*{Decision Trees}
+Decision trees \cite{decision-trees} are simple structures used for both classification and regression, that contain 3 important parts: the root node, decision nodes, and leaf nodes. These components make a up a flowchart-like tree where given some data, the tree can be traversed according to attribute values e.g. "age $>$ 50" until a terminal or leaf node is reached that contains the prediction e.g. "is bald" or "is not bald".
+
+	% -------------------------------------------------------------
+	% DECISION TREE EXAMPLE
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.38]{decision_tree}
+	\caption{A simple decision tree to predict baldness.}
+	\label{default}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% DECISION TREE EXAMPLE
+	% -------------------------------------------------------------
+
+Decision trees can be built using various different algorithms, although they all share the goal of trying to find the attribute that best splits the data into groups. This means trees are built in such a way as to ensure they are as small as possible whilst still providing an accurate prediction. A few metrics used to measure how well an attribute splits data include: Gini impurity, entropy and mean squared error (MSE) \cite{decision-trees}. 
+
+Whilst decision trees are simple and easy to understand, they are vulnerable to overfitting as complex trees can result in a scenario where trees start to memorise the training data rather than picking decisions that result in good general performance. To combat this techniques such as pruning can be used, and ensemble methods that build multiple trees such as gradient boosting are preferred for more complex datasets. 
+
 \subsection*{The Gradient Boosting Algorithm}
-The gradient boost algorithm takes an input dataset consisting of $n$ rows. Each row contains some predictor values ($x_i$) and the target value ($y_i$). 
+The gradient boost algorithm builds on decision trees by using multiple decision trees that are sequentially improved to create a final model that avoids overly complex trees prone to overfitting data. 
+
+Initially an input dataset consisting of $n$ rows is taken. Each row contains some predictor values ($x_i$) and the target value ($y_i$). 
 
 To measure how well the model's predictions stack up against the true values, a \textbf{loss function} is used. This compares the model's predictions $F(x)$ with the observed values $y$. For regression tasks, mean squared error is typically used:
 \[\frac{1}{2} (Observed - Predicted)^2\]
@@ -580,7 +380,7 @@ The $\frac{1}{2}$ is used at the front, so that calculations are simplified when
 
 The initial model prediction is simply the average of all known values. This is chosen as it minimises the total error across the dataset, and is determined using the formula:
 \[F_0(x) = \argmin_\gamma{\sum^{n}_{i=1}L(y_i, \gamma)}\]
-which simply states the predicted value $F_0(x)$ should be the one that minimises the loss function $L(y_i, \gamma)$. To calculate this the derivative of the loss function is taken with respect to $F_0$, resulting in a formula for the average:
+which simply states the predicted value $F_0(x)$ should be the one that minimises the loss function $L(y_i, \gamma)$. To calculate this the derivative of the loss function is taken with respect to $F_0$ and set to 0, resulting in a formula for the average:
 \[F_0(x) = \frac{\sum^{n}_{i=1}y_i}{n}\]
 
 \paragraph{Step 2: Building Decision Trees} \leavevmode
@@ -595,19 +395,272 @@ After the initial prediction, a set number $M$ (typically 100) of decision trees
 
 Once all $M$ trees have been built, the final model outputs the initial prediction plus the adjustments made by each tree. For new data, predictions are made by passing the input through all $M$ trees and summing their contributions: \[F_M(x) = F_0(x) + \text{corrections from 100 trees}\]
 
-This process allows the model to gradually improve its accuracy.
+This process allows the model to gradually improve its accuracy, until it reaches an optimised state.
+
+\subsection*{The LightGBM Algorithm}
+LightGBM \cite{lightGBM} is a leaf-wise gradient boosting algorithm developed by Microsoft that focuses on fast performance speeds and efficiency over large datasets. It works by using a histogram-based technique which divides the data into discrete bins based on continuous values. As a result, instead of using the entire dataset to measure which split is the best, a bin can be used which approximates the whole dataset whilst using far less computational power and memory. The result is a much quicker process that still keeps a high accuracy.
+
+LightGBM also uses leaf-wise tree growth instead of level-wise growth which means that instead of expanding all nodes at a given level in the tree before moving down to the next level, the node that reduces loss the most is expanded. This results in much deeper trees which are often more accurate, but also increases the risk of creating trees which overfit the data. The resulting trees are usually also harder to understand as they don't follow a balanced structure with the same number of nodes at each level. 
+
+	% -------------------------------------------------------------
+	% LEVEL WISE VS LEAF WISE
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.3]{leaf-vs-level}
+	\caption{Level-wise and Leaf-wise decision tree growth \cite{lightGBM}.}
+	\label{default}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% LEVEL WISE VS LEAF WISE
+	% -------------------------------------------------------------
+
+Overall lightGBM has much faster training speeds and better efficiency when it comes to large and complex datasets. Its leaf-wise node expansion approach also allows for more complex and accurate decision trees than those built using normal gradient boosting methods.
+% -------------------------------------------------------------
+% METHODOLOGY
+% ------------------------------------------------------------- 
+\chapter[Methodology]{Methodology}
+This chapter outlines the approaches taken towards developing the components that make up the final prediction model. The choices taken for the specific sentiment analysis and expected points models are outlined, including the model selection, data identification and processing, training and hyper-parameter tuning, as well as evaluation methods. The team selection algorithm is explained, and the manner in which these components combine to form the final model are detailed.
+% -------------------------------------------------------------
+% OVERVIEW OF THE APPROACH
+% -------------------------------------------------------------
+\section[Overview of the Approach]{Overview of the Approach}
+This project focuses on developing and evaluating a machine learning model for predicting FPL player performance using sentiment analysis and historical data. The study consists of three main stages: sentiment analysis, expected points prediction, and performance evaluation.
+
+The first stage involves fine-tuning a BERT-based sentiment analysis model to classify tweets about FPL players before each gameweek. The aggregated sentiment scores are then integrated into a dataset containing historical player performance data. While existing FPL expected points models rely solely on structured historical data, this approach investigates whether incorporating Twitter sentiment can improve predictive performance.
+
+In the second stage, a gradient boosting machine (GBM) model is trained on the new dataset to estimate expected points for each player. The model’s output represents its prediction of how many FPL points a player is likely to score in the upcoming gameweek.
+
+Finally, the model's effectiveness is assessed by applying an algorithm that simulates FPL team selection. The team selection process is formulated as an optimisation problem, where integer linear programming is used to construct a 15-player squad that maximises expected points while adhering to budget and constraint rules. This evaluation aims to quantify the impact of sentiment analysis on decision-making in FPL over the course of a whole season.
+
+By incorporating Twitter data into player performance predictions, this research explores the extent to which social media data can enhance existing FPL forecasting models. The findings may provide valuable insights for FPL managers seeking data-driven strategies to improve their decision-making.
 % -------------------------------------------------------------
 % SENTIMENT ANALYSIS MODEL
 % -------------------------------------------------------------
-\chapter[Sentiment Analysis Model]{Sentiment Analysis Model}
+\section[Sentiment Analysis Model]{Sentiment Analysis Model}
+To capture crowd wisdom through Twitter, a sentiment analysis model is needed to automatically label tweets and gauge user's opinions towards each player. Whilst it is possible to train a sentiment analysis model from scratch, this study uses a pre-trained BERT model \cite{BERT} available for free from Google. This approach leverages access to a model that has been trained on billions of texts, giving it an extremely complex understanding of natural language. A model trained from scratch could not hope to replicate such complexity given the timeframe of this project. It would also be unreasonable to expect such a large task to be completed without the use of advanced computing machinery unavailable to individual researchers without the backing of a large corporation. The BERT model has been chosen specifically because it has been proven to outperform other state-of-the-art models like LSTM in sentiment analysis tasks\cite{elankath, hoang}.
+
+This study uses fine-tuning to refine BERT for the specific task of sentiment analysis on FPL tweets. Fine tuning is the process of adapting a pre-trained model for specific tasks or use-cases \cite{fine-tuning}. This is a much less computationally demanding task than fully training a model, and only requires a relatively small dataset which is ideal for a project of this scale. By combining the extensive natural language knowledge that BERT already has with a suitable dataset of FPL tweets, a sophisticated and accurate sentiment analysis model that suits the needs of the project will be achieved.
+
+\subsection[Data Collection]{Data Collection}
+Identifying and collecting suitable data for fine-tuning the model is a critical step in creating a model with optimal performance. The quality of the fine-tuning data directly affects the model's output quality \cite{gigo}, so it was important to chose a dataset carefully.
+
+The first approach considered was manual data collection directly via Twitter, however, exploring this approach led to many dead ends. The first problem was the financial cost of using the official Twitter API, which has seen a price increase from \$3 per month to \$100 per month since the company was sold in 2022 \cite{Twitter-costs}. This change has led to many free tools aimed at helping researchers leverage Twitter data for their studies being shut down, impacting the entire research field by limiting the options they have when it comes to collecting data. Without being able to use these tools, and with the official API unaffordable, using the API to efficiently collect data was not an option. Whilst other methods of collecting data exist, such as writing code scripts to scrape data from the Twitter website, or using 3rd party browser extensions, these methods are against the Twitter terms of service and could result in a permanent account ban if caught.
+
+Manual collection of data on Twitter is an acceptable approach within the terms of service, however it is an extremely tedious process. When considering a dataset needed to fine tune a BERT model should contain thousands of entries, as well as the time constraints of this project, manually collecting and then labelling thousands of tweets was also not an option. 
+
+The chosen approach was to use an existing dataset published on popular machine learning forums such as Hugging Face and Kaggle. These sites have thousands of active users contributing to a wide range of research topics. As such, finding a dataset for a similar purpose to this study's was not difficult. 4 potential datasets were identified on Kaggle, and include:
+
+\begin{itemize}
+    \item \href{https://www.kaggle.com/datasets/tirendazacademy/fifa-world-cup-2022-tweets}{\textcolor{blue}{\uline{Fifa World Cup 2022 Tweets with Sentiment Labels}}} - (30k tweets)
+    \item \href{https://www.kaggle.com/datasets/wjia26/epl-teams-Twitter-sentiment-dataset}{\textcolor{blue}{\uline{Premier League Teams Tweets with Sentiment Labels}}} - (460k tweets)
+    \item \href{https://www.kaggle.com/datasets/prasad22/fpl-tweets-dataset}{\textcolor{blue}{\uline{FPL Tweets from 2012 - 2023, unlabelled}}} - (110k tweets)
+    \item \href{https://www.kaggle.com/datasets/firefly55lm/tweets-footballers-premier-league}{\textcolor{blue}{\uline{Premier League Players Tweets with Sentiment Labels}}} - (167k tweets)
+\end{itemize}
+
+A further inspection of these 4 datasets was carried out to identify the most suitable given the needs of the model being built. 
+
+The first dataset, whilst labelled, only contained tweets for the first day of the world cup. This meant a majority of tweets were centered around the event as a whole and the controversy of Qatar hosting, with little mention of players or actions they had carried out during football matches. The second dataset was much more suited to the needs of the model, however had the drawback of being centred around teams rather than individual players. The third dataset was focused specifically on FPL which appeared ideal at first. However it was found that this dataset contained a lot of unrelated tweets from people tweeting about their own performance in FPL, instead of expected performance of actual players.
+	% -------------------------------------------------------------
+	% NOISY DATA
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[scale=0.5]{fpl-tweets-dataset}
+	\caption{Examples of noisy tweets irrelevant to player performance, such as personal FPL commentary}
+	\label{default}
+	\end{figure}
+	% -------------------------------------------------------------
+	% NOISY DATA
+	% -------------------------------------------------------------
+
+The fourth and final dataset was identified as the most suitable for this study. This dataset contains a far greater number of relevant tweets, focused on individual Premier League players from the 2022/23 season (it is almost impossible to find more recent data, due to the Twitter API price changes coming into effect from 2023). As well as the relevant focus of the tweets themselves, this dataset contains player labels for each row which is perfect for construction of an auxiliary sentence for target-based sentiment analysis. Instead of manually searching for players in each tweet, the existing \textit{player\_name} column in the dataset can be used. Finally, this dataset comes with the advantage of being almost fully cleaned of any noise including emojis, links, images, etc. reducing the amount of pre-processing required.
+
+The sentiment labels provided in the dataset were automatically created by the Vader \cite{vader}, and TextBlob \cite{textblob} models. These models are fairly accurate however it is worth noting they do incorrectly label some tweets and therefore this dataset is not perfect. A potential solution to this problem is manually labelling the tweets, however this would require some criteria to match certain labels to tweets, and would also be extremely time consuming. Given the time constraints of this project and the limited human resources available for labelling, the dataset's size would have to decrease significantly to use a manual labelling approach. It is hoped that using the existing labels will be more beneficial due to the much larger dataset size available with this approach, which should result in a more accurate final model.
+\newpage
 % -------------------------------------------------------------
-% MODEL IMPLEMENTATION
+% DATA PRE-PROCESSING
 % -------------------------------------------------------------
+\subsection[Data Pre-Processing]{Data Pre-Processing}
+The decision to cut the dataset down to a more suitable size of around 20k tweets was made, in order to keep training time reasonable (roughly 30 mins per epoch). Reducing the dataset size will most likely affect the model's performance negatively, however, given the time constraints of this project the computation time required to train the model on a dataset over 100k rows would have been too large.
+
+Many tweets in the dataset mention multiple players, with some even containing conflicting sentiments e.g. "Haaland was poor today, massively outshone by Salah". In order to capture the separate sentiment values (target based sentiment) the method introduced by Sun et al. \cite{sun} was used, where an auxiliary sentence was created posing a question to the model. The chosen format was: "What do you think of the sentiment towards [player]?". Using this approach, the model inputs and outputs will look like:  
+
+\begin{itemize}
+    \item \textbf{Input:} What do you think of the sentiment towards Haaland?  
+    \item \textbf{Output:} Negative
+    \item \textbf{Input:} What do you think of the sentiment towards Salah?  
+    \item \textbf{Output:} Positive
+\end{itemize}
+
+While a more FPL-specific auxiliary sentence (e.g., 'Should [player] be in my FPL squad?') was considered, it risked introducing noise due to sentiment labels from Vader/TextBlob. For example, 'Jamie Vardy has great hair!' might be labeled as 'yes' (suggesting he should be in an FPL squad) despite being unrelated to performance. Due to this potential issue, a more generic question was used with the intuition being that positive overall sentiment should closely correlate with positive FPL performance.
+ 
+After adding the auxiliary sentence to the dataset, the rest of the tweets were cleaned of any noise. Removing noise from tweets ensures the model learns only relevant information, ultimately improving performance. Additionally, duplicates and empty rows were removed, and any other unnecessary columns were dropped. 
+
+\subsection[Fine-Tuning BERT]{Fine-Tuning BERT}
+To fine-tune a BERT model for sentiment analysis, the pre-trained BERT model can be modified by adding a task-specific classification layer on top of the BERT encoder stack \cite{BERT}. This final layer transforms the output weight values (represented as a vector $\mathbf{h}$) into a final class 'positive', 'negative', or 'neutral' sentiment by using probabilities to predict which class the model's output most closely represents.
+
+\newpage
+The classification layer is a softmax \cite{softmax} classifier, which takes as input a vector $\mathbf{h}$ and uses the following equation to predict the final class:
+\[
+p(c|\mathbf {h}) =\mathrm {softmax}(W\mathbf {h})
+\]
+
+The vector $\mathbf{h}$ corresponds to the token [CLS] which is a special token added to the input sentence before it is processed by the model. This token is modified as the input passes through the model’s layers, forming a condensed representation of the entire input sequence. By fine-tuning the model specifically for sentiment analysis, this token learns to focus on sentiment information. $W$ represents the task-specific weight matrix, which is updated during fine-tuning to minimise classification loss.
+	% -------------------------------------------------------------
+	% BERT FINE-TUNING
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.35]{sentiment-diagram}
+	\caption{Single sentence classification \cite{sentiment-cls-diagram}}
+	\label{default}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% BERT FINE-TUNING
+	% -------------------------------------------------------------
+
+To minimise classification loss, a labeled dataset of texts and their corresponding sentiment labels (e.g., ‘positive,’ ‘negative,’ ‘neutral’) was used. During training, the model was fed these texts and its predictions were compared to the labels. Weights were updated iteratively to improve accuracy. This process was repeated for a set number of epochs (complete passes through the dataset) to improve accuracy whilst preventing overfitting.
+
+In order to fine-tune BERT with the auxiliary sentence method outlined above, BERT is passed the auxiliary sentence and the original tweet as a sentence pair, with a [SEP] (separator) token placed in between them. Classification is done in the same way as single sentence sentiment analysis with the hidden vector $\mathbf{h}$ used to predict the label.
+
+	% -------------------------------------------------------------
+	% BERT FINE-TUNING
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.35]{sentence-pair-cls-diagram}
+	\caption{Sentence-pair classification \cite{sentence-pair-cls-diagram}}
+	\label{default}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% BERT FINE-TUNING
+	% -------------------------------------------------------------
+
+The fine-tuning process not only adapts BERT to specific targets but also allows it to capture domain-specific language features that differ from general usage. For instance, while the word “soft” might generally convey positive sentiment (e.g., a soft blanket), in the FPL context, calling a player "soft" is often a negative sentiment. By fine-tuning BERT on domain-specific tweets, the model can learn such nuanced language patterns, improving its accuracy in the target domain.
+
+Fine-tuning BERT is computationally efficient compared to training a model from scratch and requires a relatively small amount of labeled data. As such it was a practical approach that suited the needs of this project given the time restraints.
+\newpage
+% -------------------------------------------------------------
+% HYPERPARAMETER OPTIMISATION
+% -------------------------------------------------------------
+\subsection[Hyper-parameter Optimisation]{Hyper-parameter Optimisation}
+In order to maximise the performance of the final model, hyper-parameters were optimised. Selecting a suitable set of hyper-parameters is crucial for model performance, and adjusting these values during training can help the model to avoid overfitting the training data, minimise validation loss, and maximise accuracy \cite{hyperparameters}. Typically when implementing a machine learning model, researchers manually tweak hyper-parameters and spend significant time exploring configurations that may not improve performance meaningfully. This manual process is inefficient and resource-intensive, so by using an automatic framework, less computational resources and time is spent developing the model.
+
+The framework chosen was Optuna \cite{optuna}, an automatic hyper-parameter optimisation framework for Python that finds the most optimal hyper-parameter values via trial and error. It conducts a series of trials and uses the previous trial to identify promising potential tweaks that could be made to improve performance. This process is repeated and a history of trials is kept throughout the process to guide the next changes made to the hyper-parameters. Through enough trial and error, optimal hyper-parameter values are found. 
+
+The search space for hyper-parameters was defined based on the values recommended in the original BERT paper \cite{BERT}. The chosen hyper-parameters along with their respective search space were:
+
+\begin{itemize}
+	\item Learning Rate ($2 \times 10^{-5}$ to $5 \times 10^{-5}$) - determines the step size at which the model updates its weights during training. A higher learning rate can speed up training time but risks overshooting the optimal parameters, whilst a lower learning rate ensures stability but may result in slower training.
+	\item Batch Size (16 or 32) - Batch size refers to the number of training samples processed simultaneously before updating the model's weights. A smaller batch size can introduce noise in the gradient updates, which sometimes aids in escaping local minima but can lead to slower convergence. A larger batch size offers smoother gradient updates but may require more computational resources and risks overfitting.
+	\item Number of Epochs (2 to 4) - specifies how many times the entire training dataset will be processed by the model during fine-tuning. Too many epochs can cause the model to focus on specific patterns in the training data, leading to overfitting. Too few epochs can limit the model's ability to learn from the data and lead to poor accuracy.
+\end{itemize}
+
+The datasets used during this stage were slimmed down to reduce training time. Evaluating models trained with the entire dataset would have taken too long (90 mins per trial) and used too much computing resource, so instead a dataset 25\% of the size was used. It is hoped this approach resulted in a decent general view of the best configurations, of which a small amount were then explored further using the whole dataset.
+% -------------------------------------------------------------
+% MODEL EVALUATION
+% -------------------------------------------------------------
+\subsection[Model Evaluation]{Model Evaluation}
+In order to ensure the best configuration was chosen, the three best configurations discovered during hyper-parameter optimisation were used to fully train 3 models.
+
+These models were evaluated using the following performance metrics to ensure the best model was chosen:
+
+\begin{itemize} 
+	\item \textbf{Accuracy} - The percentage of predictions that the model correctly makes across all classes. 
+	\item \textbf{Precision} - The combined percentage of predictions that are correct for each class, weighted by the number of instances in each class. E.g. if 30 samples are labelled positive, and the model correctly predicts them all, but also incorrectly predicts 10 more samples as positive the precision for that class will be $30/40 = 75\%$. 
+	\item \textbf{Recall} - The combined percentage of true instances that were correctly identified by the model, also weighted by the number of instances in each class. For the same example where all 30 positive samples were correctly predicted, the recall would be 100\% for the positive class.
+	\item \textbf{F1 Score} - The harmonic mean of precision and recall, calculated as: 
+ \[
+F_1 = 2 \times \frac{\text{precision} \times \text{recall}}{\text{precision} + \text{recall}}
+\]
+\end{itemize}
+
+Using the F1 score as a performance metric should reward models that are both precise and able to recall relevant rows of data effectively, ensuring a robust model. F1 score is particularly relevant for sentiment analysis with multiple labels, as it ensures a model is not just performing well on the majority class, and can accurately predict less frequent classes of data.
+
+The three models were evaluated on approximately 1000 samples taken randomly from the unseen data, ensuring no prior knowledge from training could influence the evaluation, and providing a fair assessment of the models' performance. The unseen data was processed in the exact same way as the training data to ensure consistency.
+
+After evaluation of the three models, the best model was selected to be used to create the enhanced dataset to train the expected points model.
+\newpage
+% -------------------------------------------------------------
+% EXPECTED POINTS MODEL
+% -------------------------------------------------------------
+\section[Expected Points Model]{Expected Points Model}
+In order to identify the best team of players ahead of an FPL gameweek, a prediction model that can accurately forecast the number of points each player is going to score was developed. Predicting player performance in Fantasy Premier League is a well-explored problem. Many studies have used a variety of machine learning and statistical methods in order to achieve this goal. The study most similar to this one, carried out by Bonello et al. \cite{bonello} in which news articles and betting markets were used to improve traditional model performance, found that Gradient Boosting Machines (GBMs) were the most effective. They state "ensemble methods show[ed] far higher suitability to the task when compared with alternate supervised learning approaches such as SVMs." 
+
+Due to the similar nature of this study (the main difference is the source of crowd wisdom coming from Twitter instead of news articles and betting markets) GBMs were chosen as the approach for expected points model. In selecting GBMs, this study builds on the success of previous studies where they have been proven to handle complex datasets with lots of interacting features. The selection of Twitter data adds a unique advantage, capturing opinions from millions of fans around the world instead of just 'expert' journalists. As well as this, FPL-specific information such as when a double gameweek is coming up for certain teams will typically not be reported by traditional news outlets.
+% -------------------------------------------------------------
+% DATA COLLECTION AND ENGINEERING
+% -------------------------------------------------------------
+\subsection[Data Collection and Engineering]{Data Collection and Engineering}
+The core of the dataset containing historical information for each player was taken from a community-run \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}} set up by Anand \cite{anand}. This repository contains data for each FPL season dating back to 2016, including information for every player and every gameweek. This dataset was used by GS when he created his binary classification model in 2018 \cite{GS}, so it made sense to combine this approach with the sentiment data collected, in order to get a fair comparison. Data for the 2022/23 FPL season was used, as this matches the timeline of the most recent Twitter data available (more recent data locked behind \$100 per month API).
+
+As well as the raw data available, rolling features were computed such as 'average\_points\_last\_3\_weeks', and 'minutes\_last\_3\_weeks', in order to capture a greater range information about each player ahead of a gameweek. In total 21 input parameters were chosen, with roughly 3 main categories for the type of information captured by each input: 
+
+\begin{itemize}
+    \item \textbf{Information known before kick-off} - e.g., home or away, opponent difficulty
+    \item \textbf{Player specific data} - e.g., average points last 3 weeks, goals scored last 3 weeks
+    \item \textbf{Team specific data} - e.g., team form, team goals scored last 3 weeks
+\end{itemize}
+
+To incorporate sentiment data into the dataset, unseen Twitter data was run through the sentiment analysis model to get a sentiment value for each row in the dataset. Each tweet was then tagged with the FPL gameweek it belonged to by taking start dates for each gameweek and matching tweets to the closest start date.
+
+This process resulted in a dataset of unseen tweets with a corresponding sentiment label, for each player and gameweek. These tweets were matched to their corresponding player and gameweek from the base dataset. For each match, two new columns, containing the number of positive and negative tweets for each player were added to the dataset, resulting in the final dataset which included sentiment information.
+
+\subsection[Data Pre-Processing]{Data Pre-Processing}
+To pre-process the dataset before training the model, a number of steps were taken.
+
+Firstly, the only text value feature in the dataset, the team name, was encoded using one-hot encoding. This is where a new column is introduced for every possible value the feature could take, so new columns for all 20 Premier League teams were introduced. Then for example, if the original row in the dataset had a team value of 'Manchester United', the corresponding 'manchester\_united' column would have a value of 1, and all other team columns would have a value of 0. 
+
+Next, each numerical value was normalised (scaled to a value between 1 and 0). This was done so all features in the dataset had the same scale, which is important for the convergence of GBMs. Normalisation was performed using Min-Max scaling, which rescales each feature by subtracting the minimum value and dividing by the range (maximum value - minimum value). This ensures that no feature dominates the learning process due to differing scales, and that the model can more efficiently optimise during training.
+
+After this any rows with empty values or duplicate rows were dropped from the dataset completely, resulting in a dataset ready to be used for model training.
+
+\newpage
+% -------------------------------------------------------------
+% MODEL TRAINING AND EVALUATION
+% -------------------------------------------------------------
+\subsection[Model Training and Evaluation]{Model Training and Evaluation}
+A Gradient Boosting Machine (GBM) model was trained to predict expected points for each player. The train and test datasets were stratified to ensure an even distribution of data from different gameweeks. Making sure data was evenly distributed was important to avoid model bias towards a particular period of the season, improving the model's ability to generalise.
+
+Training of a GBM is slightly different to a typical neural network like the one used in the final layer of the BERT model. A GBM works by building a 'tree' (a simple decision-making structure) that initially outputs the mean of the target values, and then calculates the residual errors (difference between the model's prediction and the true values) to build a new better tree. Instead of updating model weights like a neural network, new trees are added to reduce the loss progressively. For a more detailed explanation of decision trees and GBMs, see chapter 3.
+
+An initial GBM model was trained with default hyper-parameters, and the resulting performance was checked to make sure there were no obvious errors or unexpected results. After this model was observed to be behaving correctly, the hyper-parameters were tweaked to maximise performance.
+
+To find the optimal hyper-parameters for the GBM model, Optuna \cite{optuna} was once again used just as for the sentiment analysis model. Root Mean Squared Error (RMSE) was chosen as the evaluation metric, as this directly quantifies the accuracy of point predictions. Due to the much faster training speeds seen when training a GBM as compared to a BERT model, 50 different combinations of hyper-parameters were explored. During training, early stopping was implemented to prevent overfitting. If the validation loss did not improve for 10 consecutive iterations, training was halted. This sped up the training process and reduced computational demand, as each trial involved significantly less iterations. 
+
+Once training was complete, the best-performing set of hyper-parameters was selected based on validation set performance and was subsequently used to train a final model. To ensure the inclusion of sentiment data lead to a significant performance increase, a further model was trained using the same set of hyper-parameters, however the data used to train it did not contain any sentiment information ('positive\_tweets' and 'negative\_tweets' were removed from the dataset). 
+
+Additionally, feature importance scores were analysed post-training to further ensure that sentiment-based features contributed meaningfully to the model's decision-making process.
+% -------------------------------------------------------------
+% OPTIMAL TEAM SELECTION ALGORITHM
+% -------------------------------------------------------------
+\section[Optimal Team Selection Algorithm]{Optimal Team Selection Algorithm}
+\subsection[Constraints]{Constraints}
+\subsection[Algorithm]{Algorithm}
+% -------------------------------------------------------------
+% SUMMARY
+% -------------------------------------------------------------
+\section[Summary]{Summary}
+\chapter[Implementation]{Implementation}
+% -------------------------------------------------------------
+% IMPLEMENTATION
+% -------------------------------------------------------------
+This chapter describes the detailed implementation of the points prediction model, detailing the libraries, APIs, and methodologies used for each component. It outlines the machine learning algorithms and training pipelines, with each stage of the pipeline such as data collection, pre-processing, model training, and hyper-parameter tuning systematically explained. 
+
+Furthermore, details of the metrics used to assess model performance are discussed, along with the strategies used to optimise these metrics. Key considerations made during training, such as tradeoffs between bias and variance are also explored to ensure the final model is robust and can generalise well.
+% -------------------------------------------------------------
+% SENTIMENT ANALYSIS MODEL
+% -------------------------------------------------------------
+\section[Sentiment Analysis Model]{Sentiment Analysis Model}
 The BERT model used in this study to predict sentiment for FPL players was fine-tuned in Google Colab \cite{colab} using Python. Google Colab is a cloud computing platform that was chosen as it allows free GPU and TPU access, much better suited to fine-tuning a deep learning model than a CPU found in a typical laptop, helping reduce training time. Its notebook format also allows for simple and clear separation of functions, allowing for single blocks of code to be independently executed. This allows for easy debugging and troubleshooting of code, improving the development experience. A Jupyter notebook was set up to create a pipeline for pre-processing data, training the model, optimising hyperparameters, and evaluation of the model. This format allows for easy and quick reproduction, as it includes markup to explain steps in more detail.
  
 Python was chosen as the preferred language due to the extensive number of libraries that exist supporting the development of deep learning models. Some of the most popular include Hugging Face's Transformers library \cite{huggingface-transformers} which contains APIs for hundreds of pre-trained transformer models including BERT. The transformers library also includes tokenisers for each model and a PyTorch \cite{pytorch} Trainer class that allows fine-tuning to be done with just a few lines of code. The model's hyper-parameters can be fine tuned and optimised using the Optuna library \cite{optuna} to explore the best possible combinations. Use of these libraries ensure correct approaches are taken, and massively reduces development time by simplifying the entire process.
 
-\section[Data Pre-Processing]{Data Pre-Processing}
+\subsection[Data Pre-Processing]{Data Pre-Processing}
 The first step of the pipeline was to process the dataset, cleaning it of any noise and transforming it to include an auxiliary sentence suited to the TABSA approach chosen. To begin with any image links were identified and removed by searched for occurrences of 'a href' in the texts. Empty rows and duplicates were stripped out, and finally regular expressions were used to check if the player label for each tweet (who the tweet is supposedly mentioning) was actually mentioned in the text. For example, some entries might have a player label of 'Jordan Pickford' but the tweet makes no mention of him. This ensures the model can always see the player it is supposed to be predicting a sentiment value for in the input text. 
 
 The auxiliary sentence was then created for each entry in the dataset by using the player\_name column to construct a sentence in the form "What do you think of the sentiment towards [player\_name]". The column names were adjusted and reordered so that the final dataset contained just three rows: 'question', 'context', and 'label'.
@@ -616,7 +669,8 @@ Finally, all the data was converted into a format the model could understand. Fo
 
 Once this was done the dataset was split into train and validation sets using the train\_test\_split method from scikitlearn. The datasets were then ready to be used for training of the model.
 
-\section[Training the Model]{Training the Model}
+\newpage
+\subsection[Training the Model]{Training the Model}
 The next step in the pipeline was to use the processed datasets to train the model's classification layer used to fine-tune it. The first step of training was to configure the TrainingArguments from the transformers library. This class contains the hyper-parameters for the model such as learning rate, batch size, epochs, and weight decay. These hyper-parameters can be tweaked to improve model performance and prevent overfitting during training. Initially, these were set to default values suggested by the Hugging Face tutorial, with the intention to optimise them properly later (see 4.2.4).  
 	
 After these arguments were configured, the next step was to set up the Trainer object. The pre-trained \texttt{BertForSequenceClassification} model was loaded in from the transformers library. This model is configured for classification tasks on 2 input sentences with a suitable classification head already implemented, exactly what is needed for target-based sentiment analysis with an auxiliary sentence. The specific model used was 'bert-base-cased' which is just the base variant of the BERT model that is case-sensitive. The Trainer was initialised by passing in the model, datasets and training arguments. Once the Trainer had been initialised, the training process was started by calling the \texttt{train()} method.
@@ -650,10 +704,10 @@ Once trained, the model was tested to ensure the it worked as expected. 5 sample
 	% INFERENCE
 	% -------------------------------------------------------------
 
-Model outputs appear to be mostly correct and are easily retrieved through the built-in methods provided by the transformers library. This allows for a quick and efficient way to generate a list of sentiment predictions for a large set of tweets, necessary for the final system. 
+Model outputs appear to be mostly correct and are easily retrieved through the built-in methods provided by the transformers library. This allows for a quick and efficient way to generate a list of sentiment predictions for a large set of tweets, necessary for building the final model. 
 
 \newpage
-\section[Hyper-parameter Optimisation]{Hyper-parameter Optimisation}
+\subsection[Hyper-parameter Optimisation]{Hyper-parameter Optimisation}
 Optuna was the chosen library for tuning hyper-parameters, due to its extensive documentation and computationally efficient approach. 
 
 The first step in configuring Optuna was to specify the hyper-parameters to be tweaked and the space to be explored. To do this, an objective function was defined to guide the hyper-parameter tuning process. This function evaluates the performance of each 'trial' which is a model trained on a set of hyper-parameters suggested by Optuna. It defines the search space and hyper-parameters available, and then feeds Optuna's suggestions into each model's training arguments. It also specifies which metric to use to evaluate this models - validation loss in this case. The validation loss is a measure of how far away the model's predictions are from the labelled values. To achieve an accurate model, this metric should be as low as possible to indicate the model's guesses are very close to the truth.
@@ -686,7 +740,7 @@ The configurations and resulting validation loss for each trial were:
 
 
 \newpage
-\section[Model Evaluation]{Model Evaluation}
+\subsection[Model Evaluation]{Model Evaluation}
 Whilst fully training the three best configurations, it was initially discovered that these configurations started to overfit due to an increase in data samples, so to compensate for this training was reduced by one epoch. Although optimising the hyper-parameters with the full dataset would give the best results, the time taken to do this (around 15 hours for 10 trials) would have been too great, so this approach is chosen as a compromise.
 
 The configurations evaluated were the best 3 from hyper-parameter optimisation (see 4.2.4): Trial 5 (Configuration 1), Trial 1 (Configuration 2), and Trial 2 (Configuration 3). The results are as follows:
@@ -745,40 +799,40 @@ The configurations evaluated were the best 3 from hyper-parameter optimisation (
 
 \newpage
 
-As evident from the results, the models struggled with the negative class in all configurations. This was expected due to the class imbalance present in the dataset, which contains far fewer "negative" samples compared to the "neutral" and "positive" samples. The model tends to mislabel "negative" samples as "neutral" due to the higher number of "neutral" samples during training. This is reflected in the lower precision and recall for the negative class across all configurations.
+The results suggest that the models struggled with the negative class in all configurations. This was expected due to the class imbalance present in the dataset, which contains far fewer "negative" samples compared to the "neutral" and "positive" samples. The model seems to mislabel "negative" samples as "neutral" due to the higher number of "neutral" samples during training. This is reflected in the lower precision and recall for the negative class across all configurations.
 
 The neutral class has high recall (close to 1.00) but suffers from lower precision in some configurations, particularly in Configuration 2, where the model incorrectly classifies a significant portion of the negative samples as neutral. The positive class also shows a reasonably balanced performance, but it is clear that the class imbalance impacts the model's performance, as seen in the discrepancies between recall and precision for the "negative" and "neutral" classes.
 
-After evaluating the models, Configuration 1 (Trial 5) stood out as the best model based on the F1-score, which is a better reflection of the model’s overall ability to balance precision and recall. The F1-score of Configuration 1 was significantly higher than the other configurations, making it the most reliable model for classifying positive, negative, and neutral sentiments.
+After evaluating the models, Configuration 1 (Trial 5) stood out as the best model based on the F1-score, which is a better reflection of the model’s overall ability to balance precision and recall. The F1-score of Configuration 1 was significantly higher than the other configurations, suggesting it was the most reliable model for classifying positive, negative, and neutral sentiments.
 
-As such, the model trained using Configuration 1 was saved and uploaded to a newly created Hugging Face repository using the API provided. From there it was easily accessible to all other parts of the system.
+As such, the model trained using Configuration 1 was saved and uploaded to a newly created Hugging Face repository using the API provided. From there it was easily accessible to all other components of this project.
 % -------------------------------------------------------------
 % EXPECTED POINTS MODEL	
 % -------------------------------------------------------------
-\chapter[Expected Points Model]{Expected Points Model}
+\section[Expected Points Model]{Expected Points Model}
 The GBM model was implemented using the LightGBM library \cite{lightGBM} due to its comprehensive documentation, simple APIs, and impressive performance aided by the use of GPU learning. LightGBM is a gradient boosting framework that uses a leaf-wise tree splitting approach rather than a level-wise one, which improves overall model performance as more complex trees can be created. More complex trees can however lead to overfitting, so ensuring that the model hyper-parameters are configured correctly is an even more important task than it would be for frameworks using a different algorithm. LightGBM has been shown to outperform other popular algorithms such as XGBoost, making it an appropriate choice for this task \cite{lightGBM-vs-XGBoost}.
 
 Two more Google Colab notebooks were created, one to facilitate the creation of the dataset that contains data from the sentiment analysis model, and a further to create the model training and evaluation pipeline. Again, Python was chosen as the development language due to its wide range of machine learning libraries such as Pandas and Numpy. Additionally, Matplotlib was used to create visualisations for the final evaluation of the models with and without sentiment data.
 
-\section[Dataset Creation and Feature Engineering]{Dataset Creation and Feature Engineering}
+\subsection[Dataset Creation and Feature Engineering]{Dataset Creation and Feature Engineering}
 In order to train the GBM model, a dataset needed to be created with the most relevant features possible. The first stage in achieving this was downloading the historical dataset from the \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}}. This was a simple case of downloading the raw files for each gameweek of the 2022/23 season via GET request, and saving them. Once saved, irrelevant features were dropped, and a Pandas dataframe was created with the concatenation of all gameweek files.
 
 From this point the 'rolling' features were computed, such as 'starts\_last\_3\_weeks' and 'points\_last\_3\_weeks', by using the inbuilt \texttt{.shift} and \texttt{.rolling} methods from Pandas. The dataset rows were grouped by name, team, and gameweek (there are no players with the same name on the same team, so this provides a unique record) and then \texttt{.shift(1)} could be used to look back 1 gameweek, whilst \texttt{.shift(1).rolling(3)} would look back at 3 previous gameweeks. This allowed for easy and efficient calculation of features, without having to use any loops or array methods. Once these calculations were done, any empty rows were dropped and the dataset was examined to ensure features had been correctly calculated. 
 
-The next step was to add in the sentiment data that is so important to this study. This was done by taking the unseen twitter data from the dataset identified in the sentiment analysis chapter, and running those tweets through the sentiment analysis model to get a list of tweets for every player and every gameweek, labelled as 'positive', 'neutral', or 'negative'. To do this each tweet from the dataset was tagged with the gameweek it belonged to, using the tweet timestamp. The data was pre-processed using the same steps as model training, and then model was loaded using the Hugging Face API so the tweets could be run through it to get a sentiment prediction for each tweet. 
+The next step was to add in the sentiment data that is so important to this study. This was done by taking the unseen Twitter data from the dataset identified in the sentiment analysis chapter, and running those tweets through the sentiment analysis model to get a list of tweets for every player and every gameweek, labelled as 'positive', 'neutral', or 'negative'. To do this each tweet from the dataset was tagged with the gameweek it belonged to, using the tweet timestamp. The data was pre-processed using the same steps as model training, and then model was loaded using the Hugging Face API so the tweets could be run through it to get a sentiment prediction for each tweet. 
 
 The positive and negative sentiment values for each player for each gameweek were then summed, resulting in a 'positive\_tweets' and 'negative\_tweets' counter for each player and gameweek. The player and gameweek columns were then matched with the same record in the dataframe containing historical information, and merge was performed to get a final dataset. When implementing this, it became clear there were some player names that contained typos and matching player names was not behaving as expected. To fix this, the \texttt{rapidfuzz} library was used, which is a matching library that accounts for typos. This meant small typos were not an issue and the sentiment data was correctly appended to the main dataframe.
 
 This final dataframe was saved as a CSV file and then uploaded to a Hugging Face repository so that it could be used by the second notebook for training and evaluating the GBM model.
 
-\section[Data Pre-Processing]{Data Pre-Processing}
+\subsection[Data Pre-Processing]{Data Pre-Processing}
 To process the dataset before it could be used for training, sklearn and Pandas were used. Pandas was used to remove the identifying features: name and gameweek, from the actual inputs, with the intent to add them back to the dataset once final model predictions had been generated. This way a dataset of expected points for each player and gameweek could be generated.
 
 Inputs were scaled using the \texttt{MinMaxScaler} from sklearn which is a simple way of normalising the input values between 0 and 1. A different scaler was used for inputs and the target variable 'total\_points' so that the predictions could be unscaled at the end. Additionally, the team name was encoded using Pandas \texttt{.get\_dummies} method which simply adds a new column for every possible value of team name (one hot encoding). This meant 20 additional columns were added and the specific team column for each row was given a value of 1, with all others having a value of 0. 
 
-After this was done duplicates were dropped and the dataset was examined to ensure the correct columns existed, with appropriate values. Finally the dataset was split into test, train and final evaluation datasets. The purpose of the final evaluation dataset was to keep back data, so the entire system could be fairly evaluated without any data leakage during training. The test and train set were used as normal for model training, with around 15k training samples and 3k test samples. 
+After this was done duplicates were dropped and the dataset was examined to ensure the correct columns existed, with appropriate values. Finally the dataset was split into test, train and final evaluation datasets. The purpose of the final evaluation dataset was to keep hidden data, so the final model could be fairly evaluated without any data leakage during training. The test and train set were used as normal for model training, with around 15k training samples and 3k test samples. 
 
-\section[Model Training and Hyperparameter Optimisation]{Model Training and Hyperparameter Optimisation}
+\subsection[Model Training and Hyperparameter Optimisation]{Model Training and Hyperparameter Optimisation}
 Initially the model was trained with default hyper-parameters, using the class \texttt{LGBMRegressor} from LightGBM. This class makes it extremely simple to create a regression model and train it, which is perfect for the needs of this study. A model object of the class was instantiated and then the \texttt{.fit} method was called, passing in the training data inputs and the target variable.
 
 The \texttt{.predict} method was called on the same model with the validation data to get a performance overview of the model. Initial training was promising, with a Root Mean Squared Error (RMSE) of just 0.0753 for the validation set. To further reduce this value, hyper-parameter optimisation was once again employed using Optuna. 
@@ -810,8 +864,8 @@ Because of the computational efficiency of LightGBM and the relatively speedy pr
 
 Additionally, the Optuna visualisation tools were used to plot a visualisation of how RMSE was reduced progressively as the search space was explored.
 
-\section[Evaluation of Sentiment and Non-Sentiment Based Models]{Evaluation of Sentiment and Non-Sentiment Based Models}
-The entire purpose of this study is to compare how models with sentiment information captured via twitter perform against models without this information. As such it made sense to train another model using the exact same dataset, minus the 'positive\_tweets' and 'negative\_tweets' features. 
+\subsection[Evaluation of Sentiment and Non-Sentiment Based Models]{Evaluation of Sentiment and Non-Sentiment Based Models}
+The entire purpose of this study is to compare how models with sentiment information captured via Twitter perform against models without this information. As such it made sense to train another model using the exact same dataset, minus the 'positive\_tweets' and 'negative\_tweets' features. 
 
 This way a valid comparison could be made between the two models, and any notable differences could be observed. The first comparison was the RMSE of validation data between the two models. The model trained with the sentiment data produced a RMSE of 0.07208, whilst the model trained without sentiment data produced 0.07221. This small difference favours the model trained with sentiment data, however it is hard to draw conclusions from such a small change.
 
@@ -855,7 +909,7 @@ The feature importance analysis shows that 'positive\_tweets' ranks 10th, just b
 % -------------------------------------------------------------
 % TEAM SELECTION ALGORITHM
 % -------------------------------------------------------------
-\chapter[Team Selection Algorithm]{Team Selection Algorithm}
+\section[Team Selection Algorithm]{Team Selection Algorithm}
 % -------------------------------------------------------------
 % RESULTS AND DISCUSSION
 % -------------------------------------------------------------

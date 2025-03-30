@@ -10,38 +10,39 @@
 \contentsline {section}{\numberline {2.2}Wisdom of Crowds}{12}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Sentiment Analysis}{13}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Summary}{14}{section.2.4}%
-\contentsline {chapter}{\numberline {3}Methodology}{15}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Overview of the System}{15}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Sentiment Analysis Model}{16}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Data Collection}{16}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Data Pre-Processing}{19}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Fine-Tuning BERT}{19}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Hyper-parameter Optimisation}{22}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Model Evaluation}{23}{subsection.3.2.5}%
-\contentsline {section}{\numberline {3.3}Expected Points Model}{24}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Data Collection and Engineering}{24}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Data Pre-Processing}{25}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Model Training and Evaluation}{26}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Optimal Team Selection Algorithm}{27}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Constraints}{27}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Algorithm}{27}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Summary}{27}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Theory}{28}{chapter.4}%
-\contentsline {section}{\numberline {4.1}The BERT Model}{28}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Gradient Boosting and Decision Trees}{35}{section.4.2}%
-\contentsline {paragraph}{Step 1: Initial Prediction}{35}{section*.18}%
-\contentsline {paragraph}{Step 2: Building Decision Trees}{36}{section*.19}%
-\contentsline {paragraph}{Step 3: Making Predictions}{36}{section*.20}%
-\contentsline {chapter}{\numberline {5}Sentiment Analysis Model}{37}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Data Pre-Processing}{37}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Training the Model}{38}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Hyper-parameter Optimisation}{40}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Model Evaluation}{41}{section.5.4}%
-\contentsline {chapter}{\numberline {6}Expected Points Model}{43}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Dataset Creation and Feature Engineering}{43}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Data Pre-Processing}{44}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Model Training and Hyperparameter Optimisation}{45}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Evaluation of Sentiment and Non-Sentiment Based Models}{46}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Team Selection Algorithm}{48}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Results and Discussion}{49}{chapter.8}%
-\contentsline {chapter}{\numberline {9}Conclusion and Future Work}{50}{chapter.9}%
+\contentsline {chapter}{\numberline {3}Theory}{15}{chapter.3}%
+\contentsline {section}{\numberline {3.1}The BERT Model}{15}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Gradient Boosting and Decision Trees}{22}{section.3.2}%
+\contentsline {paragraph}{Step 1: Initial Prediction}{24}{section*.17}%
+\contentsline {paragraph}{Step 2: Building Decision Trees}{24}{section*.18}%
+\contentsline {paragraph}{Step 3: Making Predictions}{25}{section*.19}%
+\contentsline {chapter}{\numberline {4}Methodology}{26}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Overview of the Approach}{26}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Sentiment Analysis Model}{27}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Data Collection}{27}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Data Pre-Processing}{30}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Fine-Tuning BERT}{30}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Hyper-parameter Optimisation}{33}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Model Evaluation}{34}{subsection.4.2.5}%
+\contentsline {section}{\numberline {4.3}Expected Points Model}{35}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Data Collection and Engineering}{35}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Data Pre-Processing}{36}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Model Training and Evaluation}{37}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Optimal Team Selection Algorithm}{38}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Constraints}{38}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Algorithm}{38}{subsection.4.4.2}%
+\contentsline {section}{\numberline {4.5}Summary}{38}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Implementation}{39}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Sentiment Analysis Model}{39}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Data Pre-Processing}{40}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Training the Model}{41}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Hyper-parameter Optimisation}{43}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}Model Evaluation}{44}{subsection.5.1.4}%
+\contentsline {section}{\numberline {5.2}Expected Points Model}{45}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Dataset Creation and Feature Engineering}{46}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Data Pre-Processing}{47}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Model Training and Hyperparameter Optimisation}{47}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Evaluation of Sentiment and Non-Sentiment Based Models}{48}{subsection.5.2.4}%
+\contentsline {section}{\numberline {5.3}Team Selection Algorithm}{50}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Results and Discussion}{51}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{52}{chapter.7}%
