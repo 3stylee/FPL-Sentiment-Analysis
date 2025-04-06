@@ -73,6 +73,7 @@ However, using social media can often be a tedious process, sifting through thou
 % FPL RULES
 % -------------------------------------------------------------
 \section[Rules of FPL]{Rules of FPL}
+\label{sec:rules-of-fpl}
 Note the terms \textit{player} and \textit{manager} are often confused when it comes to FPL, so please be aware that this study uses the term \textit{manager} to refer to people who participate in the game of FPL, and \textit{players} to refer to real-life premier league footballers.
 
 Fantasy Premier League is a mirror of the real-life English Premier League, meaning that each in game event (referred to as a \textit{gameweek}) represents a set of real-life football matches. The game takes place over a \textit{season} which usually runs from August until May of the following calendar year, and at the end of the season the winner is crowned. There are 20 teams who play each other twice over the course of the season, resulting in a total of 38 gameweeks. Note that sometimes due to unforeseen circumstances like bad weather or domestic cup fixtures, games are postponed resulting in a team not playing in one gameweek (known as a \textit{blank} gameweek), and playing twice in another gameweek (known as a \textit{double} gameweek) to make up.
@@ -596,7 +597,7 @@ Due to the similar nature of this study (the main difference is the source of cr
 % DATA COLLECTION AND ENGINEERING
 % -------------------------------------------------------------
 \subsection[Data Collection and Engineering]{Data Collection and Engineering}
-The core of the dataset containing historical information for each player was taken from a community-run \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}} set up by Anand \cite{anand}. This repository contains data for each FPL season dating back to 2016, including information for every player and every gameweek. This dataset was used by GS when he created his binary classification model in 2018 \cite{GS}, so it made sense to combine this approach with the sentiment data collected, in order to get a fair comparison. Data for the 2022/23 FPL season was used, as this matches the timeline of the most recent Twitter data available (more recent data locked behind \$100 per month API).
+The core of the dataset containing historical information for each player was taken from a community-run \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}} set up by Anand \cite{anand}. This repository contains data for each FPL season dating back to 2016, including information for every player and every gameweek. This dataset was used by GS when he created his binary classification model in 2018 \cite{raghunandh}, so it made sense to combine this approach with the sentiment data collected, in order to get a fair comparison. Data for the 2022/23 FPL season was used, as this matches the timeline of the most recent Twitter data available (more recent data locked behind \$100 per month API).
 
 As well as the raw data available, rolling features were computed such as 'average\_points\_last\_3\_weeks', and 'minutes\_last\_3\_weeks', in order to capture a greater range information about each player ahead of a gameweek. In total 21 input parameters were chosen, with roughly 3 main categories for the type of information captured by each input: 
 
@@ -611,15 +612,9 @@ To incorporate sentiment data into the dataset, unseen Twitter data was run thro
 This process resulted in a dataset of unseen tweets with a corresponding sentiment label, for each player and gameweek. These tweets were matched to their corresponding player and gameweek from the base dataset. For each match, two new columns, containing the number of positive and negative tweets for each player were added to the dataset, resulting in the final dataset which included sentiment information.
 
 \subsection[Data Pre-Processing]{Data Pre-Processing}
-To pre-process the dataset before training the model, a number of steps were taken.
+To pre-process the dataset before training the model, each numerical value was normalised (scaled to a value between 1 and 0). This was done so all features in the dataset had the same scale, which is important for the convergence of GBMs. Normalisation was performed using Min-Max scaling, which rescales each feature by subtracting the minimum value and dividing by the range (maximum value - minimum value). This ensures that no feature dominates the learning process due to differing scales, and that the model can more efficiently optimise during training.
 
-Firstly, the only text value feature in the dataset, the team name, was encoded using one-hot encoding. This is where a new column is introduced for every possible value the feature could take, so new columns for all 20 Premier League teams were introduced. Then for example, if the original row in the dataset had a team value of 'Manchester United', the corresponding 'manchester\_united' column would have a value of 1, and all other team columns would have a value of 0. 
-
-Next, each numerical value was normalised (scaled to a value between 1 and 0). This was done so all features in the dataset had the same scale, which is important for the convergence of GBMs. Normalisation was performed using Min-Max scaling, which rescales each feature by subtracting the minimum value and dividing by the range (maximum value - minimum value). This ensures that no feature dominates the learning process due to differing scales, and that the model can more efficiently optimise during training.
-
-After this any rows with empty values or duplicate rows were dropped from the dataset completely, resulting in a dataset ready to be used for model training.
-
-\newpage
+After this any rows with empty values or duplicate rows were dropped from the dataset completely. Then the dataset was split into train and test datasets, with an additional evaluation set kept back for final evaluation of the model. The approach taken for this was to keep back data for the last 8 gameweeks of the season (gameweeks 31-38) so that the final model could be evaluated for a consecutive 8 weeks in a row. With more data available, it would have been better to test the model over the course of a whole season, or even in real time to see how it copes with the most up to date information. However, as mentioned many times previously, the limited amount of twitter data available for free makes this impossible to do. There may be some bias in the data with certain events like double gameweeks happening at the end of the season, but this was chosen as the best approach with the limited amount of data available.
 % -------------------------------------------------------------
 % MODEL TRAINING AND EVALUATION
 % -------------------------------------------------------------
@@ -628,23 +623,59 @@ A Gradient Boosting Machine (GBM) model was trained to predict expected points f
 
 Training of a GBM is slightly different to a typical neural network like the one used in the final layer of the BERT model. A GBM works by building a 'tree' (a simple decision-making structure) that initially outputs the mean of the target values, and then calculates the residual errors (difference between the model's prediction and the true values) to build a new better tree. Instead of updating model weights like a neural network, new trees are added to reduce the loss progressively. For a more detailed explanation of decision trees and GBMs, see chapter 3.
 
-An initial GBM model was trained with default hyper-parameters, and the resulting performance was checked to make sure there were no obvious errors or unexpected results. After this model was observed to be behaving correctly, the hyper-parameters were tweaked to maximise performance.
+An initial GBM model was trained with default hyper-parameters, and the resulting performance was checked to make sure there were no obvious errors or unexpected results. To find the optimal hyper-parameters for the GBM model, Optuna \cite{optuna} was once again used just as for the sentiment analysis model. Root Mean Squared Error (RMSE) was chosen as the evaluation metric, as this directly quantifies the accuracy of points predictions. Due to the much faster training speeds seen when training a GBM as compared to a BERT model, 50 different combinations of hyper-parameters were explored. Early stopping was implemented to prevent overfitting so that iff the validation loss did not improve for 10 consecutive iterations, training was halted. This was to speed up the training process and reduce computational demand.
 
-To find the optimal hyper-parameters for the GBM model, Optuna \cite{optuna} was once again used just as for the sentiment analysis model. Root Mean Squared Error (RMSE) was chosen as the evaluation metric, as this directly quantifies the accuracy of point predictions. Due to the much faster training speeds seen when training a GBM as compared to a BERT model, 50 different combinations of hyper-parameters were explored. During training, early stopping was implemented to prevent overfitting. If the validation loss did not improve for 10 consecutive iterations, training was halted. This sped up the training process and reduced computational demand, as each trial involved significantly less iterations. 
+The best-performing set of hyper-parameters was selected based and was used to train the final model. An additional model trained with no sentiment data was also saved, so that a comparison in performance could be made and any differences between the two models could be observed. The hope being the model trained with sentiment data would show some improvements to reflect the additional data made available to it.
 
-Once training was complete, the best-performing set of hyper-parameters was selected based on validation set performance and was subsequently used to train a final model. To ensure the inclusion of sentiment data lead to a significant performance increase, a further model was trained using the same set of hyper-parameters, however the data used to train it did not contain any sentiment information ('positive\_tweets' and 'negative\_tweets' were removed from the dataset). 
-
-Additionally, feature importance scores were analysed post-training to further ensure that sentiment-based features contributed meaningfully to the model's decision-making process.
+Finally, the final evaluation data was then run through the model to get expected points predictions for each entry in the dataset. This resulting dataset containing model predictions and actual points scored for the last 8 gameweeks of the season was used for model evaluation with the team selection algorithm.
 % -------------------------------------------------------------
 % OPTIMAL TEAM SELECTION ALGORITHM
 % -------------------------------------------------------------
 \section[Optimal Team Selection Algorithm]{Optimal Team Selection Algorithm}
+To fully evaluate the performance of the final prediction model, it needs to be tested under real-world conditions. This means using unseen data to gather predictions for real FPL gameweeks. This prediction data needs to be transformed from a points prediction score for each player in the game, to a useful team recommendation. 
+
+In order to do this and form real teams that satisfy the rules of the game, a selection algorithm was constructed to find the best possible team from the information available. This selection algorithm used integer linear programming in order to select the most optimal 15 players (maximise expected points) whilst satisfying the budgetary, positional, and squad size constraints. The pool of available players contained around 500 individuals making the optimisation computationally significant and non-trivial.
+
 \subsection[Constraints]{Constraints}
+Detailed in section~\ref{sec:rules-of-fpl}, the rules of FPL place many constraints on how a squad of players can be formed. The constraints placed on an initial squad formation are as follows:
+
+\begin{itemize} 
+	\item \textbf{Squad Size} - The number of players in a squad must be equal to 15. 
+	\item \textbf{Squad Value} - The total cost of all players in a squad must not be more than £100M.
+	\item \textbf{Positional Constraints} - A squad must be made up of 2 goalkeepers, 5 defenders, 5 midfielders, and 3 strikers.
+	\item \textbf{Team Constraints} - A squad cannot have more than 3 players belonging to the same real-world premier league team
+\end{itemize}
+
+As well as selecting an initial squad of 15, the algorithm needs to select a 'Starting XI' whose points will count towards the final score each gameweek. Positional constraints placed on the 11 are:
+
+\begin{itemize} 
+	\item \textbf{One Goalkeeper}
+	\item \textbf{Between Three and Five Defenders} 
+	\item \textbf{Between Three and Five midfielders} 	
+	\item \textbf{Between One Three Strikers} 
+\end{itemize}
+
+As such, after running data through the team selection algorithm to get the best 15 players, an additional function to pick the best 11 players from a squad of 15 (fitting the positional constraints) was constructed. 
+
 \subsection[Algorithm]{Algorithm}
+The algorithm uses linear integer programming which is a mathematical optimisation technique. For the context of FPL team selection, the problem is defined with each player from the available pool of ~500 being assigned a decision variable (set to 1 if player selected, 0 if not). An objective function is then defined which is to maximise the sum of the expected points for all players selected. 
+
+Additionally, the constraints mentioned above are modelled as a linear set of rules for the optimiser to follow when solving the problem. The PuLP library is utilised to explore all possible solutions in an effective way using branch-and-bound techniques. If an optimal solution is possible, the solver will output it after finishing the search through the solution space.
+
+Once the squad has been selected, the problem of choosing a starting eleven is simple. Initially the minimum amount of players in each position are chosen based on points - e.g. best GK, 3 best DEFs, 3 best MIDs and best ST. Then the final 3 players are chosen by taking the 3 players with the highest expected points, completing the eleven.
+\subsection[Final Evaluation with Selection Algorithm]{Final Evaluation with Selection Algorithm}
+With the team selection algorithm in place, a set of teams for each gameweek (31-38) and each model (all data, no sentiment data, and true values) was created. 
+
+To do this the dataset created from the predictions of the final GBM models was split by gameweek, resulting in 8 gameweeks of data. Then the expected points predictions for the no sentiment model, the all data model, and the actual points scored were extracted. The data for each model and gameweek was then run through the team selection algorithm to get a squad, starting eleven, and total points scored.
+
+For an accurate comparison against baselines like the average manager score, the captaincy was also simulated. The captain chip is used by managers to pick one player from their starting eleven whose points are doubled. In this case the player with the highest expected points had their actual points doubled to simulate them being chosen as the captain.
+
+The resulting data for each gameweek and model was used for the final evaluation of the model.
 % -------------------------------------------------------------
 % SUMMARY
 % -------------------------------------------------------------
 \section[Summary]{Summary}
+
 \chapter[Implementation]{Implementation}
 % -------------------------------------------------------------
 % IMPLEMENTATION
@@ -913,7 +944,10 @@ The feature importance analysis shows that 'positive\_tweets' ranks 10th, just b
 % -------------------------------------------------------------
 % RESULTS AND DISCUSSION
 % -------------------------------------------------------------
-\chapter[Results and Discussion]{Results and Discussion}
+\chapter[Results and Discussion]{Results and Discussion} 
+This chapter outlines the results of testing the final model, along with comparisons of total points scored for the final 8 gameweeks of the 2022/23 FPL season. The goal of this project is to evaluate the performance of a new FPL prediction model constructed using existing methods, but with the inclusion of a novel sentiment data source - Twitter. As such, the final model has been evaluated over multiple gameweeks alongside existing baselines. A comprehensive outline of all findings have been included in this chapter.
+
+The model is compared against the baseline average scores of the playerbase, a Gradient Boosting Machine model without twitter data, the final GBM model that includes twitter data, and the best possible score that could have been achieved. The results suggest that the lack of Twitter data available currently prevent any solid conclusions from being drawn about how effective it is as a sentiment data source. As well as this the limited timescale from which to draw comparisons (just 8 gameweeks) further limit the extent to which any concrete conclusions can be made. The GBM models constructed both perform almost identically with minimal differences, outscoring the average player consistently whilst remaining far away from the best possible score.
 % -------------------------------------------------------------
 % CONCLUSION AND FUTURE WORK
 % -------------------------------------------------------------

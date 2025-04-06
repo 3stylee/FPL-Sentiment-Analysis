@@ -288,6 +288,11 @@ D.~E. Rumelhart, G.~E. Hinton, and R.~J. Williams, \emph{Learning
 IBM, ``{What is a Decision Tree?}'' Retrieved March 2025 from
   \url{https://www.ibm.com/think/topics/decision-trees}, 2025.
 
+\bibitem{lightGBM}
+G.~for Geeks, ``{Light GBM},'' Retrieved February 2025 from
+  \url{https://www.geeksforgeeks.org/lightgbm-light-gradient-boosting-machine},
+  2025.
+
 \bibitem{fine-tuning}
 D.~Bergmann, ``What is fine-tuning?''
   \url{https://www.ibm.com/topics/fine-tuning}, March 2024.
@@ -342,11 +347,6 @@ V.~Anand, ``{FPL Historical Dataset},'' Retrieved February 2025 from
 
 \bibitem{pytorch}
 ``Pytorch,'' \url{https://pytorch.org/}, December 2024.
-
-\bibitem{lightGBM}
-G.~for Geeks, ``{Light GBM},'' Retrieved February 2025 from
-  \url{https://www.geeksforgeeks.org/lightgbm-light-gradient-boosting-machine},
-  2025.
 
 \bibitem{lightGBM-vs-XGBoost}
 Pranjal, ``{Light GBM vs XGBOOST},'' Retrieved February 2025 from
