@@ -40,7 +40,7 @@
 	\Large{
 	Loughborough University\\
 	Student ID: F125967\\
-	17COC251: Computer Science Project}
+	24COC251: Computer Science Project}
 
 	{\vspace{2em}}
 
@@ -422,20 +422,20 @@ Overall lightGBM has much faster training speeds and better efficiency when it c
 % METHODOLOGY
 % ------------------------------------------------------------- 
 \chapter[Methodology]{Methodology}
-This chapter outlines the approaches taken towards developing the components that make up the final prediction model. The choices taken for the specific sentiment analysis and expected points models are outlined, including the model selection, data identification and processing, training and hyper-parameter tuning, as well as evaluation methods. The team selection algorithm is explained, and the manner in which these components combine to form the final model are detailed.
+This chapter outlines the approaches taken towards developing the components that make up the final prediction model. The choices taken for the specific sentiment analysis and expected points models are outlined, including the model selection, data identification and processing, training and hyper-parameter tuning, as well as evaluation methods. The team selection algorithm is explained, and the manner in which these components combine to form and evaluate the final model are detailed.
 % -------------------------------------------------------------
 % OVERVIEW OF THE APPROACH
 % -------------------------------------------------------------
 \section[Overview of the Approach]{Overview of the Approach}
-This project focuses on developing and evaluating a machine learning model for predicting FPL player performance using sentiment analysis and historical data. The study consists of three main stages: sentiment analysis, expected points prediction, and performance evaluation.
+This project focuses on developing and evaluating a machine learning model for predicting FPL player performance using twitter sentiment and historical footballing data. The methodology consists of three main stages: 1 - creation of a sentiment analysis model, 2 - creation of an expected points prediction model, and 3 - model performance evaluation.
 
-The first stage involves fine-tuning a BERT-based sentiment analysis model to classify tweets about FPL players before each gameweek. The aggregated sentiment scores are then integrated into a dataset containing historical player performance data. While existing FPL expected points models rely solely on structured historical data, this approach investigates whether incorporating Twitter sentiment can improve predictive performance.
+The first stage involves fine-tuning a sentiment analysis based BERT model to classify tweets about FPL players ahead of each gameweek. The resulting sentiment predictions for tweets are aggregated into sentiment scores for each player, then integrated into a dataset containing historical player performance data. Whilst existing FPL expected points models rely solely on structured historical data, this approach investigates whether incorporating Twitter sentiment can improve predictive performance.
 
-In the second stage, a gradient boosting machine (GBM) model is trained on the new dataset to estimate expected points for each player. The model’s output represents its prediction of how many FPL points a player is likely to score in the upcoming gameweek.
+In the second stage, a gradient boosting machine (GBM) model is trained on the combined dataset to estimate expected points for each player. The model’s output represents its prediction of how many FPL points a player is likely to score in the upcoming gameweek. The model's predictions for the final 8 gameweeks of the 2022/23 FPL season are saved as a dataset to evaluate the performance of the model.
 
-Finally, the model's effectiveness is assessed by applying an algorithm that simulates FPL team selection. The team selection process is formulated as an optimisation problem, where integer linear programming is used to construct a 15-player squad that maximises expected points while adhering to budget and constraint rules. This evaluation aims to quantify the impact of sentiment analysis on decision-making in FPL over the course of a whole season.
+Finally, the model's effectiveness is assessed by applying an algorithm that simulates FPL team selection to the prediction dataset. The team selection process is formulated as an optimisation problem, where integer linear programming is used to construct a fifteen-player squad and eleven-player starting team that maximises expected points whilst adhering to budget and constraint rules. This evaluation aims to quantify the impact of sentiment analysis on decision-making in FPL under real-world conditions.
 
-By incorporating Twitter data into player performance predictions, this research explores the extent to which social media data can enhance existing FPL forecasting models. The findings may provide valuable insights for FPL managers seeking data-driven strategies to improve their decision-making.
+By incorporating Twitter data into player performance predictions, this project explores the extent to which social media data can enhance existing FPL forecasting models. The findings may provide valuable insights for FPL managers seeking data-driven strategies to improve their decision-making.
 % -------------------------------------------------------------
 % SENTIMENT ANALYSIS MODEL
 % -------------------------------------------------------------
@@ -549,6 +549,7 @@ Fine-tuning BERT is computationally efficient compared to training a model from 
 % HYPERPARAMETER OPTIMISATION
 % -------------------------------------------------------------
 \subsection[Hyper-parameter Optimisation]{Hyper-parameter Optimisation}
+\label{sec:bert-hp}
 In order to maximise the performance of the final model, hyper-parameters were optimised. Selecting a suitable set of hyper-parameters is crucial for model performance, and adjusting these values during training can help the model to avoid overfitting the training data, minimise validation loss, and maximise accuracy \cite{hyperparameters}. Typically when implementing a machine learning model, researchers manually tweak hyper-parameters and spend significant time exploring configurations that may not improve performance meaningfully. This manual process is inefficient and resource-intensive, so by using an automatic framework, less computational resources and time is spent developing the model.
 
 The framework chosen was Optuna \cite{optuna}, an automatic hyper-parameter optimisation framework for Python that finds the most optimal hyper-parameter values via trial and error. It conducts a series of trials and uses the previous trial to identify promising potential tweaks that could be made to improve performance. This process is repeated and a history of trials is kept throughout the process to guide the next changes made to the hyper-parameters. Through enough trial and error, optimal hyper-parameter values are found. 
@@ -619,11 +620,21 @@ After this any rows with empty values or duplicate rows were dropped from the da
 % MODEL TRAINING AND EVALUATION
 % -------------------------------------------------------------
 \subsection[Model Training and Evaluation]{Model Training and Evaluation}
+\label{sec:gbm-training}
 A Gradient Boosting Machine (GBM) model was trained to predict expected points for each player. The train and test datasets were stratified to ensure an even distribution of data from different gameweeks. Making sure data was evenly distributed was important to avoid model bias towards a particular period of the season, improving the model's ability to generalise.
 
 Training of a GBM is slightly different to a typical neural network like the one used in the final layer of the BERT model. A GBM works by building a 'tree' (a simple decision-making structure) that initially outputs the mean of the target values, and then calculates the residual errors (difference between the model's prediction and the true values) to build a new better tree. Instead of updating model weights like a neural network, new trees are added to reduce the loss progressively. For a more detailed explanation of decision trees and GBMs, see chapter 3.
 
 An initial GBM model was trained with default hyper-parameters, and the resulting performance was checked to make sure there were no obvious errors or unexpected results. To find the optimal hyper-parameters for the GBM model, Optuna \cite{optuna} was once again used just as for the sentiment analysis model. Root Mean Squared Error (RMSE) was chosen as the evaluation metric, as this directly quantifies the accuracy of points predictions. Due to the much faster training speeds seen when training a GBM as compared to a BERT model, 50 different combinations of hyper-parameters were explored. Early stopping was implemented to prevent overfitting so that iff the validation loss did not improve for 10 consecutive iterations, training was halted. This was to speed up the training process and reduce computational demand.
+
+The hyper-parameter space was defined as: 
+
+\begin{itemize}
+	\item Number of Leaves (20 - 100) - controls the maximum number of leaves per tree (complexity). Higher complexity can increase performance but leaves the model susceptible to overfitting. 
+	\item Learning Rate (0.01 - 0.1) - controls the step size during gradient boosting. Lower learning rate leads to slower convergence but better generalisation, while higher learning rate leads to faster convergence but risks overshooting.
+	\item Min Data in Leaf (100 - 1000) - controls minimum number of data points in a leaf. Lower values risk overfitting, whilst higher values capture more information per leaf so are better at generalising.
+	\item Max Depth (3 - 15) - controls the maximum depth of each tree. Deeper trees are more complex but risk overfitting
+\end{itemize}
 
 The best-performing set of hyper-parameters was selected based and was used to train the final model. An additional model trained with no sentiment data was also saved, so that a comparison in performance could be made and any differences between the two models could be observed. The hope being the model trained with sentiment data would show some improvements to reflect the additional data made available to it.
 
@@ -660,11 +671,11 @@ As such, after running data through the team selection algorithm to get the best
 \subsection[Algorithm]{Algorithm}
 The algorithm uses linear integer programming which is a mathematical optimisation technique. For the context of FPL team selection, the problem is defined with each player from the available pool of ~500 being assigned a decision variable (set to 1 if player selected, 0 if not). An objective function is then defined which is to maximise the sum of the expected points for all players selected. 
 
-Additionally, the constraints mentioned above are modelled as a linear set of rules for the optimiser to follow when solving the problem. The PuLP library is utilised to explore all possible solutions in an effective way using branch-and-bound techniques. If an optimal solution is possible, the solver will output it after finishing the search through the solution space.
+Additionally, the constraints mentioned above are modelled as a linear set of rules for the optimiser to follow when solving the problem. The PuLP library is utilised to explore all possible solutions in an effective way using branch-and-bound techniques. If a solution is possible, the PuLP solver class will output the optimal solution after finishing the search through the solution space.
 
 Once the squad has been selected, the problem of choosing a starting eleven is simple. Initially the minimum amount of players in each position are chosen based on points - e.g. best GK, 3 best DEFs, 3 best MIDs and best ST. Then the final 3 players are chosen by taking the 3 players with the highest expected points, completing the eleven.
 \subsection[Final Evaluation with Selection Algorithm]{Final Evaluation with Selection Algorithm}
-With the team selection algorithm in place, a set of teams for each gameweek (31-38) and each model (all data, no sentiment data, and true values) was created. 
+With the team selection algorithm in place, a set of teams for each gameweek (31-38) and each model (all data, no sentiment data, and true values) were created. 
 
 To do this the dataset created from the predictions of the final GBM models was split by gameweek, resulting in 8 gameweeks of data. Then the expected points predictions for the no sentiment model, the all data model, and the actual points scored were extracted. The data for each model and gameweek was then run through the team selection algorithm to get a squad, starting eleven, and total points scored.
 
@@ -675,38 +686,42 @@ The resulting data for each gameweek and model was used for the final evaluation
 % SUMMARY
 % -------------------------------------------------------------
 \section[Summary]{Summary}
+To summarise, this chapter has outlined the three main components that have been developed in order to create and evaluate the final prediction model. First, the sentiment analysis BERT model was fine-tuned to classify FPL related tweets, generating aggregated sentiment scores for each player. Secondly, a gradient boosting machine (GBM) model was trained on historical footballing data combined with the aggregated sentiment scores to predict how many points each player would score in an upcoming gameweek. Finally an integer linear programming algorithm was implemented to select an optimal team based on expected points predictions, simulating real world FPL decision making under the constraints of the game. 
 
+Together these components make up a complete pipeline for FPL decision making based on historical and Twitter-based sentiment data. The results and evaluation of the final model are detailed in chapter~\ref{chapter:results}.
 \chapter[Implementation]{Implementation}
 % -------------------------------------------------------------
 % IMPLEMENTATION
 % -------------------------------------------------------------
-This chapter describes the detailed implementation of the points prediction model, detailing the libraries, APIs, and methodologies used for each component. It outlines the machine learning algorithms and training pipelines, with each stage of the pipeline such as data collection, pre-processing, model training, and hyper-parameter tuning systematically explained. 
+This chapter describes the technical implementation of the FPL decision making model and evaluation pipeline, providing a comprehensive overview of how each component was created. It details the specific tools, libraries, and APIs used throughout the project such as Hugging Face Transformers for sentiment analysis, LightGBM for points prediction, and PuLP for team selection. Each stage of the development pipeline is explained, with steps taken for data collection, preprocessing, model training, and hyperparameter tuning included.
 
-Furthermore, details of the metrics used to assess model performance are discussed, along with the strategies used to optimise these metrics. Key considerations made during training, such as tradeoffs between bias and variance are also explored to ensure the final model is robust and can generalise well.
+On top of this, this chapter includes details of how each component was combined to form a cohesive and well-structured pipeline. It also explains how different evaluation metrics were used to assess model performance at intermediate stages throughout the development process. The techniques used to improve these metrics along with considerations such as bias-variance tradeoffs are explained, detailing how imbalanced data and generalisation across gameweeks was handled. The goal of this chapter is to provide a clear and reproducible account of how the theoretical methodology was converted into a working decision making model.
 % -------------------------------------------------------------
 % SENTIMENT ANALYSIS MODEL
 % -------------------------------------------------------------
 \section[Sentiment Analysis Model]{Sentiment Analysis Model}
-The BERT model used in this study to predict sentiment for FPL players was fine-tuned in Google Colab \cite{colab} using Python. Google Colab is a cloud computing platform that was chosen as it allows free GPU and TPU access, much better suited to fine-tuning a deep learning model than a CPU found in a typical laptop, helping reduce training time. Its notebook format also allows for simple and clear separation of functions, allowing for single blocks of code to be independently executed. This allows for easy debugging and troubleshooting of code, improving the development experience. A Jupyter notebook was set up to create a pipeline for pre-processing data, training the model, optimising hyperparameters, and evaluation of the model. This format allows for easy and quick reproduction, as it includes markup to explain steps in more detail.
+The BERT model used in this study to predict sentiment for FPL players was fine-tuned in Google Colab \cite{colab} using Python. Google Colab is a cloud computing platform that was chosen as it allows free GPU and TPU access, much better suited to fine-tuning a deep learning model than a CPU found in a typical laptop - helping reduce training time. Its Jupyter notebook format also allows for simple and clear separation of functions with markup text support, allowing for single blocks of code to be independently executed and described with headings and text. This allowed for easy debugging and troubleshooting of code, improving the development experience. Multiple Colab notebooks were set up to create a pipeline for pre-processing data, model training, hyper-parameter optimisation, and evaluation of the model. This format allowed for easy and quick reproduction of results, making it easy to tweak parts of code and try new approaches.
  
 Python was chosen as the preferred language due to the extensive number of libraries that exist supporting the development of deep learning models. Some of the most popular include Hugging Face's Transformers library \cite{huggingface-transformers} which contains APIs for hundreds of pre-trained transformer models including BERT. The transformers library also includes tokenisers for each model and a PyTorch \cite{pytorch} Trainer class that allows fine-tuning to be done with just a few lines of code. The model's hyper-parameters can be fine tuned and optimised using the Optuna library \cite{optuna} to explore the best possible combinations. Use of these libraries ensure correct approaches are taken, and massively reduces development time by simplifying the entire process.
 
 \subsection[Data Pre-Processing]{Data Pre-Processing}
-The first step of the pipeline was to process the dataset, cleaning it of any noise and transforming it to include an auxiliary sentence suited to the TABSA approach chosen. To begin with any image links were identified and removed by searched for occurrences of 'a href' in the texts. Empty rows and duplicates were stripped out, and finally regular expressions were used to check if the player label for each tweet (who the tweet is supposedly mentioning) was actually mentioned in the text. For example, some entries might have a player label of 'Jordan Pickford' but the tweet makes no mention of him. This ensures the model can always see the player it is supposed to be predicting a sentiment value for in the input text. 
+To start pre-processing the dataset, as much noise as possible was removed. Any image links were identified and removed by searching for occurrences of 'a href' in the texts. Empty rows and duplicates were stripped out, and regular expressions were used to check if the player label for each tweet (which player the tweet is supposedly about) is actually mentioned in the text. 
 
-The auxiliary sentence was then created for each entry in the dataset by using the player\_name column to construct a sentence in the form "What do you think of the sentiment towards [player\_name]". The column names were adjusted and reordered so that the final dataset contained just three rows: 'question', 'context', and 'label'.
+For example, some entries in the dataset contained player labels such as 'Jordan Pickford' but when inspecting the tweet content, no mention of him was found. To ensure a consistent format and to remove noise likely to disrupt model training, these entries were removed from the dataset.
 
-Finally, all the data was converted into a format the model could understand. For the 'question' and 'context' columns this meant tokenisation. To do this the AutoTokenizer class from transformers was used to load in the standard BERT tokeniser. The columns were tokenised and then saved. The 'label' class was mapped to integers, with 0 representing positive, 1 representing negative, and 2 representing neutral. 
+The auxiliary sentence needed for the target-based sentiment analysis approach outlined in the methodology was then created for each entry in the dataset. This was done by using the \texttt{player\_name} column to construct a sentence in the form "What do you think of the sentiment towards [\texttt{player\_name}]". The column names were adjusted and reordered so that the final dataset contained just three rows: 'question', 'context', and 'label'.
 
-Once this was done the dataset was split into train and validation sets using the train\_test\_split method from scikitlearn. The datasets were then ready to be used for training of the model.
+Finally, all the text data was converted into numerical format so the model could understand via tokenisation. To do this the \texttt{AutoTokenizer} class from Hugging Face's Transformers library was used to load in the standard BERT tokeniser. The columns were tokenised and then saved. The 'label' class was mapped to integers, with 0 representing positive, 1 representing negative, and 2 representing neutral. 
 
+Once this was done the dataset was split into train and validation sets using the \texttt{train\_test\_split} method from scikitlearn with a \texttt{test\_size} of 0.1 and \texttt{seed} set to 42. The datasets were then ready to be used for training of the model.
 \newpage
-\subsection[Training the Model]{Training the Model}
-The next step in the pipeline was to use the processed datasets to train the model's classification layer used to fine-tune it. The first step of training was to configure the TrainingArguments from the transformers library. This class contains the hyper-parameters for the model such as learning rate, batch size, epochs, and weight decay. These hyper-parameters can be tweaked to improve model performance and prevent overfitting during training. Initially, these were set to default values suggested by the Hugging Face tutorial, with the intention to optimise them properly later (see 4.2.4).  
-	
-After these arguments were configured, the next step was to set up the Trainer object. The pre-trained \texttt{BertForSequenceClassification} model was loaded in from the transformers library. This model is configured for classification tasks on 2 input sentences with a suitable classification head already implemented, exactly what is needed for target-based sentiment analysis with an auxiliary sentence. The specific model used was 'bert-base-cased' which is just the base variant of the BERT model that is case-sensitive. The Trainer was initialised by passing in the model, datasets and training arguments. Once the Trainer had been initialised, the training process was started by calling the \texttt{train()} method.
 
-Training took around 90 minutes, and the resulting model scored an initial accuracy of around 90.34\%. Other performance metrics such as precision and F1 score were configured and will be discussed further during final model evaluation. Focusing on the validation loss, it is clear that the initial model is starting to overfit the training data as the epochs go on, evidenced by the increasing values after epoch 2. This is something that will be refined using hyper-parameter tuning.
+\subsection[Training the Model]{Training the Model}
+The next step in the pipeline was to use the processed datasets to train the model's classification layer used to fine-tune it. The first step of training was to configure the \texttt{TrainingArguments} from the Transformers library. This class contains the hyper-parameters for the model such as learning rate, batch size, epochs, and weight decay. These hyper-parameters can be tweaked to improve model performance and prevent overfitting during training. Initially, these were set to default values suggested by the Hugging Face tutorial, with the intention of optimising them later (see~\ref{sec:bert-hp-optimisation}).  
+	
+After these arguments were configured, the Hugging Face \texttt{Trainer} class was set up. To do this the pre-trained BERT model was loaded in from the transformers library, with the \texttt{BertForSequenceClassification} variant used - because a sequence of text (the auxiliary sentence and tweet content) was being used to classify tweets. The specific model used was \texttt{'bert-base-cased'} which is the case-sensitive base variant of the BERT model. The case sensitive variant was used due to tweets often containing capitalisation to convey extreme sentiment (e.g. 'COME ON WHAT A GOAL!!'). The \texttt{Trainer} class was initialised by passing in the model, train and validation datasets, and \texttt{TrainingArguments}. Once the Trainer had been initialised, the training process was started by calling the \texttt{train()} method.
+
+Training took around ninety minutes, and the resulting model scored an initial validation accuracy of around 90.34\%. Other performance metrics such as precision and F1 score were configured and will be discussed further during final model evaluation. Focusing on the validation loss, it appeared that the initial model was starting to overfit the training data as the epochs increased, evidenced by the increasing in value after epoch 2. 
 	% -------------------------------------------------------------
 	% INTIAL METRICS
 	% -------------------------------------------------------------
@@ -720,8 +735,7 @@ Training took around 90 minutes, and the resulting model scored an initial accur
 	% INITIAL METRICS
 	% -------------------------------------------------------------
 
-
-Once trained, the model was tested to ensure the it worked as expected. 5 samples from the unseen data were taken and passed through the model to infer an output. The unseen data was processed by the same tokeniser function used for the training data to ensure the data used for model inference was pre-processed in the exact same way as the training data. This is crucial for achieving an accurate prediction from the model by ensuring the model recognises the inputs and can leverage knowledge learned during training to the fullest extent. Inference was done using the built in \texttt{eval()} method that the transformers library provides for every model.
+Once trained, the initial model was tested to ensure that it produced outputs as expected. 5 samples from the unseen data were taken and passed through the model to infer an output. The unseen data was processed by the same tokeniser function used for the training data to ensure it was pre-processed in the exact same way as the training data. This was important for achieving an accurate prediction from the model as it ensured the model recognised the inputs and could leverage knowledge learned during training to the fullest extent. Inference was done using the built in \texttt{eval()} method for the \texttt{model} class provided by the Transformers library.
 	% -------------------------------------------------------------
 	% INFERENCE
 	% -------------------------------------------------------------
@@ -735,15 +749,17 @@ Once trained, the model was tested to ensure the it worked as expected. 5 sample
 	% INFERENCE
 	% -------------------------------------------------------------
 
-Model outputs appear to be mostly correct and are easily retrieved through the built-in methods provided by the transformers library. This allows for a quick and efficient way to generate a list of sentiment predictions for a large set of tweets, necessary for building the final model. 
+Model outputs appeared to be reasonable, and were easily retrieved through the built-in methods provided by the transformers library. This validated that generating a list of sentiment predictions for a large set of tweets would be feasible, which was necessary for building the final model. 
 
-\newpage
 \subsection[Hyper-parameter Optimisation]{Hyper-parameter Optimisation}
+\label{sec:bert-hp-optimisation}
 Optuna was the chosen library for tuning hyper-parameters, due to its extensive documentation and computationally efficient approach. 
 
-The first step in configuring Optuna was to specify the hyper-parameters to be tweaked and the space to be explored. To do this, an objective function was defined to guide the hyper-parameter tuning process. This function evaluates the performance of each 'trial' which is a model trained on a set of hyper-parameters suggested by Optuna. It defines the search space and hyper-parameters available, and then feeds Optuna's suggestions into each model's training arguments. It also specifies which metric to use to evaluate this models - validation loss in this case. The validation loss is a measure of how far away the model's predictions are from the labelled values. To achieve an accurate model, this metric should be as low as possible to indicate the model's guesses are very close to the truth.
+The first step in configuring Optuna was to specify the hyper-parameters to be tweaked and the space to be explored. To do this, an objective function was defined to guide the hyper-parameter tuning process. This function evaluates the performance of each 'trial' which is a model trained on a set of hyper-parameters suggested by Optuna. 
 
-An Optuna study was created using the \textit{create\_study} method, and then run for 10 trials. This amount should allow Optuna to explore a sufficient amount of configurations while keeping resource usage to a minimum. Because Optuna chooses each subsequent configuration based on the previous one, each new configuration should explore meaningful search space and therefore enable a near optimal configuration to be found in 10 trials.
+Firstly the search space and hyper-parameters available were defined following the ranges specified in~\ref{sec:bert-hp}, for Optuna's to generate suggestions for the model in each trial. The metric used to evaluate models was also defined, with validation loss being used in this case. The validation loss is a measure of how far away the model's predictions are from the true labelled values of the validation dataset. To achieve an accurate model, this metric should be as low as possible to indicate the model's guesses are very close to the truth, thus the goal of the Optuna \texttt{study} was set to minimise validation loss.
+
+An Optuna study was created using the \texttt{create\_study} method, and then the \texttt{optimize} method was called, with the objective function passed and \texttt{n\_trials} set to 10. This number of trials should allow Optuna to explore a sufficient amount of configurations while keeping resource usage to an acceptable level. Because Optuna chooses each subsequent configuration based on the previous one, each new configuration should explore meaningful search space and therefore enable a near optimal configuration to be found in 10 trials.
 
 The configurations and resulting validation loss for each trial were:
 
@@ -772,9 +788,9 @@ The configurations and resulting validation loss for each trial were:
 
 \newpage
 \subsection[Model Evaluation]{Model Evaluation}
-Whilst fully training the three best configurations, it was initially discovered that these configurations started to overfit due to an increase in data samples, so to compensate for this training was reduced by one epoch. Although optimising the hyper-parameters with the full dataset would give the best results, the time taken to do this (around 15 hours for 10 trials) would have been too great, so this approach is chosen as a compromise.
+Whilst fully training the three best configurations, it was initially discovered that these configurations started to overfit due to an increase in data samples, so to compensate for this training was reduced by one epoch. Although optimising the hyper-parameters with the full dataset would give the best results, the time taken to do this (around 15 hours for 10 trials) would have been too large, so this approach was chosen as a compromise.
 
-The configurations evaluated were the best 3 from hyper-parameter optimisation (see 4.2.4): Trial 5 (Configuration 1), Trial 1 (Configuration 2), and Trial 2 (Configuration 3). The results are as follows:
+The configurations evaluated were the best 3 from hyper-parameter optimisation: Trial 5 (Configuration 1), Trial 1 (Configuration 2), and Trial 2 (Configuration 3). The results are as follows:
 
 \begin{table}[ht]
     \centering
@@ -843,39 +859,79 @@ As such, the model trained using Configuration 1 was saved and uploaded to a new
 \section[Expected Points Model]{Expected Points Model}
 The GBM model was implemented using the LightGBM library \cite{lightGBM} due to its comprehensive documentation, simple APIs, and impressive performance aided by the use of GPU learning. LightGBM is a gradient boosting framework that uses a leaf-wise tree splitting approach rather than a level-wise one, which improves overall model performance as more complex trees can be created. More complex trees can however lead to overfitting, so ensuring that the model hyper-parameters are configured correctly is an even more important task than it would be for frameworks using a different algorithm. LightGBM has been shown to outperform other popular algorithms such as XGBoost, making it an appropriate choice for this task \cite{lightGBM-vs-XGBoost}.
 
-Two more Google Colab notebooks were created, one to facilitate the creation of the dataset that contains data from the sentiment analysis model, and a further to create the model training and evaluation pipeline. Again, Python was chosen as the development language due to its wide range of machine learning libraries such as Pandas and Numpy. Additionally, Matplotlib was used to create visualisations for the final evaluation of the models with and without sentiment data.
+Two more Google Colab notebooks were created, one to facilitate the creation of the dataset combining data from the sentiment analysis model and historical footballing data, and a further to create the model training and evaluation pipeline. Again, Python was chosen as the development language due to its wide range of machine learning libraries such as Pandas and Numpy. Additionally, Matplotlib was used to create visualisations for the final evaluation of the models with and without sentiment data.
 
 \subsection[Dataset Creation and Feature Engineering]{Dataset Creation and Feature Engineering}
-In order to train the GBM model, a dataset needed to be created with the most relevant features possible. The first stage in achieving this was downloading the historical dataset from the \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}}. This was a simple case of downloading the raw files for each gameweek of the 2022/23 season via GET request, and saving them. Once saved, irrelevant features were dropped, and a Pandas dataframe was created with the concatenation of all gameweek files.
+In order to train the GBM model, a dataset was created with the most relevant features possible. The first stage in achieving this was downloading the historical dataset from the \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}}. This was a simple case of downloading the raw files from Github for each gameweek of the 2022/23 season via GET request, and saving them.
 
-From this point the 'rolling' features were computed, such as 'starts\_last\_3\_weeks' and 'points\_last\_3\_weeks', by using the inbuilt \texttt{.shift} and \texttt{.rolling} methods from Pandas. The dataset rows were grouped by name, team, and gameweek (there are no players with the same name on the same team, so this provides a unique record) and then \texttt{.shift(1)} could be used to look back 1 gameweek, whilst \texttt{.shift(1).rolling(3)} would look back at 3 previous gameweeks. This allowed for easy and efficient calculation of features, without having to use any loops or array methods. Once these calculations were done, any empty rows were dropped and the dataset was examined to ensure features had been correctly calculated. 
+From this point the 'rolling' features were computed, such as 'starts\_last\_3\_weeks' and 'points\_last\_3\_weeks', by using the inbuilt \texttt{.shift} and \texttt{.rolling} methods from Pandas. The dataset rows were grouped by name, team, position and gameweek to obtain unique records. From here \texttt{.shift(1)} could be used to look back 1 gameweek, whilst \texttt{.shift(1).rolling(3)} would look back at 3 previous gameweeks. This allowed for easy and efficient calculation of features, without having to use any loops or array methods. Once these calculations were done, any empty rows were dropped and the relevant features were saved to a dataframe. 
 
-The next step was to add in the sentiment data that is so important to this study. This was done by taking the unseen Twitter data from the dataset identified in the sentiment analysis chapter, and running those tweets through the sentiment analysis model to get a list of tweets for every player and every gameweek, labelled as 'positive', 'neutral', or 'negative'. To do this each tweet from the dataset was tagged with the gameweek it belonged to, using the tweet timestamp. The data was pre-processed using the same steps as model training, and then model was loaded using the Hugging Face API so the tweets could be run through it to get a sentiment prediction for each tweet. 
+The list of relevant features used for the dataset is as follows:
 
-The positive and negative sentiment values for each player for each gameweek were then summed, resulting in a 'positive\_tweets' and 'negative\_tweets' counter for each player and gameweek. The player and gameweek columns were then matched with the same record in the dataframe containing historical information, and merge was performed to get a final dataset. When implementing this, it became clear there were some player names that contained typos and matching player names was not behaving as expected. To fix this, the \texttt{rapidfuzz} library was used, which is a matching library that accounts for typos. This meant small typos were not an issue and the sentiment data was correctly appended to the main dataframe.
+ \texttt{'points\_last\_week', 'points\_2\_weeks\_ago', 'points\_3\_weeks\_ago',\\
+ 'avg\_points\_last\_3\_weeks', 'expected\_goal\_involvements\_last\_3\_weeks', 'ict\_index\_last\_3\_weeks','creativity\_last\_3\_weeks',\\
+ 'threat\_last\_3\_weeks', 'bps\_last\_3\_weeks', 'minutes\_last\_week',\\
+ 'minutes\_last\_3\_weeks','starts\_last\_3\_weeks',\\
+ 'transfers\_in\_last\_week', 'transfers\_out\_last\_week',\\
+ 'value\_change\_last\_week', 'was\_home\_last\_week',\\
+ 'team\_goals\_scored\_last\_3\_weeks','team\_clean\_sheets\_last\_3\_weeks',\\
+ 'total\_points', 'value'}
+
+ After saving these features the dataset was examined to ensure features had been correctly calculated. 
+ 
+ 	% -------------------------------------------------------------
+	% DATASET VIEW
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[scale=0.38]{historical-data}
+	\caption{The dataset with rolling features computed.}
+	\label{default}
+	\end{figure}
+	% -------------------------------------------------------------
+	% DATASET VIEW
+	% -------------------------------------------------------------
+
+The next step was to add in the sentiment data. This was done by taking the unseen Twitter data from the dataset identified in the sentiment analysis chapter, and running those tweets through the sentiment analysis model to get a list of labelled tweets for every player and every gameweek. To do this each tweet from the dataset was tagged with the gameweek it belonged to, using the tweet timestamp. The start date of each gameweek was taken from the same Github repo that contains the historical data, so matching the start dates with the tweet timestamp was trivial. 
+
+Next the data was pre-processed using the same steps as model training, and then the saved sentiment analysis model was loaded using the Hugging Face API so the tweets could be run through it to get a sentiment prediction. 
+
+ 	% -------------------------------------------------------------
+	% LABELLED TWEETS
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[scale=0.48]{labelled-tweets}
+	\caption{The tweets after being run through the sentiment analysis model.}
+	\label{default}
+	\end{figure}
+	% -------------------------------------------------------------
+	% LABELLED TWEETS
+	% -------------------------------------------------------------
+	
+The positive and negative sentiment values for each player for each gameweek were then summed, resulting in a 'positive\_tweets' and 'negative\_tweets' counter for each player and gameweek. The player and gameweek columns were then matched with the same record in the dataframe containing historical information, and merge was performed to get a final dataset. 
+
+When implementing name matching, it became clear there were some player names that contained typos and abnormal characters (see Figure 5.4) so matching player names was not behaving as expected. To fix this, the \texttt{rapidfuzz} library was used, which is a matching library that accounts for typos. When checking if two names are the same, it creates a confidence score based on how similar the texts are. To account for typos and missing characters a confidence threshold of 80\% was set. The inclusion of this matching approach meant the sentiment data was correctly appended to the main dataframe.
 
 This final dataframe was saved as a CSV file and then uploaded to a Hugging Face repository so that it could be used by the second notebook for training and evaluating the GBM model.
+\newpage 
 
 \subsection[Data Pre-Processing]{Data Pre-Processing}
-To process the dataset before it could be used for training, sklearn and Pandas were used. Pandas was used to remove the identifying features: name and gameweek, from the actual inputs, with the intent to add them back to the dataset once final model predictions had been generated. This way a dataset of expected points for each player and gameweek could be generated.
+To process the dataset before it was used for training, sklearn and Pandas were used. Firstly empty rows and duplicates were removed from the dataset using the \texttt{dropna} and \texttt{drop\_duplicates} methods belonging to the Pandas dataframe.
 
-Inputs were scaled using the \texttt{MinMaxScaler} from sklearn which is a simple way of normalising the input values between 0 and 1. A different scaler was used for inputs and the target variable 'total\_points' so that the predictions could be unscaled at the end. Additionally, the team name was encoded using Pandas \texttt{.get\_dummies} method which simply adds a new column for every possible value of team name (one hot encoding). This meant 20 additional columns were added and the specific team column for each row was given a value of 1, with all others having a value of 0. 
+Next the data was split into training and validation sets, but first the data from gameweeks 31-38 was kept back for a final evalution dataset. The remaining gameweeks' data was split into train and validation sets using the \texttt{train\_test\_split} method from sklearn. The \texttt{test\_size} parameter was set to 0.15. The purpose of the final evaluation dataset was to keep hidden data, so the final model could be fairly evaluated without any data leakage during training. The test and train set were used as normal for model training, with around 15k training samples and 3k test samples. 
 
-After this was done duplicates were dropped and the dataset was examined to ensure the correct columns existed, with appropriate values. Finally the dataset was split into test, train and final evaluation datasets. The purpose of the final evaluation dataset was to keep hidden data, so the final model could be fairly evaluated without any data leakage during training. The test and train set were used as normal for model training, with around 15k training samples and 3k test samples. 
+Inputs were scaled using the \texttt{MinMaxScaler} from sklearn which is a simple way of normalising the input values between 0 and 1 to prevent large values from one input being overrepresented by the model weights during training. A different scaler was used for inputs and the target variable 'total\_points' so that the predictions could be unscaled at the end. The scaler was fit on the training dataset and then used to scale the final evaluation and validation sets. This way no data from evaluation and validation sets influenced the scaler values.
+
+Finally pandas was used to remove the identifying features: name, gameweek, position, and value from the actual features, with the intent to add them back to the dataset once final model predictions had been generated. This way a dataset of expected points for each player and gameweek could be generated, with enough information to enforce team selection constraints to form a team.
 
 \subsection[Model Training and Hyperparameter Optimisation]{Model Training and Hyperparameter Optimisation}
-Initially the model was trained with default hyper-parameters, using the class \texttt{LGBMRegressor} from LightGBM. This class makes it extremely simple to create a regression model and train it, which is perfect for the needs of this study. A model object of the class was instantiated and then the \texttt{.fit} method was called, passing in the training data inputs and the target variable.
+Initially the model was trained with default hyper-parameters, using the class \texttt{LGBMRegressor} from LightGBM. This class makes it extremely simple to create a regression model and train it, perfect for the needs of this project. A model object of the class was instantiated passing in 'rsme' as the metric, and then the \texttt{.fit} method was called passing in the training data inputs and the target variable.
 
-The \texttt{.predict} method was called on the same model with the validation data to get a performance overview of the model. Initial training was promising, with a Root Mean Squared Error (RMSE) of just 0.0753 for the validation set. To further reduce this value, hyper-parameter optimisation was once again employed using Optuna. 
+The \texttt{.predict} method was called on the same model with the validation data to get a performance overview of the model. To get the metrics sklearn and numpy were used, calculating the Root Mean Squared Error (RMSE) using the \texttt{sqrt} function from numpy and the \texttt{mse} function from sklearn. Initial training was promising, with a RMSE of just 0.0753 for the validation set. To further reduce this value, hyper-parameter optimisation was once again employed using Optuna. 
 
-The hyper-parameters to be explored were defined as: 
-
-\begin{itemize}
-	\item Number of Leaves (20 - 100) - controls the maximum number of leaves per tree (complexity). Higher complexity can increase performance but leaves the model susceptible to overfitting. 
-	\item Learning Rate (0.01 - 0.1) - controls the step size during gradient boosting. Lower learning rate leads to slower convergence but better generalisation, while higher learning rate leads to faster convergence but risks overshooting.
-	\item Min Data in Leaf (100 - 1000) - controls minimum number of data points in a leaf. Lower values risk overfitting, whilst higher values capture more information per leaf so are better at generalising.
-	\item Max Depth (3 - 15) - controls the maximum depth of each tree. Deeper trees are more complex but risk overfitting
-\end{itemize}
+\newpage
+The hyper-parameter search space was defined according to~\ref{sec:gbm-training}, and an Optuna study was set up and run. The results of the Optuna study are shown below:
 
 	% -------------------------------------------------------------
 	% OPTUNA TRIAL HISTORY
@@ -896,11 +952,11 @@ Because of the computational efficiency of LightGBM and the relatively speedy pr
 Additionally, the Optuna visualisation tools were used to plot a visualisation of how RMSE was reduced progressively as the search space was explored.
 
 \subsection[Evaluation of Sentiment and Non-Sentiment Based Models]{Evaluation of Sentiment and Non-Sentiment Based Models}
-The entire purpose of this study is to compare how models with sentiment information captured via Twitter perform against models without this information. As such it made sense to train another model using the exact same dataset, minus the 'positive\_tweets' and 'negative\_tweets' features. 
+The primary goal of this project is to evaluate how incorporating sentiment data taken from Twitter affects model performance compared to models relying solely on historical features. As such it made sense to train another model using the same dataset, with the exception of the \texttt{'positive\_tweets'} and \texttt{'negative\_tweets'} features. 
 
-This way a valid comparison could be made between the two models, and any notable differences could be observed. The first comparison was the RMSE of validation data between the two models. The model trained with the sentiment data produced a RMSE of 0.07208, whilst the model trained without sentiment data produced 0.07221. This small difference favours the model trained with sentiment data, however it is hard to draw conclusions from such a small change.
+This set up allows for a fair comparison between the two models, and any notable differences could be observed. The first comparison was the RMSE of validation data between the two models. The model with sentiment features produced a RMSE of 0.0723, while the model trained without sentiment features scored 0.0725. This small difference favours the model trained with sentiment features, however it is hard to draw conclusions from such a small change.
 
-To get a better understanding, matplotlib was used to visualise feature importance and the distribution of the residuals (real value - prediction) for each model. 
+To further explore this, matplotlib was used to visualise the distribution of the residuals (the difference between true and predicted values) for each model. 
 
 	% -------------------------------------------------------------
 	% RESIDUALS DISTRIBUTION
@@ -908,17 +964,17 @@ To get a better understanding, matplotlib was used to visualise feature importan
 	\begin{figure}[htbp]
 	\begin{center}
 	\includegraphics[scale=0.35]{residuals-distribution}
-	\caption{How residuals are distributed for each model.}
-	\label{default}
+	\caption{Residuals distribution for each model.}
+	\label{residuals-distribution}
 	\end{center}
 	\end{figure}
 	% -------------------------------------------------------------
 	% RESIDUALS DISTRIBUTION
 	% -------------------------------------------------------------
 	
-From the residual distribution plot, it is clear the model with sentiment has a lot more predictions that are exactly correct or only slightly off (as indicated by the spike at 0.0). In contrast, the model without sentiment data has slightly more spread out predictions which indicate its predictions tend to deviate further from the true values. 
+As shown in Figure~\ref{residuals-distribution}, the sentiment-based model had a higher peak around zero, indicating more predictions that were exactly correct or only slightly incorrect. In contrast, the model without sentiment data has slightly more spread out predictions which implies its predictions tend to deviate further from the true values. 
 
-This suggests that the incorporation of sentiment data helps the model to gather more information and make more accurate predictions, reducing any large errors. It seems that positive sentiment can act as a proxy for additional crowd wisdom. It is also worth noting the most important feature 'transfers\_in\_last\_week' (how many people bought that player) is another metric of capturing crowd wisdom, so it is clearly important to predicting overall performance.
+This supports the idea that the incorporation of sentiment data helps the model to gather more information and make more accurate predictions, reducing any large errors. It seems that positive sentiment can act as a proxy for additional crowd wisdom. It is also worth noting the most important feature 'transfers\_in\_last\_week' (how many people bought a player) is another feature that reflects collective manager behaviour, reinforcing the idea that aggregating public sentiment and behaviour provides value.
 
 	% -------------------------------------------------------------
 	% FEATURE IMPORTANCE
@@ -927,27 +983,58 @@ This suggests that the incorporation of sentiment data helps the model to gather
 	\begin{center}
 	\includegraphics[scale=0.4]{feature-importance}
 	\caption{Top 10 features by importance}
-	\label{default}
+	\label{feature-importance}
 	\end{center}
 	\end{figure}
 	% -------------------------------------------------------------
 	% FEATURE IMPORTANCE
 	% -------------------------------------------------------------
 
-The wider spread from the model without sentiment data suggests it is less confident due to the lack of additional knowledge not captured by historical data. 
-
-The feature importance analysis shows that 'positive\_tweets' ranks 10th, just behind 'points\_last\_week'. This suggests that positive sentiment contributes meaningfully to model performance. Additionally, the ranking implies that positive sentiment has a stronger correlation with player performance than negative sentiment.
+As further evidence, the feature importance plot (Figure~\ref{feature-importance}) ranks 'positive\_tweets' in 10th place, just behind 'points\_last\_week', suggesting that positive sentiment contributes meaningfully to the model. Notably, negative sentiment did not appear among the top features, indicating that positive sentiment may have a stronger correlation with future performance than negative sentiment.
 % -------------------------------------------------------------
 % TEAM SELECTION ALGORITHM
 % -------------------------------------------------------------
 \section[Team Selection Algorithm]{Team Selection Algorithm}
+The team selection algorithm was also implemented using Python in Google Colab. Python was chosen because of the PuLP library that can be used to solve linear integer programming problems, and Colab was used for consistency with the rest of the project, along with the added readability that markup text provides.
+
+PuLP allowed for the easy definition of the problem and constraints, with a simple API for solving the problem with just a few lines of code. The Colab environment allowed for quick experimentation and visualisation of results, and its familiar format used for the other components of the prediction model meant it was an ideal platform for the development of the team selection pipeline.
+\subsection[Squad Selection]{Squad Selection}
+The first stage of the team selection pipeline was to define a function that returned an optimal squad of 15 players based on some points predictions. 
+
+The problem was defined by creating an object from the \texttt{LpProblem} class in PuLP, with the aim set to \texttt{pulp.LpMaximize}, meaning the goal is to maximise the total number of predicted points. For each player in the dataset, a binary decision variable was created using the \texttt{LpVariable} class. This variable is set to 1 if the player is selected for the team, and 0 otherwise.
+
+The objective function was then added to the problem. It calculates the total predicted points of all selected players by multiplying each player's predicted points by their decision variable, and summing the results. This was done using the \texttt{lpSum} function which tells the solver to pick a set of players such that the total expected points is as high as possible.
+
+Next the constraints were added to make sure the selected squad follows the FPL rules. Each constraint was added using \texttt{lpSum} to ensure constraints were satisfied based on the player data in the input DataFrame. After defining the full optimisation problem, \texttt{problem.solve()} was used to compute the optimal squad. The final selected players were extracted by checking which decision variables were set to 1. Finally a dataframe containing the name, team, position, value, expected points, and actual points for all 15 selected players was returned.
+\newpage
+
+\subsection[Team Selection and Real-World Performance Evaulation]{Team Selection and Real-World Performance Evaulation}
+The second stage of the selection pipeline was to use the squad selection function to generate squads for each model and each gameweek. Then a starting eleven team was chosen from each squad, a captaincy chip was applied and the final points total was calculated so each model could be evaluated.
+
+For selection of a starting eleven a function was defined that took the squad of 15 as input, then sorted players into dataframes for each position ordered by expected points. An initial team of 8 was constructed by using the \texttt{.head()} method for each position's dataframe: 
+
+\begin{verbatim} starting = pd.concat([
+        gks.head(1),
+        defs.head(3),
+        mids.head(3),
+        fwds.head(1)
+    ]) \end{verbatim}
+
+To fill the rest of the available positions, the remaining players were combined into one dataframe again sorted by expected points, and the top three players were selected to form a team of eleven.
+ 
+ With both functions defined, the teams and resulting points for each model and each gameweek could be generated. To do this a dictionary was created with arrays for the \texttt{all\_data}, \texttt{no\_sentiment\_data}, and \texttt{optimal\_score} models. Then the gameweeks were looped through, extracting the relevant columns for expected points for each model and the true points scored, this information was added to the arrays in the dictionary.
+ 
+Then for each gameweek and model, the \texttt{select\_fpl\_team} function defined earlier was called with the relevant data to get the optimal squad. This was run through the \texttt{select\_starting\_xi} function to get the best eleven players, and then the actual points scored by that eleven was calculated using \texttt{.sum()}. The best player (player with highest expected points) from the eleven had their points added to the total again to simulate their points being doubled (captaincy).
+ 
+The resulting teams and points scored for each week were saved for evaluation, with visualisations being generated using matplotlib. The results of final evaluation are detailed in chapter~\ref{chapter:results}.
 % -------------------------------------------------------------
 % RESULTS AND DISCUSSION
 % -------------------------------------------------------------
 \chapter[Results and Discussion]{Results and Discussion} 
-This chapter outlines the results of testing the final model, along with comparisons of total points scored for the final 8 gameweeks of the 2022/23 FPL season. The goal of this project is to evaluate the performance of a new FPL prediction model constructed using existing methods, but with the inclusion of a novel sentiment data source - Twitter. As such, the final model has been evaluated over multiple gameweeks alongside existing baselines. A comprehensive outline of all findings have been included in this chapter.
+\label{chapter:results}
+The goal of this project is to evaluate the performance of a new FPL prediction model constructed using existing methods, but with the inclusion of a novel sentiment data source - Twitter. As such, this chapter outlines the findings of final model evaluation over multiple gameweeks alongside existing baselines.
 
-The model is compared against the baseline average scores of the playerbase, a Gradient Boosting Machine model without twitter data, the final GBM model that includes twitter data, and the best possible score that could have been achieved. The results suggest that the lack of Twitter data available currently prevent any solid conclusions from being drawn about how effective it is as a sentiment data source. As well as this the limited timescale from which to draw comparisons (just 8 gameweeks) further limit the extent to which any concrete conclusions can be made. The GBM models constructed both perform almost identically with minimal differences, outscoring the average player consistently whilst remaining far away from the best possible score.
+The model is compared against the baseline average scores of all managers, a Gradient Boosting Machine model without twitter data, the final GBM model that includes twitter data, and the best possible score that could have been achieved. The results suggest that the lack of Twitter data available currently prevent any solid conclusions from being drawn about how effective it is as a sentiment data source. As well as this the limited timescale from which to draw comparisons (just 8 gameweeks) further limit the extent to which any concrete conclusions can be made. The GBM models constructed both perform almost identically with minimal differences, outscoring the average player consistently whilst remaining far away from the best possible score.
 % -------------------------------------------------------------
 % CONCLUSION AND FUTURE WORK
 % -------------------------------------------------------------

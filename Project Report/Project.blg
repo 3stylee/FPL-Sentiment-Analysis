@@ -23,7 +23,6 @@ I was expecting a `,' or a `}'---line 520 of file Bib.bib
  :   year={2024},
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-Warning--I didn't find a database entry for "GS"
 -- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
@@ -34,7 +33,7 @@ Warning--empty booktitle in sentiment-cls-diagram
 Done.
 You've used 60 entries,
             4087 wiz_defined-function locations,
-            1139 strings with 18035 characters,
+            1137 strings with 18031 characters,
 and the built_in function-call counts, 31820 in all, are:
 = -- 2406
 > -- 790
