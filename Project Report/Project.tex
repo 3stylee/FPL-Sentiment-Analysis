@@ -952,45 +952,17 @@ Because of the computational efficiency of LightGBM and the relatively speedy pr
 Additionally, the Optuna visualisation tools were used to plot a visualisation of how RMSE was reduced progressively as the search space was explored.
 
 \subsection[Evaluation of Sentiment and Non-Sentiment Based Models]{Evaluation of Sentiment and Non-Sentiment Based Models}
-The primary goal of this project is to evaluate how incorporating sentiment data taken from Twitter affects model performance compared to models relying solely on historical features. As such it made sense to train another model using the same dataset, with the exception of the \texttt{'positive\_tweets'} and \texttt{'negative\_tweets'} features. 
+\label{section:xpm-eval}
+To evaluate how sentiment data affected the model, it made sense to train another model using the same dataset minus the \texttt{'positive\_tweets'} and\\
+ \texttt{'negative\_tweets'} features. 
 
-This set up allows for a fair comparison between the two models, and any notable differences could be observed. The first comparison was the RMSE of validation data between the two models. The model with sentiment features produced a RMSE of 0.0723, while the model trained without sentiment features scored 0.0725. This small difference favours the model trained with sentiment features, however it is hard to draw conclusions from such a small change.
+This set up allowed for a fair comparison between the two models, and any notable differences could be observed. To create both models, new dataframes for the training and evaluation data were created by taking copies of the originals and dropping the sentiment data columns. Two model objects were then created and trained on the data using the hyper-parameter configuration obtained from the Optuna study. 
 
-To further explore this, matplotlib was used to visualise the distribution of the residuals (the difference between true and predicted values) for each model. 
+Initially the RMSE was calculated manually like for the initial model and then compared between the two models. By comparing the RMSE for the same target variables in both models, we can get an idea of how far each model's predictions are from the true values. After examining the difference between the RMSE of the two models, it was found the difference was fairly small and likely within the margin of error. To combat this, cross validation was performed using the \texttt{cross\_val\_score} method from sklearn with a \texttt{cv} value of 5. This method splits the data into 5 training and test sets, trains a model on each split, and then averages the RMSE across all splits. Using cross-validation ensures that any observed differences between models are not due to random variability in specific train-test splits, but more general differences in model performance.
 
-	% -------------------------------------------------------------
-	% RESIDUALS DISTRIBUTION
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\begin{center}
-	\includegraphics[scale=0.35]{residuals-distribution}
-	\caption{Residuals distribution for each model.}
-	\label{residuals-distribution}
-	\end{center}
-	\end{figure}
-	% -------------------------------------------------------------
-	% RESIDUALS DISTRIBUTION
-	% -------------------------------------------------------------
-	
-As shown in Figure~\ref{residuals-distribution}, the sentiment-based model had a higher peak around zero, indicating more predictions that were exactly correct or only slightly incorrect. In contrast, the model without sentiment data has slightly more spread out predictions which implies its predictions tend to deviate further from the true values. 
+To visualise the differences between the predictions of each model, a histogram of residuals (true values - predicted values) was plotted using matplotlib. As well as this, a feature importance chart was created using lightGBM's \texttt{plot\_importance} method.
 
-This supports the idea that the incorporation of sentiment data helps the model to gather more information and make more accurate predictions, reducing any large errors. It seems that positive sentiment can act as a proxy for additional crowd wisdom. It is also worth noting the most important feature 'transfers\_in\_last\_week' (how many people bought a player) is another feature that reflects collective manager behaviour, reinforcing the idea that aggregating public sentiment and behaviour provides value.
-
-	% -------------------------------------------------------------
-	% FEATURE IMPORTANCE
-	% -------------------------------------------------------------
-	\begin{figure}[htbp]
-	\begin{center}
-	\includegraphics[scale=0.4]{feature-importance}
-	\caption{Top 10 features by importance}
-	\label{feature-importance}
-	\end{center}
-	\end{figure}
-	% -------------------------------------------------------------
-	% FEATURE IMPORTANCE
-	% -------------------------------------------------------------
-
-As further evidence, the feature importance plot (Figure~\ref{feature-importance}) ranks 'positive\_tweets' in 10th place, just behind 'points\_last\_week', suggesting that positive sentiment contributes meaningfully to the model. Notably, negative sentiment did not appear among the top features, indicating that positive sentiment may have a stronger correlation with future performance than negative sentiment.
+These visualisations, along with RMSE comparisons are detailed in section~\ref{section:model-comparisons}.
 % -------------------------------------------------------------
 % TEAM SELECTION ALGORITHM
 % -------------------------------------------------------------
@@ -1006,7 +978,6 @@ The problem was defined by creating an object from the \texttt{LpProblem} class 
 The objective function was then added to the problem. It calculates the total predicted points of all selected players by multiplying each player's predicted points by their decision variable, and summing the results. This was done using the \texttt{lpSum} function which tells the solver to pick a set of players such that the total expected points is as high as possible.
 
 Next the constraints were added to make sure the selected squad follows the FPL rules. Each constraint was added using \texttt{lpSum} to ensure constraints were satisfied based on the player data in the input DataFrame. After defining the full optimisation problem, \texttt{problem.solve()} was used to compute the optimal squad. The final selected players were extracted by checking which decision variables were set to 1. Finally a dataframe containing the name, team, position, value, expected points, and actual points for all 15 selected players was returned.
-\newpage
 
 \subsection[Team Selection and Real-World Performance Evaulation]{Team Selection and Real-World Performance Evaulation}
 The second stage of the selection pipeline was to use the squad selection function to generate squads for each model and each gameweek. Then a starting eleven team was chosen from each squad, a captaincy chip was applied and the final points total was calculated so each model could be evaluated.
@@ -1022,9 +993,9 @@ For selection of a starting eleven a function was defined that took the squad of
 
 To fill the rest of the available positions, the remaining players were combined into one dataframe again sorted by expected points, and the top three players were selected to form a team of eleven.
  
- With both functions defined, the teams and resulting points for each model and each gameweek could be generated. To do this a dictionary was created with arrays for the \texttt{all\_data}, \texttt{no\_sentiment\_data}, and \texttt{optimal\_score} models. Then the gameweeks were looped through, extracting the relevant columns for expected points for each model and the true points scored, this information was added to the arrays in the dictionary.
+With both functions defined, the teams and resulting points for each model and each gameweek could be generated. To do this a dictionary was created with arrays for the \texttt{all\_data}, \texttt{no\_sentiment\_data}, and \texttt{optimal\_score} models. Then the gameweeks were looped through, extracting the relevant columns for expected points for each model and the true points scored, this information was added to the arrays in the dictionary.
  
-Then for each gameweek and model, the \texttt{select\_fpl\_team} function defined earlier was called with the relevant data to get the optimal squad. This was run through the \texttt{select\_starting\_xi} function to get the best eleven players, and then the actual points scored by that eleven was calculated using \texttt{.sum()}. The best player (player with highest expected points) from the eleven had their points added to the total again to simulate their points being doubled (captaincy).
+Then for each gameweek and model, the \texttt{select\_fpl\_team} function defined earlier was called with the relevant data to get the optimal squad. This was run through the \texttt{select\_starting\_xi} function to get the best eleven players, and then the actual points scored by that eleven was calculated using \texttt{.sum()}. The best player (player with highest expected points) from the eleven had their points added to the total again to simulate their points being doubled.
  
 The resulting teams and points scored for each week were saved for evaluation, with visualisations being generated using matplotlib. The results of final evaluation are detailed in chapter~\ref{chapter:results}.
 % -------------------------------------------------------------
@@ -1035,6 +1006,43 @@ The resulting teams and points scored for each week were saved for evaluation, w
 The goal of this project is to evaluate the performance of a new FPL prediction model constructed using existing methods, but with the inclusion of a novel sentiment data source - Twitter. As such, this chapter outlines the findings of final model evaluation over multiple gameweeks alongside existing baselines.
 
 The model is compared against the baseline average scores of all managers, a Gradient Boosting Machine model without twitter data, the final GBM model that includes twitter data, and the best possible score that could have been achieved. The results suggest that the lack of Twitter data available currently prevent any solid conclusions from being drawn about how effective it is as a sentiment data source. As well as this the limited timescale from which to draw comparisons (just 8 gameweeks) further limit the extent to which any concrete conclusions can be made. The GBM models constructed both perform almost identically with minimal differences, outscoring the average player consistently whilst remaining far away from the best possible score.
+
+\section[Model Performance Evaluation]{Model Performance Evaluation}
+\label{section:model-comparisons}
+As outlined in section~\ref{section:xpm-eval}, Root Mean Squared Error (RMSE) was used to evaluate the performance of the expected points model. RMSE measures the average magnitude of prediction errors, where lower values indicate better performance. Additionally, to evaluate how much impact the sentiment data had on the model, another model was trained using a modified dataset that excludes all twitter sentiment information, and the RSME of the two models compared. By comparing RMSE for the same GBM model and hyper-parameter configuration, we can observe if the model trained using sentiment information generates predictions closer to the true values.
+
+Cross validation was used to ensure differences in RMSE for each model were not due to randomness or a favourable train test split. The results showed that the average RMSE for the model trained with sentiment data was \textbf{0.0711 ± 0.0060}, while the model without sentiment data achieved an average RMSE of \textbf{0.0711 ± 0.0059}. Although the RMSE for the sentiment model was marginally lower, the difference falls well within the standard deviation. This seems to suggest that sentiment data did not significantly improve model performance in terms of RMSE alone.
+
+To further explore the differences between models, and to ensure there is no significant difference that was not captured by RMSE alone, additional analysis was performed. This included a plot of the residual distribution between both models (\ref{residual-histogram}), as well as a feature importance chart (\ref{feature-importance}).
+
+
+	% -------------------------------------------------------------
+	% RESIDUAL DISTRIBUTION
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.32]{residuals-distribution}
+	\caption{Distribution of residuals for each model}
+	\label{residual-histogram}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% RESIDUAL DISTRIBUTION
+	% -------------------------------------------------------------
+	
+	% -------------------------------------------------------------
+	% FEATURE IMPORTANCE
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.43]{feature-importance}
+	\caption{Feature importance}
+	\label{feature-importance}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% FEATURE IMPORTANCE
+	% -------------------------------------------------------------
 % -------------------------------------------------------------
 % CONCLUSION AND FUTURE WORK
 % -------------------------------------------------------------
