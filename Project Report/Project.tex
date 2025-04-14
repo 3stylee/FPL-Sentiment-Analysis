@@ -74,7 +74,7 @@ However, using social media can often be a tedious process, sifting through thou
 % -------------------------------------------------------------
 \section[Rules of FPL]{Rules of FPL}
 \label{sec:rules-of-fpl}
-Note the terms \textit{player} and \textit{manager} are often confused when it comes to FPL, so please be aware that this study uses the term \textit{manager} to refer to people who participate in the game of FPL, and \textit{players} to refer to real-life premier league footballers.
+Note the terms \textit{player} and \textit{manager} are often confused when it comes to FPL, so please be aware that this study uses the term \textit{manager} to refer to people who participate in the game of FPL, and \textit{player} to refer to real-life premier league footballers.
 
 Fantasy Premier League is a mirror of the real-life English Premier League, meaning that each in game event (referred to as a \textit{gameweek}) represents a set of real-life football matches. The game takes place over a \textit{season} which usually runs from August until May of the following calendar year, and at the end of the season the winner is crowned. There are 20 teams who play each other twice over the course of the season, resulting in a total of 38 gameweeks. Note that sometimes due to unforeseen circumstances like bad weather or domestic cup fixtures, games are postponed resulting in a team not playing in one gameweek (known as a \textit{blank} gameweek), and playing twice in another gameweek (known as a \textit{double} gameweek) to make up.
 
@@ -643,6 +643,7 @@ Finally, the final evaluation data was then run through the model to get expecte
 % OPTIMAL TEAM SELECTION ALGORITHM
 % -------------------------------------------------------------
 \section[Optimal Team Selection Algorithm]{Optimal Team Selection Algorithm}
+\label{section:team-selection}
 To fully evaluate the performance of the final prediction model, it needs to be tested under real-world conditions. This means using unseen data to gather predictions for real FPL gameweeks. This prediction data needs to be transformed from a points prediction score for each player in the game, to a useful team recommendation. 
 
 In order to do this and form real teams that satisfy the rules of the game, a selection algorithm was constructed to find the best possible team from the information available. This selection algorithm used integer linear programming in order to select the most optimal 15 players (maximise expected points) whilst satisfying the budgetary, positional, and squad size constraints. The pool of available players contained around 500 individuals making the optimisation computationally significant and non-trivial.
@@ -926,7 +927,7 @@ Inputs were scaled using the \texttt{MinMaxScaler} from sklearn which is a simpl
 Finally pandas was used to remove the identifying features: name, gameweek, position, and value from the actual features, with the intent to add them back to the dataset once final model predictions had been generated. This way a dataset of expected points for each player and gameweek could be generated, with enough information to enforce team selection constraints to form a team.
 
 \subsection[Model Training and Hyperparameter Optimisation]{Model Training and Hyperparameter Optimisation}
-Initially the model was trained with default hyper-parameters, using the class \texttt{LGBMRegressor} from LightGBM. This class makes it extremely simple to create a regression model and train it, perfect for the needs of this project. A model object of the class was instantiated passing in 'rsme' as the metric, and then the \texttt{.fit} method was called passing in the training data inputs and the target variable.
+Initially the model was trained with default hyper-parameters, using the class \texttt{LGBMRegressor} from LightGBM. This class makes it extremely simple to create a regression model and train it, perfect for the needs of this project. A model object of the class was instantiated passing in 'rmse' as the metric, and then the \texttt{.fit} method was called passing in the training data inputs and the target variable.
 
 The \texttt{.predict} method was called on the same model with the validation data to get a performance overview of the model. To get the metrics sklearn and numpy were used, calculating the Root Mean Squared Error (RMSE) using the \texttt{sqrt} function from numpy and the \texttt{mse} function from sklearn. Initial training was promising, with a RMSE of just 0.0753 for the validation set. To further reduce this value, hyper-parameter optimisation was once again employed using Optuna. 
 
@@ -1005,11 +1006,11 @@ The resulting teams and points scored for each week were saved for evaluation, w
 \label{chapter:results}
 The goal of this project is to evaluate the performance of a new FPL prediction model constructed using existing methods, but with the inclusion of a novel sentiment data source - Twitter. As such, this chapter outlines the findings of final model evaluation over multiple gameweeks alongside existing baselines.
 
-The model is compared against the baseline average scores of all managers, a Gradient Boosting Machine model without twitter data, the final GBM model that includes twitter data, and the best possible score that could have been achieved. The results suggest that the lack of Twitter data available currently prevent any solid conclusions from being drawn about how effective it is as a sentiment data source. As well as this the limited timescale from which to draw comparisons (just 8 gameweeks) further limit the extent to which any concrete conclusions can be made. The GBM models constructed both perform almost identically with minimal differences, outscoring the average player consistently whilst remaining far away from the best possible score.
+The model is compared against the baseline average scores of all managers, a Gradient Boosting Machine model without twitter data, the final GBM model that includes twitter data, and the best possible score that could have been achieved. The results suggest that the lack of Twitter data available currently prevent any solid conclusions from being drawn about how effective it is as a sentiment data source. As well as this the limited timescale from which to draw comparisons (just 8 gameweeks) further limit the extent to which any concrete conclusions can be made. The GBM models constructed both perform almost identically with minimal differences.
 
 \section[Model Performance Evaluation]{Model Performance Evaluation}
 \label{section:model-comparisons}
-As outlined in section~\ref{section:xpm-eval}, Root Mean Squared Error (RMSE) was used to evaluate the performance of the expected points model. RMSE measures the average magnitude of prediction errors, where lower values indicate better performance. Additionally, to evaluate how much impact the sentiment data had on the model, another model was trained using a modified dataset that excludes all twitter sentiment information, and the RSME of the two models compared. By comparing RMSE for the same GBM model and hyper-parameter configuration, we can observe if the model trained using sentiment information generates predictions closer to the true values.
+As outlined in section~\ref{section:xpm-eval}, Root Mean Squared Error (RMSE) was used to evaluate the performance of the expected points model. RMSE measures the average magnitude of prediction errors, where lower values indicate better performance. Additionally, to evaluate how much impact the sentiment data had on the model, another model was trained using a modified dataset that excludes all twitter sentiment information, and the RMSE of the two models compared.Since both models use the same GBM architecture and hyper-parameters, any differences in RMSE can be attributed to the presence or absence of sentiment data.
 
 Cross validation was used to ensure differences in RMSE for each model were not due to randomness or a favourable train test split. The results showed that the average RMSE for the model trained with sentiment data was \textbf{0.0711 ± 0.0060}, while the model without sentiment data achieved an average RMSE of \textbf{0.0711 ± 0.0059}. Although the RMSE for the sentiment model was marginally lower, the difference falls well within the standard deviation. This seems to suggest that sentiment data did not significantly improve model performance in terms of RMSE alone.
 
@@ -1029,13 +1030,15 @@ To further explore the differences between models, and to ensure there is no sig
 	% -------------------------------------------------------------
 	% RESIDUAL DISTRIBUTION
 	% -------------------------------------------------------------
-	
+
+The histogram of residuals (\ref{residual-histogram}) shows a general trend with most prediction errors concentrated towards the center and then a gradual tail-off as the predictions get further from the true values. The plot for the sentiment-informed model almost exactly fits the plot for the model with no sentiment information, suggesting no meaningful difference between the two models. If anything, there is a larger peak of exactly, or almost exactly, correct predictions (at 0.0 on the x-axis) for the model trained using no twitter sentiment information. The blue bars slightly to either side representing the sentiment-informed model's predictions could suggest it tends to miss the true values by a small amount more than the non sentiment-informed model. However, the differences shown in the histogram are so marginal that they could easily be due to favourable train test splits, and thus it is hard to draw any conclusions about how they differ in terms of performance.
+
 	% -------------------------------------------------------------
 	% FEATURE IMPORTANCE
 	% -------------------------------------------------------------
 	\begin{figure}[htbp]
 	\begin{center}
-	\includegraphics[scale=0.43]{feature-importance}
+	\includegraphics[scale=0.45]{feature-importance}
 	\caption{Feature importance}
 	\label{feature-importance}
 	\end{center}
@@ -1043,6 +1046,100 @@ To further explore the differences between models, and to ensure there is no sig
 	% -------------------------------------------------------------
 	% FEATURE IMPORTANCE
 	% -------------------------------------------------------------
+	
+Plotting the feature importance of the final model, the new \texttt{positive\_tweets} feature added to the dataset ranked 24th in importance, with a score of just 22. Given the fifty feature columns that make up the entire dataset, this places it within the top half of features suggesting its inclusion does add some meaningful benefit to model performance. This may explain the small differences in RMSE between the two models. However, with a gap of over 150 importance points from the top 3, the benefit of its inclusion appears minimal. 
+
+Interestingly, the top three features all represent some form of crowd perception.or behaviour. With \texttt{transfers\_in\_last\_week} and \texttt{selected} indicating the recent and overall popularity of a player among managers' teams, and \texttt{value\_last\_week} tracking how a player's price (directly tied to popularity) changes. 
+
+This suggests crowd wisdom and sentiment information are extremely important for predicting player performance - as expected. The gap between the top three features and the \texttt{positive\_tweets} feature may be explained by the lack of Twitter data available during training. The importance gap could also indicate that Twitter is not a suitable data source for capturing sentiment information, perhaps due to the noise and non-FPL related content.
+
+Overall, while crowd-based signals such as transfers and price movements appear to provide strong and reliable sentiment information, improving model performance, data taken explicitly from Twitter appears to offer only marginal additional value.
+
+\newpage
+\section[Team Selection Evaluation]{Team Selection Evaluation}
+Detailed in section~\ref{section:team-selection}, the final model was evaluated on unseen data over the course of an 8 gameweek period, in order to evaluate how it performed under real-world conditions. The results of simulating model performance for the final 8 gameweeks of the season were plotted (\ref{point-plot}, and \ref{cumulative-point-plot}). The final model was compared alongside the best possible score, the average score for all players, and the model trained without Twitter data.
+
+	% -------------------------------------------------------------
+	% POINT PLOT
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.45]{point-plot}
+	\caption{Point scores per gameweek}
+	\label{point-plot}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% POINT PLOT
+	% -------------------------------------------------------------
+	 % -------------------------------------------------------------
+	% POINT PLOT CUMULATIVE
+	% -------------------------------------------------------------
+	\begin{figure}[htbp]
+	\begin{center}
+	\includegraphics[scale=0.45]{point-sim-cum}
+	\caption{Point scores per gameweek (cumulative)}
+	\label{cumulative-point-plot}
+	\end{center}
+	\end{figure}
+	% -------------------------------------------------------------
+	% POINT PLOT CUMULATIVE
+	% -------------------------------------------------------------
+
+The gap between the optimal scores and model predictions remains extremely large - with both models and the average scoring around 90 points less in each gameweek. Interestingly, the average manager slightly outperformed both models, although this can be mainly attributed to the time period in which evaluation took place. In the 2022/23 season, double gameweeks (where teams play two matches and can earn double the points) occurred during gameweeks 34 and 36 \cite{double-gameweeks}. Managers typically make use of their \textit{chips}, one-time power-ups that can be used to score extra points, during these gameweeks. Since the prediction model only focuses on predictions for one gameweek in the future, chips were not factored into the simulation.
+
+This matches up with figure~\ref{point-plot} where a noticeable gap between the average score and the model scores appears during those gameweeks, driven by chip usage. During almost all other weeks both models outperformed the average manager. With more data and a full-season simulation, the models would likely show a clearer performance advantage over the average score.
+
+Focusing back on the prediction models, the final model trained with Twitter data outperforms the model trained without by around 25 points over the course of the 8 gameweek period. This could suggest a positive impact from including Twitter data, but again the time period for evaluation is not long enough to draw a solid conclusion. Zooming in on some of the point differences between the two models, gameweeks 32 and 34 stand out to be the largest gaps. Exploring the teams selected by each model during those weeks provides some more insights:
+
+\begin{table}[ht]
+\centering
+\caption{Common Players Selected by Both Models (GW32)}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Player} & \textbf{Expected Points (xp)} & \textbf{Actual Points} \\
+\midrule
+Trent Alexander-Arnold & 5.2 / 5.1 & 5 \\
+Kieran Trippier         & 5.2 / 5 & 2 \\
+Virgil van Dijk         & 4.7 / 4.6 & 1 \\
+Gabriel Martinelli      & 5.5 / 5.4 & 9 \\
+Martin Ødegaard         & 5.2 / 5.2 & 7 \\
+James Maddison          & 4.9 / 5 & 0 \\
+Ivan Toney              & 4.7 / 4.9 & 9 \\
+Eberechi Eze            & 4.8 / 4.7 & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Players Exclusive to Final Model (GW32)}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Player} & \textbf{Expected Points (xp)} & \textbf{Actual Points} \\
+\midrule
+José Sá                  & 4.1 & 1 \\
+Mohamed Salah            & 5.3 & 7 \\
+Alexander Isak           & 4.8 & 13 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Players Exclusive to Model with no Twitter data (GW32)}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Player} & \textbf{Expected Points (xp)} & \textbf{Actual Points} \\
+\midrule
+Nick Pope                      & 4.4 & 2 \\
+Bruno Guimarães                & 4.7 & 2 \\
+Dominic Solanke                & 4.6 & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The players selected exclusively by the final model outscored those chosen exclusively by the non-sentiment model by 15 points thanks to the 7 and 13 point hauls from Mohammed Salah and Alexander Isak. 
 % -------------------------------------------------------------
 % CONCLUSION AND FUTURE WORK
 % -------------------------------------------------------------
