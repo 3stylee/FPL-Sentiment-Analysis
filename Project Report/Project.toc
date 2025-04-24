@@ -38,16 +38,17 @@
 \contentsline {subsection}{\numberline {5.1.1}Data Pre-Processing}{42}{subsection.5.1.1}%
 \contentsline {subsection}{\numberline {5.1.2}Training the Model}{43}{subsection.5.1.2}%
 \contentsline {subsection}{\numberline {5.1.3}Hyper-parameter Optimisation}{44}{subsection.5.1.3}%
-\contentsline {subsection}{\numberline {5.1.4}Model Evaluation}{46}{subsection.5.1.4}%
-\contentsline {section}{\numberline {5.2}Expected Points Model}{47}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Dataset Creation and Feature Engineering}{48}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Data Pre-Processing}{50}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Model Training and Hyperparameter Optimisation}{50}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Evaluation of Sentiment and Non-Sentiment Based Models}{51}{subsection.5.2.4}%
-\contentsline {section}{\numberline {5.3}Team Selection Algorithm}{52}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Squad Selection}{52}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Team Selection and Real-World Performance Evaulation}{53}{subsection.5.3.2}%
-\contentsline {chapter}{\numberline {6}Results and Discussion}{54}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Model Performance Evaluation}{54}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Team Selection Evaluation}{57}{section.6.2}%
-\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{60}{chapter.7}%
+\contentsline {subsection}{\numberline {5.1.4}Model Evaluation}{45}{subsection.5.1.4}%
+\contentsline {section}{\numberline {5.2}Expected Points Model}{46}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Dataset Creation and Feature Engineering}{46}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Data Pre-Processing}{49}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Model Training and Hyperparameter Optimisation}{49}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Evaluation of Sentiment and Non-Sentiment Based Models}{50}{subsection.5.2.4}%
+\contentsline {section}{\numberline {5.3}Team Selection Algorithm}{51}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Squad Selection}{51}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Team Selection and Real-World Performance Evaulation}{52}{subsection.5.3.2}%
+\contentsline {chapter}{\numberline {6}Results and Discussion}{53}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Sentiment Analysis Model Evaluation}{53}{section.6.1}%
+\contentsline {section}{\numberline {6.2}xP Model Performance Evaluation}{55}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Team Selection Evaluation}{58}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{61}{chapter.7}%

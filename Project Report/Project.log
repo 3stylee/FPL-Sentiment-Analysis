@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.30)  14 APR 2025 16:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.30)  24 APR 2025 12:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -396,12 +396,6 @@ LaTeX Warning: Label `default' multiply defined.
 LaTeX Warning: Label `default' multiply defined.
 
 
-LaTeX Warning: Label `tab:config1' multiply defined.
-
-
-LaTeX Warning: Label `tab:config1' multiply defined.
-
-
 LaTeX Warning: Label `default' multiply defined.
 
 
@@ -409,6 +403,9 @@ LaTeX Warning: Label `default' multiply defined.
 
 
 LaTeX Warning: Label `default' multiply defined.
+
+
+LaTeX Warning: Label `tab:scoring_system' multiply defined.
 
 )
 \openout1 = `Project.aux'.
@@ -461,7 +458,7 @@ Package hyperref Info: Link coloring OFF on input line 22.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<lu-logo.png, id=205, 375.4025pt x 135.50626pt>
+<lu-logo.png, id=209, 375.4025pt x 135.50626pt>
 File: lu-logo.png Graphic file (type png)
 <use lu-logo.png>
 Package pdftex.def Info: lu-logo.png  used on input line 28.
@@ -491,7 +488,7 @@ Chapter 1.
 
 {/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
  [5]
-<team-selection-initial.png, id=307, 1279.78125pt x 781.92125pt>
+<team-selection-initial.png, id=312, 1279.78125pt x 781.92125pt>
 File: team-selection-initial.png Graphic file (type png)
 <use team-selection-initial.png>
 Package pdftex.def Info: team-selection-initial.png  used on input line 88.
@@ -507,7 +504,7 @@ Chapter 2.
 
 ] [11] [12] [13] [14]
 Chapter 3.
-<transformer-architecture.png, id=410, 1016.79875pt x 555.07375pt>
+<transformer-architecture.png, id=415, 1016.79875pt x 555.07375pt>
 File: transformer-architecture.png Graphic file (type png)
 <use transformer-architecture.png>
 Package pdftex.def Info: transformer-architecture.png  used on input line 198.
@@ -520,7 +517,7 @@ Overfull \hbox (31.20966pt too wide) in paragraph at lines 198--199
 [15
 
 ] [16 <./transformer-architecture.png>]
-<bert-embedding-layer.png, id=438, 624.4128pt x 301.22136pt>
+<bert-embedding-layer.png, id=443, 624.4128pt x 301.22136pt>
 File: bert-embedding-layer.png Graphic file (type png)
 <use bert-embedding-layer.png>
 Package pdftex.def Info: bert-embedding-layer.png  used on input line 232.
@@ -532,13 +529,13 @@ en learned dur-ing the model's
  []
 
 [17]
-<dot-product-attention.png, id=455, 436.63126pt x 430.60875pt>
+<dot-product-attention.png, id=460, 436.63126pt x 430.60875pt>
 File: dot-product-attention.png Graphic file (type png)
 <use dot-product-attention.png>
 Package pdftex.def Info: dot-product-attention.png  used on input line 261.
 (pdftex.def)             Requested size: 174.6494pt x 172.24043pt.
  [18 <./bert-embedding-layer.png>]
-<multi-head-attention.png, id=467, 436.63126pt x 430.60875pt>
+<multi-head-attention.png, id=472, 436.63126pt x 430.60875pt>
 File: multi-head-attention.png Graphic file (type png)
 <use multi-head-attention.png>
 Package pdftex.def Info: multi-head-attention.png  used on input line 281.
@@ -549,19 +546,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 304--305
  []
 
 [20 <./multi-head-attention.png>] [21]
-<bert-pre-training.png, id=509, 453.695pt x 456.70625pt>
+<bert-pre-training.png, id=514, 453.695pt x 456.70625pt>
 File: bert-pre-training.png Graphic file (type png)
 <use bert-pre-training.png>
 Package pdftex.def Info: bert-pre-training.png  used on input line 328.
 (pdftex.def)             Requested size: 136.10954pt x 137.01292pt.
  [22 <./bert-pre-training.png>]
-<decision_tree.png, id=521, 905.3825pt x 407.5225pt>
+<decision_tree.png, id=526, 905.3825pt x 407.5225pt>
 File: decision_tree.png Graphic file (type png)
 <use decision_tree.png>
 Package pdftex.def Info: decision_tree.png  used on input line 357.
 (pdftex.def)             Requested size: 344.04892pt x 154.86015pt.
  [23 <./decision_tree.png>] [24]
-<leaf-vs-level.png, id=541, 626.34pt x 467.7475pt>
+<leaf-vs-level.png, id=546, 626.34pt x 467.7475pt>
 File: leaf-vs-level.png Graphic file (type png)
 <use leaf-vs-level.png>
 Package pdftex.def Info: leaf-vs-level.png  used on input line 411.
@@ -571,18 +568,18 @@ Chapter 4.
 [26
 
 ] [27]
-<fpl-tweets-dataset.png, id=574, 350.30875pt x 395.4775pt>
+<fpl-tweets-dataset.png, id=579, 350.30875pt x 395.4775pt>
 File: fpl-tweets-dataset.png Graphic file (type png)
 <use fpl-tweets-dataset.png>
 Package pdftex.def Info: fpl-tweets-dataset.png  used on input line 471.
 (pdftex.def)             Requested size: 175.15395pt x 197.73827pt.
  [28] [29 <./fpl-tweets-dataset.png>] [30]
-<sentiment-diagram.png, id=597, 716.6775pt x 533.995pt>
+<sentiment-diagram.png, id=602, 716.6775pt x 533.995pt>
 File: sentiment-diagram.png Graphic file (type png)
 <use sentiment-diagram.png>
 Package pdftex.def Info: sentiment-diagram.png  used on input line 517.
 (pdftex.def)             Requested size: 250.84088pt x 186.90105pt.
-<sentence-pair-cls-diagram.png, id=600, 501.875pt x 415.5525pt>
+<sentence-pair-cls-diagram.png, id=605, 501.875pt x 415.5525pt>
 File: sentence-pair-cls-diagram.png Graphic file (type png)
 <use sentence-pair-cls-diagram.png>
 Package pdftex.def Info: sentence-pair-cls-diagram.png  used on input line 535.
@@ -595,12 +592,12 @@ Chapter 5.
 [41
 
 ] [42]
-<initial-train.png, id=681, 647.41875pt x 192.72pt>
+<initial-train.png, id=686, 647.41875pt x 192.72pt>
 File: initial-train.png Graphic file (type png)
 <use initial-train.png>
 Package pdftex.def Info: initial-train.png  used on input line 731.
 (pdftex.def)             Requested size: 297.81624pt x 88.65227pt.
-<inference.png, id=682, 999.735pt x 397.485pt>
+<inference.png, id=687, 999.735pt x 397.485pt>
 File: inference.png Graphic file (type png)
 <use inference.png>
 Package pdftex.def Info: inference.png  used on input line 745.
@@ -610,90 +607,103 @@ Overfull \hbox (4.91249pt too wide) in paragraph at lines 745--746
  [][] 
  []
 
-[43 <./initial-train.png>] [44 <./inference.png>] [45] [46] [47]
-Overfull \hbox (0.91167pt too wide) in paragraph at lines 868--869
+[43 <./initial-train.png>] [44 <./inference.png>] [45]
+Overfull \hbox (0.91167pt too wide) in paragraph at lines 808--809
 []\OT1/cmr/m/n/10 From this point the 'rolling' fea-tures were com-puted, such 
 as 'starts[]last[]3[]weeks'
  []
 
 
-Overfull \hbox (4.01683pt too wide) in paragraph at lines 879--880
+Overfull \hbox (4.01683pt too wide) in paragraph at lines 819--820
 \OT1/cmtt/m/n/10 'avg[]points[]last[]3[]weeks', 'expected[]goal[]involvements[]
 last[]3[]weeks',
  []
 
-<historical-data.png, id=717, 896.34875pt x 378.41376pt>
+[46]
+<historical-data.png, id=716, 896.34875pt x 378.41376pt>
 File: historical-data.png Graphic file (type png)
 <use historical-data.png>
-Package pdftex.def Info: historical-data.png  used on input line 888.
+Package pdftex.def Info: historical-data.png  used on input line 828.
 (pdftex.def)             Requested size: 340.61607pt x 143.79872pt.
-[48 <./historical-data.png>]
-<labelled-tweets.png, id=724, 712.6625pt x 201.75375pt>
+<labelled-tweets.png, id=717, 712.6625pt x 201.75375pt>
 File: labelled-tweets.png Graphic file (type png)
 <use labelled-tweets.png>
-Package pdftex.def Info: labelled-tweets.png  used on input line 905.
+Package pdftex.def Info: labelled-tweets.png  used on input line 845.
 (pdftex.def)             Requested size: 342.07411pt x 96.84068pt.
- [49 <./labelled-tweets.png>] [50]
-<optuna-trial-history.png, id=737, 1320.935pt x 526.96875pt>
+ [47 <./historical-data.png>] [48 <./labelled-tweets.png>] [49]
+<optuna-trial-history.png, id=736, 1320.935pt x 526.96875pt>
 File: optuna-trial-history.png Graphic file (type png)
 <use optuna-trial-history.png>
-Package pdftex.def Info: optuna-trial-history.png  used on input line 942.
+Package pdftex.def Info: optuna-trial-history.png  used on input line 882.
 (pdftex.def)             Requested size: 356.65721pt x 142.28346pt.
 
-Overfull \hbox (11.65721pt too wide) in paragraph at lines 942--943
+Overfull \hbox (11.65721pt too wide) in paragraph at lines 882--883
  [] 
  []
 
-LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 9
-51.
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 8
+91.
 (/usr/local/texlive/2024/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 951.
- [51 <./optuna-trial-history.png>] [52] [53]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 891.
+ [50 <./optuna-trial-history.png>] [51] [52]
 Chapter 6.
-[54
 
-]
-<residuals-distribution.png, id=763, 1092.08pt x 468.75125pt>
+Overfull \hbox (3.61162pt too wide) in paragraph at lines 952--953
+\OT1/cmr/m/n/10 To as-sess the ef-fec-tive-ness of the sen-ti-ment anal-y-sis m
+odel, three hyper-parameter
+ []
+
+[53
+
+] [54]
+<residuals-distribution.png, id=770, 1092.08pt x 468.75125pt>
 File: residuals-distribution.png Graphic file (type png)
 <use residuals-distribution.png>
-Package pdftex.def Info: residuals-distribution.png  used on input line 1025.
+Package pdftex.def Info: residuals-distribution.png  used on input line 1050.
 (pdftex.def)             Requested size: 349.47275pt x 150.00345pt.
 
-Overfull \hbox (4.47275pt too wide) in paragraph at lines 1025--1026
+Overfull \hbox (4.47275pt too wide) in paragraph at lines 1050--1051
  [] 
  []
 
-<feature-importance.png, id=765, 793.96625pt x 447.6725pt>
+[55]
+<feature-importance.png, id=780, 793.96625pt x 447.6725pt>
 File: feature-importance.png Graphic file (type png)
 <use feature-importance.png>
-Package pdftex.def Info: feature-importance.png  used on input line 1041.
+Package pdftex.def Info: feature-importance.png  used on input line 1066.
 (pdftex.def)             Requested size: 357.28151pt x 201.45076pt.
 
-Overfull \hbox (12.28151pt too wide) in paragraph at lines 1041--1042
+Overfull \hbox (12.28151pt too wide) in paragraph at lines 1066--1067
  [] 
  []
 
-[55 <./residuals-distribution.png>] [56 <./feature-importance.png>]
-<point-plot.png, id=782, 614.295pt x 395.3169pt>
+[56 <./residuals-distribution.png> <./feature-importance.png>] [57]
+<point-plot.png, id=794, 614.295pt x 395.3169pt>
 File: point-plot.png Graphic file (type png)
 <use point-plot.png>
-Package pdftex.def Info: point-plot.png  used on input line 1067.
+Package pdftex.def Info: point-plot.png  used on input line 1092.
 (pdftex.def)             Requested size: 276.43019pt x 177.89095pt.
-<point-sim-cum.png, id=783, 614.295pt x 395.3169pt>
+<point-sim-cum.png, id=795, 614.295pt x 395.3169pt>
 File: point-sim-cum.png Graphic file (type png)
 <use point-sim-cum.png>
-Package pdftex.def Info: point-sim-cum.png  used on input line 1080.
+Package pdftex.def Info: point-sim-cum.png  used on input line 1105.
 (pdftex.def)             Requested size: 276.43019pt x 177.89095pt.
- [57 <./point-plot.png> <./point-sim-cum.png>] [58] [59]
+ [58 <./point-plot.png> <./point-sim-cum.png>] [59] [60]
 Chapter 7.
-(./Project.bbl [60
+[61
 
-] [61
+]
+<tweet-distribution.png, id=825, 714.7503pt x 426.393pt>
+File: tweet-distribution.png Graphic file (type png)
+<use tweet-distribution.png>
+Package pdftex.def Info: tweet-distribution.png  used on input line 1189.
+(pdftex.def)             Requested size: 335.9327pt x 200.40472pt.
+ (./Project.bbl [62 <./tweet-distribution.png>] [63
 
-] [62]
+] [64]
 Overfull \hbox (52.08412pt too wide) in paragraph at lines 169--173
 \OT1/cmr/m/n/10 top-[]5-[]techniques-[]for-[]sentiment-[]analysis-[]in-[]natura
 l-[]language-[]processing-[]c07ba5b83f64$[], 
@@ -705,13 +715,13 @@ Overfull \hbox (60.75082pt too wide) in paragraph at lines 224--227
 f-[]the-[]language-[]model-[]41731fc05483$[], 
  []
 
-[63]
+[65]
 Overfull \hbox (7.41734pt too wide) in paragraph at lines 278--281
 \OT1/cmr/m/n/10 the-[]feedforward-[]demysti^^Led-[]a-[]core-[]operation-[]of-[]
 transformers-[]afcd3a136c4c$[], 
  []
 
-[64]) [65] (./Project.aux)
+[66]) [67] (./Project.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -721,13 +731,13 @@ L3 programming layer <2024-02-20>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Project.out' has not changed.
-(rerunfilecheck)             Checksum: 41419CAD71BE8FD81B20B35DDA156E6C;8497.
+(rerunfilecheck)             Checksum: 773E2A0D0C1F16E413CE56F297CF2F42;8754.
  ) 
 Here is how much of TeX's memory you used:
- 12334 strings out of 474116
- 194090 string characters out of 5743681
+ 12354 strings out of 474116
+ 194513 string characters out of 5743681
  1941187 words of memory out of 5000000
- 34323 multiletter control sequences out of 15000+600000
+ 34338 multiletter control sequences out of 15000+600000
  565047 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,18n,79p,1595b,593s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -747,10 +757,10 @@ e/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive
 /2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/
 2024/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/20
 24/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on Project.pdf (65 pages, 2555484 bytes).
+Output written on Project.pdf (67 pages, 2582756 bytes).
 PDF statistics:
- 1012 PDF objects out of 1200 (max. 8388607)
- 854 compressed objects within 9 object streams
- 225 named destinations out of 1000 (max. 500000)
- 506 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1034 PDF objects out of 1200 (max. 8388607)
+ 872 compressed objects within 9 object streams
+ 230 named destinations out of 1000 (max. 500000)
+ 519 words of extra memory for PDF output out of 10000 (max. 10000000)
 
