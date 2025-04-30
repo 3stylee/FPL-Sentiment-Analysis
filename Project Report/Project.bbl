@@ -49,6 +49,9 @@ J.~L. Peugh, ``A practical guide to multilevel modeling,'' \emph{Journal of
   \url{https://www.sciencedirect.com/science/article/pii/S0022440509000545}
 \BIBentrySTDinterwordspacing
 
+\bibitem{opta}
+\url{https://optaplayerstats.statsperform.com/en_GB/soccer}, April 2025.
+
 \bibitem{whittaker}
 D.~Whittaker, ``A study of information behaviour in the fantasy premier league
   community,'' Ph.D. dissertation, C, 2022.
@@ -284,6 +287,10 @@ D.~E. Rumelhart, G.~E. Hinton, and R.~J. Williams, \emph{Learning
   representations by back-propagating errors}.\hskip 1em plus 0.5em minus
   0.4em\relax Cambridge, MA, USA: MIT Press, 1988, p. 696–699.
 
+\bibitem{what-is-gradient-boosting}
+Snowflake, ``{What is Gradient Boosting?}'' Retrieved April 2025 from
+  \url{https://www.snowflake.com/guides/what-gradient-boosting/}, 2025.
+
 \bibitem{decision-trees}
 IBM, ``{What is a Decision Tree?}'' Retrieved March 2025 from
   \url{https://www.ibm.com/think/topics/decision-trees}, 2025.
@@ -292,6 +299,14 @@ IBM, ``{What is a Decision Tree?}'' Retrieved March 2025 from
 G.~for Geeks, ``{Light GBM},'' Retrieved February 2025 from
   \url{https://www.geeksforgeeks.org/lightgbm-light-gradient-boosting-machine},
   2025.
+
+\bibitem{lp}
+PuLP, ``{Optimisation Concepts},'' Retrieved April 2025 from
+  \url{https://coin-or.github.io/pulp/main/optimisation_concepts.html}, 2025.
+
+\bibitem{pulp}
+Pypi, ``{PuLP},'' Retrieved February 2025 from
+  \url{https://pypi.org/project/PuLP/}, 2025.
 
 \bibitem{fine-tuning}
 D.~Bergmann, ``What is fine-tuning?''
@@ -309,9 +324,6 @@ J.~Porter, ``Twitter announces new api pricing, posing a challenge for small
 \bibitem{vader}
 C.~Hutto and E.~Gilbert, ``Vader: A parsimonious rule-based model for sentiment
   analysis of social media text,'' 01 2015.
-
-\bibitem{textblob}
-``Textblob,'' \url{https://textblob.readthedocs.io/en/dev/}, December 2024.
 
 \bibitem{sentiment-cls-diagram}
 H.~Nuraliza, O.~Pratiwi, and M.~Lubis, ``Metaverse tweet sentiment text

@@ -8,17 +8,21 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: Bib.bib
-I was expecting a `,' or a `}'---line 320 of file Bib.bib
+Repeated entry---line 287 of file Bib.bib
+ :  @misc{opta
+ :            ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 325 of file Bib.bib
  :  
  :  doi = {10.11591/ijeecs.v29.i3.pp1817-1826},
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 513 of file Bib.bib
+I was expecting a `,' or a `}'---line 518 of file Bib.bib
  :   
  :   year={2023},
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 520 of file Bib.bib
+I was expecting a `,' or a `}'---line 525 of file Bib.bib
  :   
  :   year={2024},
 (Error may have been on previous line)
@@ -31,45 +35,45 @@ Warning--empty booktitle in vader
 Warning--empty booktitle in sentiment-cls-diagram
 
 Done.
-You've used 61 entries,
+You've used 64 entries,
             4087 wiz_defined-function locations,
-            1141 strings with 18167 characters,
-and the built_in function-call counts, 32175 in all, are:
-= -- 2435
-> -- 794
+            1152 strings with 18521 characters,
+and the built_in function-call counts, 33194 in all, are:
+= -- 2515
+> -- 806
 < -- 126
-+ -- 414
-- -- 164
-* -- 1373
-:= -- 5056
-add.period$ -- 117
-call.type$ -- 61
-change.case$ -- 54
++ -- 420
+- -- 167
+* -- 1397
+:= -- 5240
+add.period$ -- 122
+call.type$ -- 64
+change.case$ -- 56
 chr.to.int$ -- 288
-cite$ -- 64
-duplicate$ -- 2512
-empty$ -- 2923
-format.name$ -- 192
-if$ -- 7409
+cite$ -- 67
+duplicate$ -- 2602
+empty$ -- 3031
+format.name$ -- 195
+if$ -- 7639
 int.to.chr$ -- 0
-int.to.str$ -- 61
-missing$ -- 533
-newline$ -- 244
-num.names$ -- 53
-pop$ -- 1448
+int.to.str$ -- 64
+missing$ -- 554
+newline$ -- 253
+num.names$ -- 56
+pop$ -- 1507
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 2513
+skip$ -- 2602
 stack$ -- 0
-substring$ -- 749
-swap$ -- 1762
+substring$ -- 751
+swap$ -- 1810
 text.length$ -- 30
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 61
+type$ -- 64
 warning$ -- 3
-while$ -- 99
-width$ -- 63
-write$ -- 566
-(There were 3 error messages)
+while$ -- 102
+width$ -- 66
+write$ -- 589
+(There were 4 error messages)
