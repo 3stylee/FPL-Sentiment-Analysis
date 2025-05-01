@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.30)  30 APR 2025 17:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.30)  1 MAY 2025 16:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -548,13 +548,7 @@ File: leaf-vs-level.png Graphic file (type png)
 <use leaf-vs-level.png>
 Package pdftex.def Info: leaf-vs-level.png  used on input line 403.
 (pdftex.def)             Requested size: 187.90344pt x 140.32532pt.
-
-Overfull \hbox (0.82474pt too wide) in paragraph at lines 417--418
-\OT1/cmr/m/n/10 to a set of lin-ear con-straints [[]49[]]. The lin-ear func-tio
-n to be max-imised/minimised
- []
-
-[26 <./leaf-vs-level.png>] [27]
+ [26 <./leaf-vs-level.png>] [27]
 Chapter 4.
 [28
 
@@ -583,12 +577,12 @@ Chapter 5.
 [43
 
 ] [44]
-<initial-train.png, id=708, 647.41875pt x 192.72pt>
+<initial-train.png, id=709, 647.41875pt x 192.72pt>
 File: initial-train.png Graphic file (type png)
 <use initial-train.png>
 Package pdftex.def Info: initial-train.png  used on input line 741.
 (pdftex.def)             Requested size: 297.81624pt x 88.65227pt.
-<inference.png, id=709, 999.735pt x 397.485pt>
+<inference.png, id=710, 999.735pt x 397.485pt>
 File: inference.png Graphic file (type png)
 <use inference.png>
 Package pdftex.def Info: inference.png  used on input line 755.
@@ -599,19 +593,19 @@ Overfull \hbox (4.91249pt too wide) in paragraph at lines 755--756
  []
 
 [45 <./initial-train.png>] [46 <./inference.png>] [47]
-<dataset-snapshot.png, id=734, 1325.95375pt x 482.80376pt>
+<dataset-snapshot.png, id=735, 1325.95375pt x 482.80376pt>
 File: dataset-snapshot.png Graphic file (type png)
 <use dataset-snapshot.png>
 Package pdftex.def Info: dataset-snapshot.png  used on input line 827.
 (pdftex.def)             Requested size: 331.48763pt x 120.70064pt.
  [48]
-<labelled-tweets.png, id=744, 703.62875pt x 196.735pt>
+<labelled-tweets.png, id=745, 703.62875pt x 196.735pt>
 File: labelled-tweets.png Graphic file (type png)
 <use labelled-tweets.png>
 Package pdftex.def Info: labelled-tweets.png  used on input line 844.
 (pdftex.def)             Requested size: 337.73796pt x 94.43172pt.
  [49 <./dataset-snapshot.png> <./labelled-tweets.png>] [50]
-<optuna-trial-history.png, id=759, 1320.935pt x 526.96875pt>
+<optuna-trial-history.png, id=760, 1320.935pt x 526.96875pt>
 File: optuna-trial-history.png Graphic file (type png)
 <use optuna-trial-history.png>
 Package pdftex.def Info: optuna-trial-history.png  used on input line 881.
@@ -639,7 +633,7 @@ odel, three hyper-parameter
 [55
 
 ] [56]
-<residuals-distribution.png, id=798, 1092.08pt x 468.75125pt>
+<residuals-distribution.png, id=799, 1092.08pt x 468.75125pt>
 File: residuals-distribution.png Graphic file (type png)
 <use residuals-distribution.png>
 Package pdftex.def Info: residuals-distribution.png  used on input line 1050.
@@ -650,7 +644,7 @@ Overfull \hbox (4.47275pt too wide) in paragraph at lines 1050--1051
  []
 
 [57]
-<feature-importance.png, id=807, 793.96625pt x 447.6725pt>
+<feature-importance.png, id=808, 793.96625pt x 447.6725pt>
 File: feature-importance.png Graphic file (type png)
 <use feature-importance.png>
 Package pdftex.def Info: feature-importance.png  used on input line 1066.
@@ -661,12 +655,12 @@ Overfull \hbox (12.28151pt too wide) in paragraph at lines 1066--1067
  []
 
 [58 <./residuals-distribution.png> <./feature-importance.png>] [59]
-<point-plot.png, id=821, 614.295pt x 395.3169pt>
+<point-plot.png, id=822, 614.295pt x 395.3169pt>
 File: point-plot.png Graphic file (type png)
 <use point-plot.png>
 Package pdftex.def Info: point-plot.png  used on input line 1092.
 (pdftex.def)             Requested size: 276.43019pt x 177.89095pt.
-<point-sim-cum.png, id=822, 614.295pt x 395.3169pt>
+<point-sim-cum.png, id=823, 614.295pt x 395.3169pt>
 File: point-sim-cum.png Graphic file (type png)
 <use point-sim-cum.png>
 Package pdftex.def Info: point-sim-cum.png  used on input line 1105.
@@ -676,7 +670,7 @@ Chapter 7.
 [63
 
 ]
-<tweet-distribution.png, id=852, 714.7503pt x 426.393pt>
+<tweet-distribution.png, id=853, 714.7503pt x 426.393pt>
 File: tweet-distribution.png Graphic file (type png)
 <use tweet-distribution.png>
 Package pdftex.def Info: tweet-distribution.png  used on input line 1189.
@@ -701,7 +695,13 @@ Overfull \hbox (7.41734pt too wide) in paragraph at lines 281--284
 transformers-[]afcd3a136c4c$[], 
  []
 
-[69] [70]) [71] (./Project.aux)
+[69]
+Overfull \hbox (3.69524pt too wide) in paragraph at lines 308--312
+\OT1/cmr/m/n/10 understanding-[]branch-[]and-[]bound-[]in-[]optimization-[]prob
+lems-[]d8117da0e2c5$[], 
+ []
+
+[70]) [71] (./Project.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -714,13 +714,13 @@ Package rerunfilecheck Info: File `Project.out' has not changed.
 (rerunfilecheck)             Checksum: E1E8E83C9416E4AEB35964C3C8A46782;8727.
  ) 
 Here is how much of TeX's memory you used:
- 12379 strings out of 474116
- 194859 string characters out of 5743681
+ 12381 strings out of 474116
+ 194898 string characters out of 5743681
  1941187 words of memory out of 5000000
- 34353 multiletter control sequences out of 15000+600000
+ 34354 multiletter control sequences out of 15000+600000
  565654 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,18n,79p,1588b,597s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 69i,18n,79p,1588b,595s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
@@ -738,10 +738,10 @@ e/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/
 024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/20
 24/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2024
 /texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on Project.pdf (71 pages, 2622535 bytes).
+Output written on Project.pdf (71 pages, 2623656 bytes).
 PDF statistics:
- 1078 PDF objects out of 1200 (max. 8388607)
- 909 compressed objects within 10 object streams
- 238 named destinations out of 1000 (max. 500000)
+ 1081 PDF objects out of 1200 (max. 8388607)
+ 912 compressed objects within 10 object streams
+ 239 named destinations out of 1000 (max. 500000)
  519 words of extra memory for PDF output out of 10000 (max. 10000000)
 

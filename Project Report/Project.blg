@@ -35,45 +35,45 @@ Warning--empty booktitle in vader
 Warning--empty booktitle in sentiment-cls-diagram
 
 Done.
-You've used 64 entries,
+You've used 65 entries,
             4087 wiz_defined-function locations,
-            1152 strings with 18521 characters,
-and the built_in function-call counts, 33194 in all, are:
-= -- 2515
-> -- 806
+            1156 strings with 18746 characters,
+and the built_in function-call counts, 33549 in all, are:
+= -- 2544
+> -- 810
 < -- 126
-+ -- 420
-- -- 167
-* -- 1397
-:= -- 5240
-add.period$ -- 122
-call.type$ -- 64
-change.case$ -- 56
++ -- 422
+- -- 168
+* -- 1407
+:= -- 5305
+add.period$ -- 124
+call.type$ -- 65
+change.case$ -- 57
 chr.to.int$ -- 288
-cite$ -- 67
-duplicate$ -- 2602
-empty$ -- 3031
-format.name$ -- 195
-if$ -- 7639
+cite$ -- 68
+duplicate$ -- 2633
+empty$ -- 3068
+format.name$ -- 196
+if$ -- 7719
 int.to.chr$ -- 0
-int.to.str$ -- 64
-missing$ -- 554
-newline$ -- 253
-num.names$ -- 56
-pop$ -- 1507
+int.to.str$ -- 65
+missing$ -- 561
+newline$ -- 256
+num.names$ -- 57
+pop$ -- 1526
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 2602
+skip$ -- 2632
 stack$ -- 0
-substring$ -- 751
-swap$ -- 1810
+substring$ -- 752
+swap$ -- 1827
 text.length$ -- 30
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 64
+type$ -- 65
 warning$ -- 3
-while$ -- 102
-width$ -- 66
-write$ -- 589
+while$ -- 103
+width$ -- 67
+write$ -- 597
 (There were 4 error messages)

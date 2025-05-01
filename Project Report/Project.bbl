@@ -304,9 +304,11 @@ G.~for Geeks, ``{Light GBM},'' Retrieved February 2025 from
 PuLP, ``{Optimisation Concepts},'' Retrieved April 2025 from
   \url{https://coin-or.github.io/pulp/main/optimisation_concepts.html}, 2025.
 
-\bibitem{pulp}
-Pypi, ``{PuLP},'' Retrieved February 2025 from
-  \url{https://pypi.org/project/PuLP/}, 2025.
+\bibitem{branch-and-bound}
+A.~Mishra, ``{Understanding branch and bound in optimization problems},''
+  Retrieved April 2025 from
+  \url{https://medium.com/walmartglobaltech/understanding-branch-and-bound-in-optimization-problems-d8117da0e2c5},
+  2021.
 
 \bibitem{fine-tuning}
 D.~Bergmann, ``What is fine-tuning?''
@@ -349,6 +351,10 @@ X.~Du, H.~Xu, and F.~Zhu, ``Understanding the effect of hyperparameter
 \bibitem{anand}
 V.~Anand, ``{FPL Historical Dataset},'' Retrieved February 2025 from
   \url{https://github.com/vaastav/Fantasy-Premier-League/}, 2025.
+
+\bibitem{pulp}
+Pypi, ``{PuLP},'' Retrieved February 2025 from
+  \url{https://pypi.org/project/PuLP/}, 2025.
 
 \bibitem{colab}
 ``Google colab,'' \url{https://colab.google/}, December 2024.

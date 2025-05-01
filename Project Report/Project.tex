@@ -179,7 +179,7 @@ The implementation makes use of various APIs, which often function as 'black box
 A strong theoretical foundation has also helped when it comes to model selection, feature engineering and hyper-parameter optimisation. For example, understanding the key differences in gradient boosting methods with their pros and cons has helped to ensure consideration for bias-variance trade-offs by avoiding overfitting. By including detailed explanations of these concepts it is hoped the reader gains a greater appreciation for the choices taken in this project.
 
 \section[The BERT Model]{The BERT Model}
-Bidirectional Encoder Representations from Transformers, known as BERT \cite{BERT}, is a language model pre-trained using a deep learning framework called the transformer. This architecture, introduced in the now infamous 2017 paper Attention is All You Need \cite{attention}, has since become the foundation for many major advances in natural language processing. The transformer design underpins a range of powerful AI systems, including OpenAI's ChatGPT \cite{chatGPT}.
+Bidirectional Encoder Representations from Transformers \cite{BERT}, known as BERT, is a language model pre-trained using a deep learning framework called the transformer. This architecture, introduced in the now infamous 2017 paper Attention is All You Need \cite{attention}, has since become the foundation for many major advances in natural language processing. The transformer design underpins a range of powerful AI systems, including OpenAI's ChatGPT \cite{chatGPT}.
 
         % -------------------------------------------------------------
 	% TRANSFORMER ARCHITECTURE
@@ -414,21 +414,21 @@ Overall, LightGBM has much faster training speeds and better efficiency when it 
 % LINEAR PROGRAMMING
 % ------------------------------------------------------------- 
 \section[Linear Programming]{Linear Programming}
-Linear Programming is a mathematical optimisation technique used to solve problems where the objective is to maximise/minimise a linear function, subject to a set of linear constraints \cite{lp}. The linear function to be maximised/minimised is made up of \textbf{decision variables} which represent the choices to be made in the problem. For the example of selecting a fantasy football team to maximise points scored, each player can have a binary decision variable (0 or 1) representing whether they should be chosen or not. The linear function to be maximised would be:
+Linear Programming \cite{lp} is a mathematical optimisation technique used to solve problems where the objective is to maximise/minimise a linear function, subject to a set of linear constraints. The linear function to be maximised/minimised is made up of decision variables which represent the choices to be made in the problem. For the example of selecting a fantasy football team to maximise points scored, each player from the available player pool is assigned a binary decision variable (0 or 1) representing whether they should be chosen or not. The linear function to be maximised is defined as:
 \[
 \text{Maximise: } \sum_{i=1}^{n} x_i p_i
 \]
 
 where \( x_i \in \{0,1\} \) denotes the selection of player \( i \), and \( p_i \) is the predicted number of points for that player.
 
-This example belongs to a more specific category of linear programming known as Linear Integer Programming (LIP) where some or all decision variables must be integers. These types of problems exist in many real-world examples, where for example the number of units of a product to produce to optimise stock must be an integer.
+This example belongs to a more specific category of linear programming known as Linear Integer Programming (LIP) where some or all decision variables must be integers. These types of problems exist in many real-world examples, such as a stock optimisation problem where the number units of each product produced must be an integer.
 
-Linear constraints are also placed on the problem, usually making it non-trivial to solve and thus more advanced techniques must be used to solve these problems.
+Linear constraints are also placed on the problem, such as monetary or time constraints, making these problems non-trivial. As such, more advanced techniques must be used to solve these problems.
 
-\subsection*{The PuLP Library}
-The PuLP \cite{pulp} library is a linear and mixed integer programming library that provides a solver class to solve linear programming problems. It does this by using a technique known as branch and bound, which is commonly used for solving LIP problems.
+\subsection*{Branch and Bound}
+Branch and bound \cite{branch-and-bound} is a process used for solving LIPs which works by first solving the linear equation as normal, under each defined constraint. If the answers for each decision variable are already integers, then the problem is solved and the answer can be accepted. However, this is not normally the case and the decision variables often end up as fractions which is no use for LIP problems (e.g. you can't choose two thirds of a player). To solve this issue, the problem is split into smaller sub-problems (branching) where for example a player with value 0.6 will be branched into two new versions: one where that player is forced to be picked, and one where they are forced to be left out (bounding). 
 
-Branch and bound works by repeatedly
+This process repeats, with each branch becoming solved once the decision variables are all integers. If a solution is better than the current best solution, it will be stored. If the overall score for an unsolved branch is worse than the current best it can be pruned, as the score will only get worse as the fractional decision variables are eliminated. After all branches have been solved or pruned, the optimal solution (if possible) is returned. 
 % -------------------------------------------------------------
 % METHODOLOGY
 % ------------------------------------------------------------- 
@@ -453,7 +453,7 @@ By incorporating X data into player performance predictions, this project explor
 \section[Sentiment Analysis Model]{Sentiment Analysis Model}
 To capture crowd wisdom through X, a sentiment analysis model is needed to automatically label posts and gauge user's opinions towards each player. Whilst it is possible to train a sentiment analysis model from scratch, this study uses a pre-trained BERT model \cite{BERT} available for free from Google. This approach leverages access to a model that has been trained on billions of texts, giving it an extremely complex understanding of natural language. A model trained from scratch could not hope to replicate such complexity given the timeframe of this project. It would also be unreasonable to expect such a large task to be completed without the use of advanced computing machinery unavailable to individual researchers without the backing of a large corporation. The BERT model has been chosen specifically because it has been proven to outperform other state-of-the-art models like LSTM in sentiment analysis tasks\cite{elankath, hoang}.
 
-This study uses fine-tuning to refine BERT for the specific task of sentiment analysis on FPL posts. Fine tuning is the process of adapting a pre-trained model for specific tasks or use-cases \cite{fine-tuning}. This is a much less computationally demanding task than fully training a model, requiring only a relatively small dataset - ideal for a project of this scale. Combining the extensive natural language knowledge baked into BERT with a suitable dataset of FPL posts, should result in a sophisticated and accurate sentiment analysis model that suits the needs of the project.
+This study uses fine-tuning to refine BERT for the specific task of sentiment analysis on FPL posts. Fine tuning \cite{fine-tuning} is the process of adapting a pre-trained model for specific tasks or use-cases. This is a much less computationally demanding task than fully training a model, requiring only a relatively small dataset - ideal for a project of this scale. Combining the extensive natural language knowledge baked into BERT with a suitable dataset of FPL posts, should result in a sophisticated and accurate sentiment analysis model that suits the needs of the project.
 
 \subsection[Data Collection]{Data Collection}
 Identifying and collecting suitable data for fine-tuning the model is a critical step in creating a model with optimal performance. The quality of the fine-tuning data directly affects the model's output quality \cite{gigo}, so it was important to chose a dataset carefully.
@@ -610,7 +610,7 @@ Due to the similar nature of this study - differing primarily in the source of c
 % DATA COLLECTION AND ENGINEERING
 % -------------------------------------------------------------
 \subsection[Data Collection and Engineering]{Data Collection and Engineering}
-The historical information for each player was taken from a community-run \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}} set up by Anand \cite{anand}. This repository contains data for each FPL season dating back to 2016, including information for every player and every gameweek. This dataset was used by GS when he created his binary classification model in 2018 \cite{raghunandh}, so it made sense to combine this data with the X sentiment data collected, in order to get a fair comparison. Data for the 2022/23 FPL season was used, as this matches the timeline of the most recent X data available (more recent data locked behind the \$100 per month API).
+The historical information for each player was taken from a community-run \href{https://github.com/vaastav/Fantasy-Premier-League/tree/master}{\textcolor{blue}{\uline{Github repo}}} set up by Anand \cite{anand}. This repository contains data for each FPL season dating back to 2016, including information for every player and every gameweek. This dataset was used by GS \cite{raghunandh} when he created his binary classification model in 2018, so it made sense to combine this data with the X sentiment data collected, in order to get a fair comparison. Data for the 2022/23 FPL season was used, as this matches the timeline of the most recent X data available (more recent data locked behind the \$100 per month API).
 
 As well as the raw data available, rolling features were computed such as 'average\_points\_last\_3\_weeks', and 'minutes\_last\_3\_weeks', in order to capture a greater range information about each player ahead of a gameweek. In total 50 input parameters were chosen, with roughly 3 main categories for the type of information captured by each input: 
 
@@ -946,7 +946,7 @@ The resulting teams and points scored for each week were saved for evaluation, w
 \label{chapter:results}
 The goal of this project is to evaluate the performance of a new FPL prediction model constructed using existing methods, but with the inclusion of a novel sentiment data source - X. As such, this chapter presents the results of two main evaluation stages: the performance of the sentiment analysis model used to extract player sentiment from posts, and the downstream evaluation of the FPL prediction model that incorporates this sentiment data.
 
-The final model is compared against the baseline average scores of all managers, a Gradient Boosting Machine model without X data, the final GBM model that includes X data, and the best possible score that could have been achieved. The results suggest that the lack of X data available currently prevent any solid conclusions from being drawn about how effective it is as a sentiment data source. As well as this the limited timescale from which to draw comparisons (just 8 gameweeks) further limit the extent to which any concrete conclusions can be made. The GBM models constructed both perform almost identically with minimal differences.
+The final model is compared against the baseline average scores of all managers, a Gradient Boosting Machine model without X data, the final GBM model that includes X data, and the best possible score that could have been achieved. The results suggest that the lack of X data available currently prevent any solid conclusions from being drawn about how effective it is as a sentiment data source. Additionally, the limited timescale from which to draw comparisons (just eight gameweeks) further limit the extent to which any concrete conclusions can be made. The GBM models constructed both perform almost identically with minimal differences.
 
 \section[Sentiment Analysis Model Evaluation]{Sentiment Analysis Model Evaluation}
 To assess the effectiveness of the sentiment analysis model, three hyper-parameter configurations were selected for final evaluation based on their performance during tuning. These models were trained on the full dataset (with one fewer epoch to avoid overfitting) and then evaluated using standard classification metrics: precision, recall, F1-score, and overall accuracy.
@@ -1072,7 +1072,7 @@ The histogram of residuals (\ref{residual-histogram}) shows a general trend with
 	% FEATURE IMPORTANCE
 	% -------------------------------------------------------------
 	
-Plotting the feature importance of the final model, the new \texttt{positive\_tweets} feature added to the dataset ranked 24th in importance, with a score of just 22. Given the fifty feature columns that make up the entire dataset, this places it within the top half of features suggesting its inclusion does add some meaningful benefit to model performance. This may explain the small differences in RMSE between the two models. However, with a gap of over 150 importance points from the top 3, the benefit of its inclusion appears minimal. 
+Plotting the feature importance of the final model, the new \texttt{positive\_tweets} feature added to the dataset ranked 24th in importance, with a score of just 22. Given the fifty feature columns that make up the entire dataset, this places it within the top half of features suggesting its inclusion does add some meaningful benefit to model performance. This may explain the small differences in RMSE between the two models. However, with a gap of over 150 importance points from the top three, the benefit of its inclusion appears minimal. 
 
 Interestingly, the top three features all represent some form of crowd perception.or behaviour. With \texttt{transfers\_in\_last\_week} and \texttt{selected} indicating the recent and overall popularity of a player among managers' teams, and \texttt{value\_last\_week} tracking how a player's price (directly tied to popularity) changes. 
 
@@ -1082,7 +1082,7 @@ Overall, while crowd-based signals such as transfers and price movements appear 
 
 \newpage
 \section[Team Selection Evaluation]{Team Selection Evaluation}
-Detailed in section~\ref{section:team-selection}, the final model was evaluated on unseen data over the course of an 8 gameweek period, in order to evaluate how it performed under real-world conditions. The results of simulating model performance for the final 8 gameweeks of the season were plotted (\ref{point-plot}, and \ref{cumulative-point-plot}). The final model was compared alongside the best possible score, the average score for all players, and the model trained without X data.
+Detailed in section~\ref{section:team-selection}, the final model was evaluated on unseen data over the course of an eight gameweek period, in order to evaluate how it performed under real-world conditions. The results of simulating model performance for the final eight gameweeks of the season were plotted (\ref{point-plot}, and \ref{cumulative-point-plot}). The final model was compared alongside the best possible score, the average score for all players, and the model trained without X data.
 
 	% -------------------------------------------------------------
 	% POINT PLOT
@@ -1115,7 +1115,7 @@ The gap between the optimal scores and model predictions remains extremely large
 
 This hypothesis matches up with figure~\ref{point-plot} where a noticeable gap between the average score and the model scores appears during gameweeks 34 and 36, driven by chip usage. During almost all other weeks both models outperformed the average manager. With more data and a full-season simulation, the models would likely show a clearer performance advantage over the average score.
 
-Focusing back on the prediction models, the final model trained with X data outperformed the model trained without by around 25 points over the course of the 8 gameweek period. This could suggest a positive impact from including X data, however the time period for evaluation is not long enough to draw a solid conclusion. Zooming in on some of the point differences between the two models, gameweeks 32 and 34 stand out to be the largest gaps. Exploring the teams selected by each model during these weeks provides some more insights:
+Focusing back on the prediction models, the final model trained with X data outperformed the model trained without by around 25 points over the course of the eight gameweek period. This could suggest a positive impact from including X data, however the time period for evaluation is not long enough to draw a solid conclusion. Zooming in on some of the point differences between the two models, gameweeks 32 and 34 stand out to be the largest gaps. Exploring the teams selected by each model during these weeks provides some more insights:
 
 \begin{table}[ht]
 \centering
@@ -1145,7 +1145,7 @@ Dominic Solanke                & 4.6 & 2 \\
 \end{tabular}
 \end{table}
 
-For gameweek 32, both models agreed on eight players for their starting eleven. The remaining three players selected exclusively by the final model outscored those chosen exclusively by the non-sentiment model by 15 points thanks to the 7 and 13 point hauls from Mohammed Salah and Alexander Isak. 
+For gameweek 32, both models agreed on eight players for their starting eleven. The remaining three players selected exclusively by the final model outscored those chosen exclusively by the non-sentiment model by fifteen points thanks to the seven and thirteen point hauls from Mohammed Salah and Alexander Isak. 
 
 To investigate if the selection of these players could be directly attributed to the X sentiment information, post counts for each player were examined:
 
@@ -1166,9 +1166,9 @@ Alexander Isak           & 6 & 6 \\
 \end{tabular}
 \end{table}
 
-While Mohammed Salah had a large number of positive posts (19), which may have contributed to his selection, both Nick Pope and Bruno Guimarāes had a similarly high number of positive posts (14 and 17) but were not chosen by the final model. The highest scorer in Alexander Isak actually had the same amount of negative posts as positive (6) so it seems unlikely his selection by the final model was influenced by the X features.
+While Mohammed Salah had a large number of positive posts (nineteen), which may have contributed to his selection, both Nick Pope and Bruno Guimarāes had a similarly high number of positive posts (fourteen and seventeen) but were not chosen by the final model. The highest scorer in Alexander Isak actually had the same amount of negative posts as positive (six) so it seems unlikely his selection by the final model was influenced by the X features.
 
-A similar analysis was conducted for gameweek 34, which had similar results. Whilst there were differences in player selection favouring the final model, post sentiment alone did not consistently explain these choices. This evidence seems to indicate the observed performance differences between the final model and the model trained with no X information are likely not due to the inclusion of X sentiment data alone.
+A similar analysis was conducted for gameweek 34, which had similar results. Whilst there were differences in player selection favouring the final model, X sentiment alone did not consistently explain these choices. This evidence seems to indicate the observed performance differences between the final model and the model trained with no X information are likely not due to the inclusion of X sentiment data alone.
 % -------------------------------------------------------------
 % CONCLUSION AND FUTURE WORK
 % -------------------------------------------------------------
@@ -1179,7 +1179,7 @@ The exact reason why the X data failed to make a significant impact remains uncl
 
 Unfortunately, obtaining more X data was a major challenge throughout this project due to the increasing costs of using the X API. Given a larger financial backing and unlimited usage of the X API, a much larger dataset would have been easy to create and even a real-time prediction system could have been developed. A richer dataset containing hundreds or thousands of posts per player per gameweek, rather than just the few dozen observed for this project, would have likely produced a stronger signal and had a more meaningful impact on model performance. 
 
-Another factor that could have contributed to the limited impact of the X data is the accuracy of the sentiment analysis model. The model's outputs are not 100\% accurate, and its predictions were influenced by noise during model training. As mentioned in the methodology for the model, the model was trained using data automatically labelled by a VADER sentiment model. Using manually labelled posts would have likely improved accuracy but was unfeasible due to the time constraints of the project. Given that manual labelling was not feasible for the already too small dataset, increasing the dataset volume and manually labelling data is not a practical solution going forward. 
+Another factor that could have contributed to the limited impact of the X data is the accuracy of the sentiment analysis model. The model's outputs are not 100\% accurate, and its predictions were influenced by noise during model training. As mentioned in the methodology for model development, the model was trained using data automatically labelled by a VADER sentiment model. Using manually labelled posts would have likely improved accuracy but was unfeasible due to the time constraints of the project. Given that manual labelling was not feasible for the already too small dataset, increasing the dataset volume and manually labelling data is not a practical solution going forward. 
 
 	% -------------------------------------------------------------
 	% TWEET DISTRIBUTION
