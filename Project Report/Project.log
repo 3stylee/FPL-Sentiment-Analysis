@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.30)  1 MAY 2025 16:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.30)  2 MAY 2025 13:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -269,6 +269,7 @@ File: puenc.def 2024-01-20 v7.01h Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
+Package hyperref Info: Option `breaklinks' set `true' on input line 4062.
 Package hyperref Info: Hyper figures OFF on input line 4179.
 Package hyperref Info: Link nesting OFF on input line 4184.
 Package hyperref Info: Hyper index ON on input line 4187.
@@ -395,24 +396,24 @@ LaTeX Warning: Label `tab:scoring_system' multiply defined.
 )
 \openout1 = `Project.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
  (/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count295
@@ -435,7 +436,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 22.
+Package hyperref Info: Link coloring OFF on input line 23.
 
 (./Project.out) (./Project.out)
 \@outlinefile=\write3
@@ -446,7 +447,7 @@ Package caption Info: End \AtBeginDocument code.
 <lu-logo.png, id=209, 375.4025pt x 135.50626pt>
 File: lu-logo.png Graphic file (type png)
 <use lu-logo.png>
-Package pdftex.def Info: lu-logo.png  used on input line 28.
+Package pdftex.def Info: lu-logo.png  used on input line 29.
 (pdftex.def)             Requested size: 187.70079pt x 67.75294pt.
  [1
 
@@ -473,13 +474,13 @@ Chapter 1.
 
 {/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
  [6]
-<team-selection-initial.png, id=319, 1279.78125pt x 781.92125pt>
+<team-selection-initial.png, id=318, 1279.78125pt x 781.92125pt>
 File: team-selection-initial.png Graphic file (type png)
 <use team-selection-initial.png>
-Package pdftex.def Info: team-selection-initial.png  used on input line 98.
+Package pdftex.def Info: team-selection-initial.png  used on input line 112.
 (pdftex.def)             Requested size: 351.93117pt x 215.02304pt.
 
-Overfull \hbox (6.93117pt too wide) in paragraph at lines 98--99
+Overfull \hbox (6.93117pt too wide) in paragraph at lines 112--113
  [] 
  []
 
@@ -489,85 +490,85 @@ Chapter 2.
 
 ] [12] [13] [14] [15]
 Chapter 3.
-<transformer-architecture.png, id=423, 1016.79875pt x 555.07375pt>
+<transformer-architecture.png, id=424, 1016.79875pt x 555.07375pt>
 File: transformer-architecture.png Graphic file (type png)
 <use transformer-architecture.png>
-Package pdftex.def Info: transformer-architecture.png  used on input line 189.
+Package pdftex.def Info: transformer-architecture.png  used on input line 203.
 (pdftex.def)             Requested size: 376.20966pt x 205.37405pt.
 
-Overfull \hbox (31.20966pt too wide) in paragraph at lines 189--190
+Overfull \hbox (31.20966pt too wide) in paragraph at lines 203--204
  [] 
  []
 
 [16
 
 ] [17 <./transformer-architecture.png>]
-<bert-embedding-layer.png, id=451, 624.4128pt x 301.22136pt>
+<bert-embedding-layer.png, id=452, 624.4128pt x 301.22136pt>
 File: bert-embedding-layer.png Graphic file (type png)
 <use bert-embedding-layer.png>
-Package pdftex.def Info: bert-embedding-layer.png  used on input line 223.
+Package pdftex.def Info: bert-embedding-layer.png  used on input line 237.
 (pdftex.def)             Requested size: 312.20563pt x 150.6103pt.
 
-Overfull \hbox (1.30685pt too wide) in paragraph at lines 236--237
+Overfull \hbox (1.30685pt too wide) in paragraph at lines 250--251
 []\OT1/cmr/bx/n/10 Token em-bed-dings \OT1/cmr/m/n/10 are vec-tors that have be
 en learned dur-ing the model's
  []
 
 [18]
-<dot-product-attention.png, id=468, 436.63126pt x 430.60875pt>
+<dot-product-attention.png, id=469, 436.63126pt x 430.60875pt>
 File: dot-product-attention.png Graphic file (type png)
 <use dot-product-attention.png>
-Package pdftex.def Info: dot-product-attention.png  used on input line 252.
+Package pdftex.def Info: dot-product-attention.png  used on input line 266.
 (pdftex.def)             Requested size: 174.6494pt x 172.24043pt.
  [19 <./bert-embedding-layer.png>]
-<multi-head-attention.png, id=481, 436.63126pt x 430.60875pt>
+<multi-head-attention.png, id=482, 436.63126pt x 430.60875pt>
 File: multi-head-attention.png Graphic file (type png)
 <use multi-head-attention.png>
-Package pdftex.def Info: multi-head-attention.png  used on input line 272.
+Package pdftex.def Info: multi-head-attention.png  used on input line 286.
 (pdftex.def)             Requested size: 174.6494pt x 172.24043pt.
  [20 <./dot-product-attention.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 295--296
+Underfull \hbox (badness 10000) in paragraph at lines 309--310
 
  []
 
 [21 <./multi-head-attention.png>] [22]
-<bert-pre-training.png, id=522, 453.695pt x 456.70625pt>
+<bert-pre-training.png, id=523, 453.695pt x 456.70625pt>
 File: bert-pre-training.png Graphic file (type png)
 <use bert-pre-training.png>
-Package pdftex.def Info: bert-pre-training.png  used on input line 319.
+Package pdftex.def Info: bert-pre-training.png  used on input line 333.
 (pdftex.def)             Requested size: 136.10954pt x 137.01292pt.
  [23 <./bert-pre-training.png>]
-<decision_tree.png, id=536, 905.3825pt x 407.5225pt>
+<decision_tree.png, id=537, 905.3825pt x 407.5225pt>
 File: decision_tree.png Graphic file (type png)
 <use decision_tree.png>
-Package pdftex.def Info: decision_tree.png  used on input line 349.
+Package pdftex.def Info: decision_tree.png  used on input line 363.
 (pdftex.def)             Requested size: 344.04892pt x 154.86015pt.
  [24 <./decision_tree.png>] [25]
-<leaf-vs-level.png, id=557, 626.34pt x 467.7475pt>
+<leaf-vs-level.png, id=558, 626.34pt x 467.7475pt>
 File: leaf-vs-level.png Graphic file (type png)
 <use leaf-vs-level.png>
-Package pdftex.def Info: leaf-vs-level.png  used on input line 403.
+Package pdftex.def Info: leaf-vs-level.png  used on input line 417.
 (pdftex.def)             Requested size: 187.90344pt x 140.32532pt.
  [26 <./leaf-vs-level.png>] [27]
 Chapter 4.
 [28
 
 ] [29]
-<fpl-tweets-dataset.png, id=598, 350.30875pt x 395.4775pt>
+<fpl-tweets-dataset.png, id=599, 350.30875pt x 395.4775pt>
 File: fpl-tweets-dataset.png Graphic file (type png)
 <use fpl-tweets-dataset.png>
-Package pdftex.def Info: fpl-tweets-dataset.png  used on input line 482.
+Package pdftex.def Info: fpl-tweets-dataset.png  used on input line 500.
 (pdftex.def)             Requested size: 175.15395pt x 197.73827pt.
  [30] [31 <./fpl-tweets-dataset.png>] [32]
-<sentiment-diagram.png, id=621, 716.6775pt x 533.995pt>
+<sentiment-diagram.png, id=627, 716.6775pt x 533.995pt>
 File: sentiment-diagram.png Graphic file (type png)
 <use sentiment-diagram.png>
-Package pdftex.def Info: sentiment-diagram.png  used on input line 529.
+Package pdftex.def Info: sentiment-diagram.png  used on input line 547.
 (pdftex.def)             Requested size: 250.84088pt x 186.90105pt.
-<sentence-pair-cls-diagram.png, id=624, 501.875pt x 415.5525pt>
+<sentence-pair-cls-diagram.png, id=630, 501.875pt x 415.5525pt>
 File: sentence-pair-cls-diagram.png Graphic file (type png)
 <use sentence-pair-cls-diagram.png>
-Package pdftex.def Info: sentence-pair-cls-diagram.png  used on input line 547.
+Package pdftex.def Info: sentence-pair-cls-diagram.png  used on input line 565.
 
 (pdftex.def)             Requested size: 175.65887pt x 145.44554pt.
  [33 <./sentiment-diagram.png>] [34 <./sentence-pair-cls-diagram.png>] [35] [36
@@ -577,55 +578,55 @@ Chapter 5.
 [43
 
 ] [44]
-<initial-train.png, id=709, 647.41875pt x 192.72pt>
+<initial-train.png, id=717, 647.41875pt x 192.72pt>
 File: initial-train.png Graphic file (type png)
 <use initial-train.png>
-Package pdftex.def Info: initial-train.png  used on input line 741.
+Package pdftex.def Info: initial-train.png  used on input line 759.
 (pdftex.def)             Requested size: 297.81624pt x 88.65227pt.
-<inference.png, id=710, 999.735pt x 397.485pt>
+<inference.png, id=718, 999.735pt x 397.485pt>
 File: inference.png Graphic file (type png)
 <use inference.png>
-Package pdftex.def Info: inference.png  used on input line 755.
+Package pdftex.def Info: inference.png  used on input line 773.
 (pdftex.def)             Requested size: 349.91249pt x 139.12183pt.
 
-Overfull \hbox (4.91249pt too wide) in paragraph at lines 755--756
+Overfull \hbox (4.91249pt too wide) in paragraph at lines 773--774
  [][] 
  []
 
 [45 <./initial-train.png>] [46 <./inference.png>] [47]
-<dataset-snapshot.png, id=735, 1325.95375pt x 482.80376pt>
+<dataset-snapshot.png, id=746, 1325.95375pt x 482.80376pt>
 File: dataset-snapshot.png Graphic file (type png)
 <use dataset-snapshot.png>
-Package pdftex.def Info: dataset-snapshot.png  used on input line 827.
+Package pdftex.def Info: dataset-snapshot.png  used on input line 845.
 (pdftex.def)             Requested size: 331.48763pt x 120.70064pt.
  [48]
-<labelled-tweets.png, id=745, 703.62875pt x 196.735pt>
+<labelled-tweets.png, id=759, 703.62875pt x 196.735pt>
 File: labelled-tweets.png Graphic file (type png)
 <use labelled-tweets.png>
-Package pdftex.def Info: labelled-tweets.png  used on input line 844.
+Package pdftex.def Info: labelled-tweets.png  used on input line 862.
 (pdftex.def)             Requested size: 337.73796pt x 94.43172pt.
  [49 <./dataset-snapshot.png> <./labelled-tweets.png>] [50]
-<optuna-trial-history.png, id=760, 1320.935pt x 526.96875pt>
+<optuna-trial-history.png, id=774, 1320.935pt x 526.96875pt>
 File: optuna-trial-history.png Graphic file (type png)
 <use optuna-trial-history.png>
-Package pdftex.def Info: optuna-trial-history.png  used on input line 881.
+Package pdftex.def Info: optuna-trial-history.png  used on input line 899.
 (pdftex.def)             Requested size: 356.65721pt x 142.28346pt.
 
-Overfull \hbox (11.65721pt too wide) in paragraph at lines 881--882
+Overfull \hbox (11.65721pt too wide) in paragraph at lines 899--900
  [] 
  []
 
-LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 8
-90.
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 9
+08.
 (/usr/local/texlive/2024/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 890.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 908.
  [51 <./optuna-trial-history.png>] [52] [53] [54]
 Chapter 6.
 
-Overfull \hbox (3.61162pt too wide) in paragraph at lines 952--953
+Overfull \hbox (3.61162pt too wide) in paragraph at lines 970--971
 \OT1/cmr/m/n/10 To as-sess the ef-fec-tive-ness of the sen-ti-ment anal-y-sis m
 odel, three hyper-parameter
  []
@@ -633,70 +634,70 @@ odel, three hyper-parameter
 [55
 
 ] [56]
-<residuals-distribution.png, id=799, 1092.08pt x 468.75125pt>
+<residuals-distribution.png, id=813, 1092.08pt x 468.75125pt>
 File: residuals-distribution.png Graphic file (type png)
 <use residuals-distribution.png>
-Package pdftex.def Info: residuals-distribution.png  used on input line 1050.
+Package pdftex.def Info: residuals-distribution.png  used on input line 1068.
 (pdftex.def)             Requested size: 349.47275pt x 150.00345pt.
 
-Overfull \hbox (4.47275pt too wide) in paragraph at lines 1050--1051
+Overfull \hbox (4.47275pt too wide) in paragraph at lines 1068--1069
  [] 
  []
 
 [57]
-<feature-importance.png, id=808, 793.96625pt x 447.6725pt>
+<feature-importance.png, id=822, 793.96625pt x 447.6725pt>
 File: feature-importance.png Graphic file (type png)
 <use feature-importance.png>
-Package pdftex.def Info: feature-importance.png  used on input line 1066.
+Package pdftex.def Info: feature-importance.png  used on input line 1084.
 (pdftex.def)             Requested size: 357.28151pt x 201.45076pt.
 
-Overfull \hbox (12.28151pt too wide) in paragraph at lines 1066--1067
+Overfull \hbox (12.28151pt too wide) in paragraph at lines 1084--1085
  [] 
  []
 
 [58 <./residuals-distribution.png> <./feature-importance.png>] [59]
-<point-plot.png, id=822, 614.295pt x 395.3169pt>
+<point-plot.png, id=836, 614.295pt x 395.3169pt>
 File: point-plot.png Graphic file (type png)
 <use point-plot.png>
-Package pdftex.def Info: point-plot.png  used on input line 1092.
+Package pdftex.def Info: point-plot.png  used on input line 1110.
 (pdftex.def)             Requested size: 276.43019pt x 177.89095pt.
-<point-sim-cum.png, id=823, 614.295pt x 395.3169pt>
+<point-sim-cum.png, id=837, 614.295pt x 395.3169pt>
 File: point-sim-cum.png Graphic file (type png)
 <use point-sim-cum.png>
-Package pdftex.def Info: point-sim-cum.png  used on input line 1105.
+Package pdftex.def Info: point-sim-cum.png  used on input line 1123.
 (pdftex.def)             Requested size: 276.43019pt x 177.89095pt.
  [60 <./point-plot.png> <./point-sim-cum.png>] [61] [62]
 Chapter 7.
 [63
 
 ]
-<tweet-distribution.png, id=853, 714.7503pt x 426.393pt>
+<tweet-distribution.png, id=867, 714.7503pt x 426.393pt>
 File: tweet-distribution.png Graphic file (type png)
 <use tweet-distribution.png>
-Package pdftex.def Info: tweet-distribution.png  used on input line 1189.
+Package pdftex.def Info: tweet-distribution.png  used on input line 1207.
 (pdftex.def)             Requested size: 335.9327pt x 200.40472pt.
  (./Project.bbl [64 <./tweet-distribution.png>] [65] [66
 
 ] [67]
-Overfull \hbox (52.08412pt too wide) in paragraph at lines 172--176
+Overfull \hbox (52.08412pt too wide) in paragraph at lines 176--180
 \OT1/cmr/m/n/10 top-[]5-[]techniques-[]for-[]sentiment-[]analysis-[]in-[]natura
 l-[]language-[]processing-[]c07ba5b83f64$[], 
  []
 
 
-Overfull \hbox (60.75082pt too wide) in paragraph at lines 227--230
+Overfull \hbox (60.75082pt too wide) in paragraph at lines 231--234
 \OT1/cmr/m/n/10 chatgpt-[]architecture-[]exploring-[]the-[]inner-[]workings-[]o
 f-[]the-[]language-[]model-[]41731fc05483$[], 
  []
 
 [68]
-Overfull \hbox (7.41734pt too wide) in paragraph at lines 281--284
+Overfull \hbox (7.41734pt too wide) in paragraph at lines 285--288
 \OT1/cmr/m/n/10 the-[]feedforward-[]demysti^^Led-[]a-[]core-[]operation-[]of-[]
 transformers-[]afcd3a136c4c$[], 
  []
 
 [69]
-Overfull \hbox (3.69524pt too wide) in paragraph at lines 308--312
+Overfull \hbox (3.69524pt too wide) in paragraph at lines 312--316
 \OT1/cmr/m/n/10 understanding-[]branch-[]and-[]bound-[]in-[]optimization-[]prob
 lems-[]d8117da0e2c5$[], 
  []
@@ -714,34 +715,33 @@ Package rerunfilecheck Info: File `Project.out' has not changed.
 (rerunfilecheck)             Checksum: E1E8E83C9416E4AEB35964C3C8A46782;8727.
  ) 
 Here is how much of TeX's memory you used:
- 12381 strings out of 474116
- 194898 string characters out of 5743681
- 1941187 words of memory out of 5000000
- 34354 multiletter control sequences out of 15000+600000
- 565654 words of font info for 65 fonts, out of 8000000 for 9000
+ 12382 strings out of 474116
+ 194902 string characters out of 5743681
+ 1942187 words of memory out of 5000000
+ 34353 multiletter control sequences out of 15000+600000
+ 565047 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,18n,79p,1588b,595s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
-usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></u
-sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
-r/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/
-local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/lo
-cal/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loca
-l/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/
-texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/te
-xlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texli
-ve/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
-e/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/
-2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2
-024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/20
-24/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2024
-/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on Project.pdf (71 pages, 2623656 bytes).
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
+/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></us
+r/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
+local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/lo
+cal/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loca
+l/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/
+texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/tex
+live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
+ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texliv
+e/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive
+/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/
+2024/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/20
+24/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on Project.pdf (71 pages, 2615129 bytes).
 PDF statistics:
- 1081 PDF objects out of 1200 (max. 8388607)
- 912 compressed objects within 10 object streams
- 239 named destinations out of 1000 (max. 500000)
+ 1096 PDF objects out of 1200 (max. 8388607)
+ 929 compressed objects within 10 object streams
+ 243 named destinations out of 1000 (max. 500000)
  519 words of extra memory for PDF output out of 10000 (max. 10000000)
 

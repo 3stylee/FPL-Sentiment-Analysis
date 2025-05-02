@@ -123,6 +123,10 @@ D.~Akst, ``The wisdom of even wiser crowds,''
   \url{https://www.wsj.com/articles/the-wisdom-of-even-wiser-crowds-1487265722?tesla=y\&mod=vocus},
   Feb 2017.
 
+\bibitem{surprisingly-pop-study}
+``Mit scholars show new method of harvesting crowd wisdom,''
+  \url{https://www.eurekalert.org/news-releases/586123}, Jan. 2017.
+
 \bibitem{bonello}
 N.~Bonello, J.~Beel, S.~Lawless, and J.~Debattista, ``Multi-stream data
   analytics for enhanced performance prediction in fantasy football,''
@@ -356,12 +360,12 @@ V.~Anand, ``{FPL Historical Dataset},'' Retrieved February 2025 from
 Pypi, ``{PuLP},'' Retrieved February 2025 from
   \url{https://pypi.org/project/PuLP/}, 2025.
 
-\bibitem{colab}
-``Google colab,'' \url{https://colab.google/}, December 2024.
-
 \bibitem{huggingface-transformers}
 ``Hugging face transformers,''
   \url{https://huggingface.co/docs/transformers/en/index}, December 2024.
+
+\bibitem{colab}
+``Google colab,'' \url{https://colab.google/}, December 2024.
 
 \bibitem{pytorch}
 ``Pytorch,'' \url{https://pytorch.org/}, December 2024.
@@ -370,6 +374,16 @@ Pypi, ``{PuLP},'' Retrieved February 2025 from
 Pranjal, ``{Light GBM vs XGBOOST},'' Retrieved February 2025 from
   \url{https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/#h-lightgbm-vs-xgboost},
   2017.
+
+\bibitem{pandas}
+``{Pandas},'' Retrieved April 2025 from \url{https://pandas.pydata.org/}, 2025.
+
+\bibitem{numpy}
+``{Numpy},'' Retrieved April 2025 from \url{https://numpy.org/}, 2025.
+
+\bibitem{matplotlib}
+``{Matplotlib},'' Retrieved April 2025 from \url{https://matplotlib.org/},
+  2025.
 
 \bibitem{double-gameweeks}
 FPL, ``{Which teams have Double Gameweeks in FPL?}'' Retrieved April 2025 from
